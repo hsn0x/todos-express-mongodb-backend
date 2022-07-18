@@ -1,4 +1,4 @@
-export const sessionConfig = {
+export default {
     secret: process.env.SESSION_SECRET,
     name: process.env.SESSION_NAME,
     resave: false, // we support the touch method so per the express-session docs this should be set to false

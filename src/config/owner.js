@@ -1,4 +1,4 @@
-export const ownerConfig = {
+export default {
     firstName: process.env.OWNER_FIRST_NAME,
     lastName: process.env.OWNER_LAST_NAME,
     username: process.env.OWNER_USERNAME,

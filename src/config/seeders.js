@@ -1,3 +1,3 @@
-export const seedersConfig = {
+export default {
     amount: 50,
 };

@@ -1,53 +1,47 @@
-import sequelize from "../db/sequelize.js";
-import SequelizeSlugify from "sequelize-slugify";
+import { Schema, model } from "mongoose";
 
-import { STRING } from "../db/dataTypes.js";
-import { Model } from "sequelize";
-
-class Avatar extends Model {}
-
-Avatar.init(
+const schema = Schema(
     {
         public_id: {
-            type: STRING,
+            type: String,
         },
         version: {
-            type: STRING,
+            type: String,
         },
         signature: {
-            type: STRING,
+            type: String,
         },
         width: {
-            type: STRING,
+            type: String,
         },
         height: {
-            type: STRING,
+            type: String,
         },
         format: {
-            type: STRING,
+            type: String,
         },
         resource_type: {
-            type: STRING,
+            type: String,
         },
         created_at: {
-            type: STRING,
+            type: String,
         },
         bytes: {
-            type: STRING,
+            type: String,
         },
         type: {
-            type: STRING,
+            type: String,
         },
         url: {
-            type: STRING,
+            type: String,
         },
         secure_url: {
-            type: STRING,
+            type: String,
         },
-        avatarableId: { type: STRING },
-        avatarableType: { type: STRING },
+        avatarableId: { type: String },
+        avatarableType: { type: String },
     },
-    { sequelize, modelName: "avatar" }
+    { timestamps: true }
 );
 
-export default Avatar;
+export default model("Avatar", schema);

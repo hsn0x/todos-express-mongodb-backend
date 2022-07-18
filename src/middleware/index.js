@@ -1,7 +1,7 @@
 import { Router } from "express";
 import bodyParser from "./BodyParser.js";
 import passport from "./Passport.js";
-import sequelize from "./Sequelize.js";
+import mongoDb from "./MongoDB.js";
 import cors from "cors";
 
 const router = Router();
@@ -13,7 +13,7 @@ const corsConfig = {
 
 router.use(cors(corsConfig));
 router.options("*", cors(corsConfig));
-router.use(sequelize);
+router.use(mongoDb);
 router.use(bodyParser);
 router.use(passport);
 

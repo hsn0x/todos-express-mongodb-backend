@@ -1,1 +1,1 @@
-export const passportConfig = {};
+export default {};

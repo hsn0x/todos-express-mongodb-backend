@@ -2,7 +2,6 @@
 import express from "express";
 import passport from "passport";
 // Local Import
-import sequelize from "./db/sequelize.js";
 import "./associations/index.js";
 
 // Route
@@ -14,6 +13,7 @@ import { expressConfig } from "./config/index.js";
 
 // Seed Database
 import { dbSeed, dbSeedFake } from "./seeders/index.js";
+import mongodb from "./db/mongodb.js";
 
 const app = express();
 
@@ -29,10 +29,9 @@ const serverHost = expressConfig.host;
 const serverPort = expressConfig.port;
 
 const server = async () => {
-    await sequelize.sync({ force: true });
-    // await sequelize.sync();
-    await dbSeed();
-    await dbSeedFake();
+    await mongodb();
+    // await dbSeed();
+    // await dbSeedFake();
 
     app.listen(serverPort, () => {
         console.log(
