@@ -2,7 +2,6 @@
 import express from "express";
 import passport from "passport";
 // Local Import
-import "./associations/index.js";
 
 // Route
 import routes from "./routes/index.js";
@@ -35,7 +34,7 @@ const server = async () => {
 
     app.listen(serverPort, () => {
         console.log(
-            `Sequelize API Server is runnig ..., on port http://${serverHost}:${serverPort}`
+            `Express.js API Server with MongoDB is runnig ..., on port http://${serverHost}:${serverPort}`
         );
     });
 };

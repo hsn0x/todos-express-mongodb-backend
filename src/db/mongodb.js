@@ -1,23 +1,21 @@
-import { MongoClient } from "mongodb";
 import { mongodbConfig } from "../config/index.js";
+import mongoose from "mongoose";
 
-// Connection URL
-const url = mongodbConfig.mongoUrl;
-const client = new MongoClient(url);
+class Database {
+    constructor() {
+        this._connect();
+    }
 
-// Database Name
-const dbName = mongodbConfig.database;
+    _connect() {
+        mongoose
+            .connect(mongodbConfig.mongoUrl)
+            .then(() => {
+                console.log("Database connection successful");
+            })
+            .catch((err) => {
+                console.error("Database connection error", err);
+            });
+    }
+}
 
-const mongodb = async () => {
-    // Use connect method to connect to the server
-    await client.connect();
-    console.log("Connected successfully to server");
-    const db = client.db(dbName);
-    const collection = db.collection("documents");
-
-    // the following code examples can be pasted here...
-
-    return "done.";
-};
-
-export default mongodb;
+export default new Database();

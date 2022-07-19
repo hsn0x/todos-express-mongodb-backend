@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
-const schema = Schema(
+const schema = mongoose.Schema(
     {
         public_id: {
             type: String,
@@ -44,4 +44,4 @@ const schema = Schema(
     { timestamps: true }
 );
 
-export default model("Avatar", schema);
+export default mongoose.model("Avatar", schema);
