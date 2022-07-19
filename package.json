@@ -1,6 +1,6 @@
 {
     "name": "hsn-todos-express.js-mongodb-backend",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "hsn todos list with express.js and mongodb, backend",
     "main": "src/index.js",
     "author": "Hassane Bendaoud <40140987+realHassaneBen@users.noreply.github.com>",
