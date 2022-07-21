@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
-const schema = mongoose.Schema(
+const Schema = mongoose.Schema;
+const model = mongoose.model;
+
+const schema = Schema(
     {
         public_id: {
             type: String,
@@ -40,8 +43,14 @@ const schema = mongoose.Schema(
         },
         imageableId: { type: String },
         imageableType: { type: String },
+        user: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "User",
+            },
+        ],
     },
     { timestamps: true }
 );
 
-export default mongoose.model("Image", schema);
+export default model("Image", schema);

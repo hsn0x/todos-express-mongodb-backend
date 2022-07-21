@@ -1,20 +1,26 @@
 import { Role } from "../models/index.js";
 
-const findAllRolesQuery = async (include = []) => {
-    const roles = await Role.findAll({ include: [...include] });
+export const findAllRolesQuery = async (populate) => {
+    const roles = await Role.find().populate(populate);
     return roles;
 };
-
-const findByPkRoleQuery = (id) => {
-    const role = Role.findByPk(id);
+export const findByPkRoleQuery = (id, populate) => {
+    const role = Role.findByPk(id).populate(populate);
     return role;
 };
-const findOneRoleQuery = (where) => {
-    const role = Role.findOne({ where });
+export const findOneRoleQuery = (where, populate) => {
+    const role = Role.findOne({ where }).populate(populate);
     return role;
 };
-
-const createRoleQuery = async (role) => {
+export const findByIdAndUpdate = async (id, role) => {
+    const updatedRole = await Role.findByIdAndUpdate(id, role);
+    return updatedRole;
+};
+export const findOneAndUpdate = async (where, role) => {
+    const updatedRole = await Role.findOneAndUpdate(where, role);
+    return updatedRole;
+};
+export const createRoleQuery = async (role) => {
     const { title, description, price, UserId, RoleId, CategoryId } = role;
 
     const createdRole = await Role.create({
@@ -29,22 +35,12 @@ const createRoleQuery = async (role) => {
     await createdRole.setRole(RoleId);
     return createdRole;
 };
-
-const updateRoleQuery = async (id, role) => {
+export const updateRoleQuery = async (id, role) => {
     await Role.update(role, { where: { ...id } });
 };
 
-const deleteRoleQuery = async (id) => {
+export const deleteRoleQuery = async (id) => {
     await Role.destroy({
         where: id,
     });
-};
-
-export {
-    findAllRolesQuery,
-    findByPkRoleQuery,
-    findOneRoleQuery,
-    createRoleQuery,
-    updateRoleQuery,
-    deleteRoleQuery,
 };

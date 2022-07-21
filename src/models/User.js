@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 
+const Schema = mongoose.Schema;
+const model = mongoose.model;
+
 const schema = mongoose.Schema(
     {
         firstName: {
@@ -37,6 +40,24 @@ const schema = mongoose.Schema(
         gender: {
             type: String,
         },
+        avatars: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Avatar",
+            },
+        ],
+        Images: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Image",
+            },
+        ],
+        roles: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Role",
+            },
+        ],
     },
     { timestamps: true }
 );

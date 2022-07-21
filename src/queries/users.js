@@ -3,7 +3,6 @@ import User from "../models/User.js";
 
 const findAllUsersQuery = async () => {
     const users = await User.findOne();
-    console.log({ users });
     return users;
 };
 
@@ -12,12 +11,8 @@ const findByPkUserQuery = async (id) => {
     return user;
 };
 
-const findOneUserQuery = async (where, withoutPassword = true) => {
-    return withoutPassword
-        ? await User.findOne({
-              where,
-          })
-        : await User.findOne({ where });
+const findOneUserQuery = async (where) => {
+    return await User.findOne({ where });
 };
 
 const createUserQuery = async (user) => {

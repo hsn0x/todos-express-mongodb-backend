@@ -12,16 +12,15 @@ const RECORD = seedersConfig.amount;
 const dbSeed = async () => {
     await createRoles();
     await createPermissions();
-    await createResources();
-    await createUsers();
+    // await createResources();
+    // await createUsers();
 };
 
 /**
  *
  */
 const dbSeedFake = async () => {
-    await createFakeUsers(RECORD);
-
+    // await createFakeUsers(RECORD);
     // await createFakeStudents(RECORD);
 };
 

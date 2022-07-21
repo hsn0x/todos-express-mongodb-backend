@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
+import slugify from "slugify";
 
-const schema = mongoose.Schema(
+const Schema = mongoose.Schema;
+const model = mongoose.model;
+
+const schema = Schema(
     {
         name: {
             type: String,
@@ -9,14 +13,24 @@ const schema = mongoose.Schema(
         },
         slug: {
             type: String,
-            required: true,
             unique: true,
         },
         description: {
             type: String,
         },
+        roles: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Role",
+            },
+        ],
     },
     { timestamps: true }
 );
 
-export default mongoose.model("Permission", schema);
+schema.pre("save", function (next) {
+    this.slug = slugify(this.name, { lower: true });
+    next();
+});
+
+export default model("Permission", schema);
