@@ -18,6 +18,12 @@ const schema = Schema(
         description: {
             type: String,
         },
+        users: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "User",
+            },
+        ],
         permissions: [
             {
                 type: Schema.Types.ObjectId,

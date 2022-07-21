@@ -12,7 +12,7 @@ const RECORD = seedersConfig.amount;
 const dbSeed = async () => {
     await createRoles();
     await createPermissions();
-    // await createResources();
+    await createResources();
     // await createUsers();
 };
 

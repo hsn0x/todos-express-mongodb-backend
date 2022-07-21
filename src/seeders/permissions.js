@@ -1,6 +1,6 @@
 import { Permission, Role } from "../models/index.js";
 import { PERMISSIONS, ROLES } from "../constants/index.js";
-import { findOneAndUpdate, findOneRoleQuery } from "../queries/roles.js";
+import { findOneRoleAndUpdate, findOneRoleQuery } from "../queries/roles.js";
 import { findOnePermissionQuery } from "../queries/permissions.js";
 import { ObjectId } from "mongodb";
 import { findOneUserQuery } from "../queries/users.js";
@@ -21,14 +21,11 @@ export const createPermissions = async () => {
         for (let index = 0; index < permissions.length; index++) {
             const permission = permissions[index];
             const perm = await findOnePermissionQuery({ name: permission });
-            await findOneAndUpdate(ROLE.name, {
+            await findOneRoleAndUpdate(ROLE.name, {
                 $push: {
                     permissions: ObjectId(perm._id),
                 },
             });
         }
     }
-
-    const role = await findOneRoleQuery({ id: 1 }, ["permissions"]);
-    console.log(role);
 };

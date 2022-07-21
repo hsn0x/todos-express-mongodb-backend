@@ -1,20 +1,24 @@
 import { Resource } from "../models/index.js";
 
-const findAllResourcesQuery = async (include = []) => {
-    const resources = await Resource.findAll({ include: [...include] });
+export const findAllResourcesQuery = async () => {
+    const resources = await Resource.find();
     return resources;
 };
 
-const findByPkResourceQuery = (id) => {
+export const findByPkResourceQuery = (id) => {
     const resource = Resource.findByPk(id);
     return resource;
 };
-const findOneResourceQuery = (id) => {
-    const resource = Resource.findOne({ where: id });
+export const findOneResourceQuery = (where, populate) => {
+    const resource = Resource.findOne({ where }).populate(populate);
     return resource;
 };
+export const findOneResourceAndUpdate = async (where, resource) => {
+    const updatedResource = await Resource.findOneAndUpdate(where, resource);
+    return updatedResource;
+};
 
-const createResourceQuery = async (resource) => {
+export const createResourceQuery = async (resource) => {
     const { title, description, price, UserId, ResourceId, CategoryId } =
         resource;
 
@@ -31,21 +35,12 @@ const createResourceQuery = async (resource) => {
     return createdResource;
 };
 
-const updateResourceQuery = async (id, resource) => {
+export const updateResourceQuery = async (id, resource) => {
     await Resource.update(resource, { where: { ...id } });
 };
 
-const deleteResourceQuery = async (id) => {
+export const deleteResourceQuery = async (id) => {
     await Resource.destroy({
         where: id,
     });
-};
-
-export {
-    findAllResourcesQuery,
-    findByPkResourceQuery,
-    findOneResourceQuery,
-    createResourceQuery,
-    updateResourceQuery,
-    deleteResourceQuery,
 };

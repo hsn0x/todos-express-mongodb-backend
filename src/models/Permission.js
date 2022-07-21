@@ -24,6 +24,12 @@ const schema = Schema(
                 ref: "Role",
             },
         ],
+        resources: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Resource",
+            },
+        ],
     },
     { timestamps: true }
 );

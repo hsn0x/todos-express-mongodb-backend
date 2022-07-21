@@ -16,7 +16,7 @@ export const findByIdAndUpdate = async (id, role) => {
     const updatedRole = await Role.findByIdAndUpdate(id, role);
     return updatedRole;
 };
-export const findOneAndUpdate = async (where, role) => {
+export const findOneRoleAndUpdate = async (where, role) => {
     const updatedRole = await Role.findOneAndUpdate(where, role);
     return updatedRole;
 };
