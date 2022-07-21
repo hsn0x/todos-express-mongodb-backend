@@ -29,10 +29,12 @@ const schema = mongoose.Schema(
         passwordHash: {
             type: String,
             required: true,
+            select: false,
         },
         passwordSalt: {
             type: String,
             required: true,
+            select: false,
         },
         age: {
             type: Number,
@@ -46,7 +48,7 @@ const schema = mongoose.Schema(
                 ref: "Avatar",
             },
         ],
-        Images: [
+        images: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "Image",

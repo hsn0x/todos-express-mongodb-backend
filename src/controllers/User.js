@@ -13,16 +13,12 @@ import {
     validateUpdateUser,
 } from "../validation/User.js";
 
-const getUsers = async (request, response) => {
-    const users = await findAllUsersQuery(true);
-    if (users) {
-        response.status(200).json({ users });
-    } else {
-        response.status(500).json({ message: `Faile to get users` });
-    }
+export const getUsers = async (request, response) => {
+    const users = await findAllUsersQuery();
+    response.status(200).json(users);
 };
 
-const getUserById = async (request, response) => {
+export const getUserById = async (request, response) => {
     const id = parseInt(request.params.id);
     const user = await findOneUserQuery({ id });
     if (user) {
@@ -32,7 +28,7 @@ const getUserById = async (request, response) => {
     }
 };
 
-const getUserByUsername = async (request, response) => {
+export const getUserByUsername = async (request, response) => {
     const username = request.params.username;
     const user = await findOneUserQuery({ username });
     if (user) {
@@ -44,7 +40,7 @@ const getUserByUsername = async (request, response) => {
     }
 };
 
-const getUserByEmail = async (request, response) => {
+export const getUserByEmail = async (request, response) => {
     const email = parseInt(request.params.email);
     const user = await findOneUserQuery({ email });
     if (user) {
@@ -56,7 +52,7 @@ const getUserByEmail = async (request, response) => {
     }
 };
 
-const createUser = async (request, response, next) => {
+export const createUser = async (request, response, next) => {
     const {
         firstName,
         lastName,
@@ -106,7 +102,7 @@ const createUser = async (request, response, next) => {
     }
 };
 
-const updateUser = async (request, response) => {
+export const updateUser = async (request, response) => {
     const id = parseInt(request.params.id);
     const { session, user } = request;
 
@@ -144,7 +140,7 @@ const updateUser = async (request, response) => {
     }
 };
 
-const updateUserEmail = async (request, response) => {
+export const updateUserEmail = async (request, response) => {
     const id = parseInt(request.params.id);
     const { session, user } = request;
 
@@ -174,7 +170,7 @@ const updateUserEmail = async (request, response) => {
     }
 };
 
-const updateUserPassword = async (request, response) => {
+export const updateUserPassword = async (request, response) => {
     const id = parseInt(request.params.id);
     const { session, user } = request;
     if (user.id !== id) {
@@ -255,20 +251,8 @@ const updateUserPassword = async (request, response) => {
     }
 };
 
-const deleteUser = async (request, response) => {
+export const deleteUser = async (request, response) => {
     const id = parseInt(request.params.id);
     await deleteUserQuery({ id });
     response.status(200).json({ message: `User deleted with ID: ${id}` });
-};
-
-export {
-    getUsers,
-    getUserById,
-    getUserByUsername,
-    getUserByEmail,
-    createUser,
-    updateUser,
-    updateUserEmail,
-    updateUserPassword,
-    deleteUser,
 };

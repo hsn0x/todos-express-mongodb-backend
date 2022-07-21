@@ -1,47 +1,33 @@
-import UserSensitiveData from "../constants/SensitiveData.js";
 import User from "../models/User.js";
 
-const findAllUsersQuery = async () => {
-    const users = await User.findOne();
+export const findAllUsersQuery = async (populate = []) => {
+    const users = await User.find().populate(populate);
     return users;
 };
-
-const findByPkUserQuery = async (id) => {
-    const user = await User.findByPk(id);
+export const findByIdUserQuery = async (id, populate = []) => {
+    const user = await User.findById(id).populate(populate);
     return user;
 };
-
-const findOneUserQuery = async (where) => {
-    return await User.findOne({ where });
+export const findOneUserQuery = async (where, populate = [], salt) => {
+    const user = await User.findOne(where).select(salt).populate(populate);
+    return user;
 };
-
-const createUserQuery = async (user) => {
+export const findOneUserAndUpdate = async (where, user) => {
+    const updatedUser = await User.findOneAndUpdate(where, user);
+    return updatedUser;
+};
+export const createUserQuery = async (user) => {
     const createdUser = await User.create(user);
-
-    delete createdUser.dataValues.password;
-    delete createdUser.dataValues.passwordHash;
-    delete createdUser.dataValues.passwordSalt;
 
     return createdUser;
 };
-
-const updateUserQuery = async (user, where) => {
+export const updateUserQuery = async (user, where) => {
     const updatedUser = await User.update(user, { where });
     return updatedUser;
 };
-
-const deleteUserQuery = async (where) => {
+export const deleteUserQuery = async (where) => {
     const deletedUser = await User.destroy({
         where,
     });
     return deletedUser;
-};
-
-export {
-    findAllUsersQuery,
-    findByPkUserQuery,
-    findOneUserQuery,
-    createUserQuery,
-    updateUserQuery,
-    deleteUserQuery,
 };

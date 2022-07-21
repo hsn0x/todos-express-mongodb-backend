@@ -32,7 +32,6 @@ export const createResources = async () => {
             resourceIndex++
         ) {
             const resource = resources[resourceIndex];
-            // await permission.addResource(resource.id);
             await findOnePermissionAndUpdate(permission.id, {
                 $push: {
                     resources: ObjectId(resource.id),
@@ -40,7 +39,4 @@ export const createResources = async () => {
             });
         }
     }
-
-    const permission = await findOnePermissionQuery({ id: 1 }, ["resources"]);
-    console.log(permission);
 };

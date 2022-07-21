@@ -43,12 +43,10 @@ const schema = Schema(
         },
         avatarableId: { type: String },
         avatarableType: { type: String },
-        user: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "User",
-            },
-        ],
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
     },
     { timestamps: true }
 );

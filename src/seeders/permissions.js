@@ -23,7 +23,7 @@ export const createPermissions = async () => {
             const perm = await findOnePermissionQuery({ name: permission });
             await findOneRoleAndUpdate(ROLE.name, {
                 $push: {
-                    permissions: ObjectId(perm._id),
+                    permissions: perm._id,
                 },
             });
         }

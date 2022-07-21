@@ -1,15 +1,15 @@
 import { Role } from "../models/index.js";
 
-export const findAllRolesQuery = async (populate) => {
+export const findAllRolesQuery = async (populate = []) => {
     const roles = await Role.find().populate(populate);
     return roles;
 };
-export const findByPkRoleQuery = (id, populate) => {
-    const role = Role.findByPk(id).populate(populate);
+export const findByPkRoleQuery = async (id, populate = []) => {
+    const role = await Role.findByPk(id).populate(populate);
     return role;
 };
-export const findOneRoleQuery = (where, populate) => {
-    const role = Role.findOne({ where }).populate(populate);
+export const findOneRoleQuery = async (where, populate = []) => {
+    const role = await Role.findOne(where).populate(populate);
     return role;
 };
 export const findByIdAndUpdate = async (id, role) => {

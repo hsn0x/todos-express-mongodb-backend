@@ -13,7 +13,7 @@ const dbSeed = async () => {
     await createRoles();
     await createPermissions();
     await createResources();
-    // await createUsers();
+    await createUsers();
 };
 
 /**
