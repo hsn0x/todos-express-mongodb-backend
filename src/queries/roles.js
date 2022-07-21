@@ -1,46 +1,35 @@
 import { Role } from "../models/index.js";
 
-export const findAllRolesQuery = async (populate = []) => {
-    const roles = await Role.find().populate(populate);
+export const findAllRolesQuery = async (populate = [], salt = []) => {
+    const roles = await Role.find().select(salt).populate(populate);
     return roles;
 };
-export const findByPkRoleQuery = async (id, populate = []) => {
-    const role = await Role.findByPk(id).populate(populate);
+export const findByIdRoleQuery = async (id, populate = [], salt = []) => {
+    const role = await Role.findById(id).select(salt).populate(populate);
     return role;
 };
-export const findOneRoleQuery = async (where, populate = []) => {
-    const role = await Role.findOne(where).populate(populate);
+export const findOneRoleQuery = async (filter, populate = [], salt = []) => {
+    const role = await Role.findOne(filter).select(salt).populate(populate);
     return role;
 };
-export const findByIdAndUpdate = async (id, role) => {
-    const updatedRole = await Role.findByIdAndUpdate(id, role);
-    return updatedRole;
+export const findByIdRoleAndUpdate = async (id, data) => {
+    const roleUpdated = await Role.findByIdAndUpdate(id, data);
+    return roleUpdated;
 };
-export const findOneRoleAndUpdate = async (where, role) => {
-    const updatedRole = await Role.findOneAndUpdate(where, role);
-    return updatedRole;
+export const findOneRoleAndUpdate = async (filter, data) => {
+    const roleUpdated = await Role.findOneAndUpdate(filter, data);
+    return roleUpdated;
 };
-export const createRoleQuery = async (role) => {
-    const { title, description, price, UserId, RoleId, CategoryId } = role;
-
-    const createdRole = await Role.create({
-        title,
-        description,
-        price,
-        UserId,
-        RoleId,
-        CategoryId,
-    });
-    await createdRole.setUser(UserId);
-    await createdRole.setRole(RoleId);
+export const createRoleQuery = async (data, options) => {
+    const createdRole = await Role.create(data, options);
     return createdRole;
 };
-export const updateRoleQuery = async (id, role) => {
-    await Role.update(role, { where: { ...id } });
+export const updateOneRoleQuery = async (filter, data, options = {}) => {
+    const recordUpdated = await Role.updateOne(filter, data, options);
+    return recordUpdated;
 };
 
-export const deleteRoleQuery = async (id) => {
-    await Role.destroy({
-        where: id,
-    });
+export const deleteRoleQuery = async (filter, options) => {
+    const recordDeleted = await Role.deleteOne(filter, options);
+    return recordDeleted;
 };

@@ -60,10 +60,7 @@ const register = async (req, res, next) => {
     const user = await registerUserQuery(userData);
 
     if (user) {
-        res.status(201).json({
-            message: `User created with ID: ${user.id}`,
-            user,
-        });
+        res.status(201).json(user);
     } else {
         res.status(500).json({
             message: `Faile to create a user`,

@@ -1,9 +1,7 @@
-import { Permission, Role } from "../models/index.js";
+import { Permission } from "../models/index.js";
 import { PERMISSIONS, ROLES } from "../constants/index.js";
-import { findOneRoleAndUpdate, findOneRoleQuery } from "../queries/roles.js";
+import { findOneRoleAndUpdate } from "../queries/roles.js";
 import { findOnePermissionQuery } from "../queries/permissions.js";
-import { ObjectId } from "mongodb";
-import { findOneUserQuery } from "../queries/users.js";
 
 export const createPermissions = async () => {
     for (let index = 0; index < PERMISSIONS.length; index++) {

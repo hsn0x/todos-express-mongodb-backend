@@ -1,46 +1,32 @@
 import { Resource } from "../models/index.js";
 
-export const findAllResourcesQuery = async () => {
-    const resources = await Resource.find();
+export const findAllResourcesQuery = async (populate = [], salt = []) => {
+    const resources = await Resource.find().select(salt).populate(populate);
     return resources;
 };
 
-export const findByPkResourceQuery = (id) => {
-    const resource = Resource.findByPk(id);
+export const findByIdResourceQuery = (id, populate = [], salt = []) => {
+    const resource = Resource.findById(id).select(salt).populate(populate);
     return resource;
 };
-export const findOneResourceQuery = (where, populate) => {
-    const resource = Resource.findOne({ where }).populate(populate);
+export const findOneResourceQuery = (filter, populate = [], salt = []) => {
+    const resource = Resource.findOne(filter).select(salt).populate(populate);
     return resource;
 };
-export const findOneResourceAndUpdate = async (where, resource) => {
-    const updatedResource = await Resource.findOneAndUpdate(where, resource);
+export const findOneResourceAndUpdate = async (filter, data) => {
+    const updatedResource = await Resource.findOneAndUpdate(filter, data);
     return updatedResource;
 };
 
-export const createResourceQuery = async (resource) => {
-    const { title, description, price, UserId, ResourceId, CategoryId } =
-        resource;
-
-    const createdResource = await Resource.create({
-        title,
-        description,
-        price,
-        UserId,
-        ResourceId,
-        CategoryId,
-    });
-    await createdResource.setUser(UserId);
-    await createdResource.setResource(ResourceId);
+export const createResourceQuery = async (data, options) => {
+    const createdResource = await Resource.create(data, options);
     return createdResource;
 };
 
-export const updateResourceQuery = async (id, resource) => {
-    await Resource.update(resource, { where: { ...id } });
+export const updateOneResourceQuery = async (filter, data, options = {}) => {
+    await Resource.updateOne(filter, data, options);
 };
 
-export const deleteResourceQuery = async (id) => {
-    await Resource.destroy({
-        where: id,
-    });
+export const deleteOneResourceQuery = async (filter, options) => {
+    await Resource.deleteOne(filter, options);
 };

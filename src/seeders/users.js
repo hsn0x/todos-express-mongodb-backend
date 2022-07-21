@@ -3,7 +3,7 @@ import { Avatar, Image, User } from "../models/index.js";
 import { genPassword } from "../lib/passwordUtils.js";
 import { findOneRoleQuery } from "../queries/roles.js";
 import { ownerConfig } from "../config/index.js";
-import { findOneUserAndUpdate, findOneUserQuery } from "../queries/users.js";
+import { findOneUserAndUpdate } from "../queries/users.js";
 
 const createUsers = async () => {
     const hashedPassword = genPassword(ownerConfig.password);

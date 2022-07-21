@@ -1,10 +1,10 @@
 import { genPassword, passwordMatch } from "../lib/passwordUtils.js";
 import {
     createUserQuery,
-    deleteUserQuery,
+    deleteOneUserQuery,
     findAllUsersQuery,
     findOneUserQuery,
-    updateUserQuery,
+    updateOneUserQuery,
 } from "../queries/users.js";
 import {
     validateCreateUser,
@@ -127,7 +127,7 @@ export const updateUser = async (request, response) => {
         });
     }
 
-    const updatedUser = await updateUserQuery(userData, { id });
+    const updatedUser = await updateOneUserQuery(userData, { id });
     if (updatedUser) {
         response.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -157,7 +157,7 @@ export const updateUserEmail = async (request, response) => {
             errors: isUserValid.errors,
         });
     }
-    const updatedUser = await updateUserQuery(userData, { id });
+    const updatedUser = await updateOneUserQuery(userData, { id });
     if (updatedUser) {
         response.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -238,7 +238,7 @@ export const updateUserPassword = async (request, response) => {
     }
 
     userData.password = userData.newPassword;
-    const updatedUser = await updateUserQuery(userData, { id });
+    const updatedUser = await updateOneUserQuery(userData, { id });
     if (updatedUser) {
         response.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -253,6 +253,6 @@ export const updateUserPassword = async (request, response) => {
 
 export const deleteUser = async (request, response) => {
     const id = parseInt(request.params.id);
-    await deleteUserQuery({ id });
+    await deleteOneUserQuery({ id });
     response.status(200).json({ message: `User deleted with ID: ${id}` });
 };
