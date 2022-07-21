@@ -9,7 +9,7 @@ import { findOneUserQuery } from "../queries/users.js";
  * @example
  * const isAuth = isAuth();
  */
-const isAuth = (req, res, next) => {
+export const isAuth = (req, res, next) => {
     const auth = req.isAuthenticated();
     if (auth) {
         return next();
@@ -21,7 +21,7 @@ const isAuth = (req, res, next) => {
     }
 };
 
-const isUserAuth = (req, res, next) => {
+export const isUserAuth = (req, res, next) => {
     const id = parseInt(req.params.id);
     const { session, user } = req;
     if (user.id !== id) {
@@ -42,7 +42,7 @@ const isUserAuth = (req, res, next) => {
  * @returns {Promise<void>}
  * @memberof Auth
  */
-const isUsernameTaken = async (req, res, next) => {
+export const isUsernameTaken = async (req, res, next) => {
     const { username } = req.body;
 
     if (!username) {
@@ -67,7 +67,7 @@ const isUsernameTaken = async (req, res, next) => {
  * @returns {Promise<void>}
  * @memberof Auth
  */
-const isEmailExist = async (req, res, next) => {
+export const isEmailExist = async (req, res, next) => {
     const { email } = req.body;
 
     const isEmailExist = await findOneUserQuery({ email });
@@ -92,7 +92,7 @@ const isEmailExist = async (req, res, next) => {
  * const isGuest = isRole("GUEST");
  * const isAdminOrModerator = isRole("ADMIN", "MODERATOR");
  */
-const isAdmin = (req, res, next) => {
+export const isAdmin = (req, res, next) => {
     const auth = req.isAuthenticated();
 
     const roles = req.user.Roles;
@@ -119,7 +119,7 @@ const isAdmin = (req, res, next) => {
  * @returns {Promise<void>}
  * @memberof Auth
  */
-const isModerator = (req, res, next) => {
+export const isModerator = (req, res, next) => {
     const auth = req.isAuthenticated();
 
     const roleName = req.user.Roles[0].name;
@@ -144,7 +144,7 @@ const isModerator = (req, res, next) => {
  * @memberof Auth
  *
  */
-const isGuest = (req, res, next) => {
+export const isGuest = (req, res, next) => {
     const auth = req.isAuthenticated();
 
     if (!auth) {
@@ -154,14 +154,4 @@ const isGuest = (req, res, next) => {
             message: "You are already logged in",
         });
     }
-};
-
-export {
-    isAuth,
-    isAdmin,
-    isModerator,
-    isGuest,
-    isEmailExist,
-    isUsernameTaken,
-    isUserAuth,
 };

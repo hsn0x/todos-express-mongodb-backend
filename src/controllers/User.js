@@ -1,8 +1,10 @@
+import { ObjectId } from "mongodb";
 import { genPassword, passwordMatch } from "../lib/passwordUtils.js";
 import {
     createUserQuery,
     deleteOneUserQuery,
     findAllUsersQuery,
+    findByIdUserQuery,
     findOneUserQuery,
     updateOneUserQuery,
 } from "../queries/users.js";
@@ -19,8 +21,8 @@ export const getUsers = async (request, response) => {
 };
 
 export const getUserById = async (request, response) => {
-    const id = parseInt(request.params.id);
-    const user = await findOneUserQuery({ id });
+    const id = request.params.id;
+    const user = await findByIdUserQuery(id);
     if (user) {
         response.status(200).json({ user });
     } else {
