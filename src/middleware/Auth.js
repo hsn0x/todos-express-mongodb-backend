@@ -22,7 +22,7 @@ export const isAuth = (req, res, next) => {
 };
 
 export const isUserAuth = (req, res, next) => {
-    const id = parseInt(req.params.id);
+    const id = req.params.id;
     const { session, user } = req;
     if (user.id !== id) {
         return res.status(401).json({
@@ -94,11 +94,13 @@ export const isEmailExist = async (req, res, next) => {
  */
 export const isAdmin = (req, res, next) => {
     const auth = req.isAuthenticated();
+    const roles = req.user.roles;
 
-    const roles = req.user.Roles;
     if (auth) {
         const isAdmin =
-            roles.length > 0 && roles.some((role) => role.name === "ADMIN");
+            roles &&
+            roles.length > 0 &&
+            roles.some((role) => role.name === "ADMIN");
         if (isAdmin) {
             return next();
         } else {
@@ -122,7 +124,7 @@ export const isAdmin = (req, res, next) => {
 export const isModerator = (req, res, next) => {
     const auth = req.isAuthenticated();
 
-    const roleName = req.user.Roles[0].name;
+    const roleName = req.user.roles[0].name;
     const hasModeratorRole = roleName === "ADMIN" || roleName === "MODERATOR";
 
     if (auth && hasModeratorRole) {

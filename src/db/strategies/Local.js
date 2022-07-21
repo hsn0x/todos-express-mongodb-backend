@@ -12,8 +12,8 @@ const verifyCallback = async (email, password, done) => {
     try {
         const user = await findOneUserQuery(
             { email },
-            ["passwordHash", "passwordSalt"],
-            []
+            [],
+            ["passwordSalt", "passwordHash"]
         );
 
         if (!user) {
