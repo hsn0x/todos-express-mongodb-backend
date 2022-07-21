@@ -1,7 +1,7 @@
 import { mongodbConfig } from "../config/index.js";
 import mongoose from "mongoose";
 
-const mongodb = async () => {
+export default async () => {
     try {
         await mongoose.connect(mongodbConfig.mongoUrl, {
             useNewUrlParser: true,
@@ -13,5 +13,3 @@ const mongodb = async () => {
         console.error("Database connection error", error);
     }
 };
-
-export default mongodb;

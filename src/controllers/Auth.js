@@ -4,7 +4,7 @@ import { validateRegister } from "../validation/Auth.js";
 import { registerUserQuery } from "../queries/auth.js";
 import { genPassword } from "../lib/passwordUtils.js";
 
-const login = (req, res, next) => {
+export const login = (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
         if (err)
             return res.status(500).json({
@@ -32,8 +32,7 @@ const login = (req, res, next) => {
         });
     })(req, res, next);
 };
-
-const register = async (req, res, next) => {
+export const register = async (req, res, next) => {
     const { firstName, lastName, username, email, password } = req.body;
 
     const userData = {
@@ -67,16 +66,14 @@ const register = async (req, res, next) => {
         });
     }
 };
-
-const profile = async (req, res, next) => {
+export const profile = async (req, res, next) => {
     return res.status(200).json({
         isAuthenticated: req.isAuthenticated(),
         user: req.user,
         message: "Profile retrieved successfully",
     });
 };
-
-const logout = async (req, res, next) => {
+export const logout = async (req, res, next) => {
     req.logout((err) => {
         if (err) {
             return res.status(500).json({
@@ -93,8 +90,7 @@ const logout = async (req, res, next) => {
         return next();
     });
 };
-
-const logoutSession = async (req, res, next) => {
+export const logoutSession = async (req, res, next) => {
     return req.session.destroy(function (err) {
         if (err) {
             return res.status(500).json({
@@ -110,5 +106,3 @@ const logoutSession = async (req, res, next) => {
         });
     });
 };
-
-export { login, register, profile, logout, logoutSession };

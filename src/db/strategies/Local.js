@@ -7,7 +7,6 @@ const customFields = {
     usernameField: "email",
     passwordField: "password",
 };
-
 const verifyCallback = async (email, password, done) => {
     try {
         const user = await findOneUserQuery(
@@ -36,7 +35,4 @@ const verifyCallback = async (email, password, done) => {
         done(error);
     }
 };
-
-const localStrategy = new LocalStrategy(customFields, verifyCallback);
-
-export { localStrategy };
+export const localStrategy = new LocalStrategy(customFields, verifyCallback);

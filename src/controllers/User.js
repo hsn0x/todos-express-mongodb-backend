@@ -146,11 +146,11 @@ export const updateUserEmail = async (req, res) => {
     const { session, user } = req;
 
     const { email } = req.body;
-    const userData = {
+    const data = {
         email,
     };
 
-    const isUserValid = validateUpdateUserEmail(userData);
+    const isUserValid = validateUpdateUserEmail(data);
 
     if (!isUserValid.valid) {
         return res.status(401).json({
@@ -158,7 +158,7 @@ export const updateUserEmail = async (req, res) => {
             errors: isUserValid.errors,
         });
     }
-    const updatedUser = await updateOneUserQuery(userData, { id });
+    const updatedUser = await updateOneUserQuery({ id }, data);
     if (updatedUser) {
         res.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -172,7 +172,7 @@ export const updateUserEmail = async (req, res) => {
 };
 
 export const updateUserPassword = async (req, res) => {
-    const id = parseInt(req.params.id);
+    const id = req.params.id;
     const { session, user } = req;
     if (user.id !== id) {
         return res.status(401).json({
@@ -180,7 +180,11 @@ export const updateUserPassword = async (req, res) => {
         });
     }
 
-    const currentUser = await findOneUserQuery({ id }, false);
+    const currentUser = await findOneUserQuery(
+        { id },
+        [],
+        ["passwordHash", "passwordSalt"]
+    );
     if (!currentUser) {
         return res.status(404).json({
             message: `User not found with ID: ${id}`,
@@ -191,6 +195,8 @@ export const updateUserPassword = async (req, res) => {
     const userData = {
         password,
         newPassword,
+        passwordHash: null,
+        passwordSalt: null,
     };
 
     /**
@@ -239,7 +245,7 @@ export const updateUserPassword = async (req, res) => {
     }
 
     userData.password = userData.newPassword;
-    const updatedUser = await updateOneUserQuery(userData, { id });
+    const updatedUser = await updateOneUserQuery({ id }, userData);
     if (updatedUser) {
         res.status(200).json({
             message: `User updated with ID: ${user.id}`,
