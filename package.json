@@ -3,12 +3,12 @@
     "version": "1.0.1",
     "description": "hsn todos list with express.js and mongodb, backend",
     "main": "src/index.js",
-    "author": "Hassane Bendaoud <40140987+realHassaneBen@users.noreply.github.com>",
+    "author": "Hassane Bendaoud <40140987+hsn0x@users.noreply.github.com>",
     "license": "MIT",
     "type": "module",
     "private": true,
     "repository": {
-        "url": "https://github.com/realHassaneBen/hsn-todos-express.js-mongodb-backend.git",
+        "url": "https://github.com/hsn0x/hsn-todos-express.js-mongodb-backend.git",
         "type": "git",
         "directory": "."
     },
