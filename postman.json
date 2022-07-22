@@ -1,0 +1,492 @@
+{
+    "info": {
+        "_postman_id": "5ca74db6-0548-4649-8da9-b945ac793716",
+        "name": "hsn-experss.js-mongodb-template-backend",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "13128906"
+    },
+    "item": [
+        {
+            "name": "users",
+            "item": [
+                {
+                    "name": "getUsers",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/users",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "users"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "getUserById",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/users/1",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "users", "1"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "getUserByUsername",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/users/username/justin_deo",
+                            "host": ["{{localhost}}"],
+                            "path": [
+                                "{{version}}",
+                                "users",
+                                "username",
+                                "justin_deo"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "createUser",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "firstName",
+                                    "value": "ahmed",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "lastName",
+                                    "value": "samir",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "username",
+                                    "value": "aa",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "a@me.coma",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "123qwe",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "age",
+                                    "value": "234",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "gender",
+                                    "value": "male",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/users/",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "users", ""]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "udpateUser",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "firstName",
+                                    "value": "ax",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "lastName",
+                                    "value": "bccc",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "username",
+                                    "value": "xxcccccccc",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "age",
+                                    "value": "2",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "gender",
+                                    "value": "d",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/users/62d9e3670cd0824ee8ef2fd2",
+                            "host": ["{{localhost}}"],
+                            "path": [
+                                "{{version}}",
+                                "users",
+                                "62d9e3670cd0824ee8ef2fd2"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "updateUserEmail",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "email",
+                                    "value": "123qwe@me.com",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/users/email/62d9e5cf4c6449db8b41406f",
+                            "host": ["{{localhost}}"],
+                            "path": [
+                                "{{version}}",
+                                "users",
+                                "email",
+                                "62d9e5cf4c6449db8b41406f"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "updateUserPassword",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "password",
+                                    "value": "qwe",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "newPassword",
+                                    "value": "123",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/users/password/62d9e5cf4c6449db8b41406f",
+                            "host": ["{{localhost}}"],
+                            "path": [
+                                "{{version}}",
+                                "users",
+                                "password",
+                                "62d9e5cf4c6449db8b41406f"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "deleteUser",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/users/5",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "users", "5"]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "auth",
+            "item": [
+                {
+                    "name": "login",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "email",
+                                    "value": "j@me.com",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "a@me.com",
+                                    "type": "default",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "xd",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/auth/login",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "auth", "login"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "me",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "email",
+                                    "value": "justin@me.com",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "a@me.com",
+                                    "type": "default",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "123qwe",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/auth/me",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "auth", "me"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "register",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "firstName",
+                                    "value": "ahmed",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "lastName",
+                                    "value": "samir",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "username",
+                                    "value": "justin123xesd",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "amine@me.comfsfsd",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "vv",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "age",
+                                    "value": "234",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "gender",
+                                    "value": "male",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "sdf",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/auth/register",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "auth", "register"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "logout",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "email",
+                                    "value": "justin",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "123",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/auth/logout",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "auth", "logout"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "login/failure",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "email",
+                                    "value": "justin@me.com",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "a@me.com",
+                                    "type": "default",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "123qwe",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/auth/login/failure",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "auth", "login", "failure"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "login/success",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "email",
+                                    "value": "justin@me.com",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "a@me.com",
+                                    "type": "default",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "123qwe",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/auth/login/success",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "auth", "login", "success"]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "home",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": []
+                },
+                "url": {
+                    "raw": "{{localhost}}/{{version}}/",
+                    "host": ["{{localhost}}"],
+                    "path": ["{{version}}", ""]
+                }
+            },
+            "response": []
+        }
+    ]
+}
