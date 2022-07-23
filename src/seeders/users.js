@@ -40,24 +40,31 @@ const createUsers = async () => {
 };
 
 const createFakeUsers = async (record) => {
+    const fakeUsers = [];
+    const fakeImages = [];
+    const fakeAvatars = [];
     for (let index = 0; index < record; index++) {
         const hashedPassword = genPassword(faker.internet.password());
         const passwordHash = hashedPassword.hash;
         const passwordSalt = hashedPassword.salt;
 
-        const image = await Image.create({
+        const image = new Image({
             public_id: faker.random.word(),
             url: faker.image.imageUrl(200, 200, "nature", true),
         });
-        const avatar = await Avatar.create({
+        fakeImages.push(image);
+
+        const avatar = new Avatar({
             public_id: faker.random.word(),
             url: faker.image.imageUrl(200, 200, "people", true),
         });
+        fakeAvatars.push(avatar);
 
-        await User.create({
+        const username = faker.internet.userName() + faker.internet.userName();
+        const user = new User({
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
-            username: faker.internet.userName(),
+            username,
             description: faker.lorem.paragraph(),
             email: faker.internet.email(),
             passwordHash,
@@ -67,7 +74,12 @@ const createFakeUsers = async (record) => {
             images: image._id,
             avatars: avatar._id,
         });
+        fakeUsers.push(user);
     }
+
+    Image.bulkSave(fakeImages);
+    Avatar.bulkSave(fakeAvatars);
+    User.bulkSave(fakeUsers);
 };
 
 export { createUsers, createFakeUsers };

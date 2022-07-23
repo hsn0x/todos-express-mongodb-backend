@@ -9,17 +9,17 @@ import { findAllResourcesQuery } from "../queries/resources.js";
 import { ObjectId } from "mongodb";
 
 export const createResources = async () => {
+    const resources = [];
     for (let index = 0; index < RESOURCES.length; index++) {
         const RESOURCE = RESOURCES[index];
         const resource = new Resource({
             name: RESOURCE.name,
             description: RESOURCE.description,
         });
-        await resource.save();
+        resources.push(resource);
     }
 
     const permissions = await findAllPermissionsQuery();
-    const resources = await findAllResourcesQuery();
     for (
         let permissionIndex = 0;
         permissionIndex < permissions.length;
@@ -32,11 +32,17 @@ export const createResources = async () => {
             resourceIndex++
         ) {
             const resource = resources[resourceIndex];
-            await findOnePermissionAndUpdate(permission.id, {
-                $push: {
-                    resources: ObjectId(resource.id),
-                },
-            });
+
+            await findOnePermissionAndUpdate(
+                { _id: permission._id },
+                {
+                    $push: {
+                        Resources: resource._id,
+                    },
+                }
+            );
         }
     }
+
+    Resource.bulkSave(resources);
 };
