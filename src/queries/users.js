@@ -1,15 +1,39 @@
+import { getPagination, getPagingData } from "../lib/handlePagination.js";
 import User from "../models/User.js";
 
-export const findAllUsersQuery = async (populate = [], salt = []) => {
-    const data = await User.find().select(salt).populate(populate);
-    return data;
+export const findAllUsersQuery = async (
+    populate = [],
+    salt = [],
+    { page, size }
+) => {
+    const { limit, skip } = getPagination(page, size);
+
+    const rows = await User.find()
+        .select(salt)
+        .populate(populate)
+        .skip(skip)
+        .limit(limit);
+    const count = await User.count();
+    const { totalItems, totalPages, currentPage } = getPagingData(
+        count,
+        page,
+        limit
+    );
+
+    return {
+        totalItems,
+        totalPages,
+        currentPage,
+        count,
+        rows,
+    };
 };
 export const findByIdUserQuery = async (id, populate = [], salt = []) => {
-    const data = await User.findById(id).select(salt).populate(populate);
+    const data = await User.findById(id).populate(populate).select(salt);
     return data;
 };
 export const findOneUserQuery = async (filter, populate = [], salt = []) => {
-    const data = await User.findOne(filter).select(salt).populate(populate);
+    const data = await User.findOne(filter).populate(populate).select(salt);
     return data;
 };
 export const findByIdUserAndUpdate = async (id, data) => {

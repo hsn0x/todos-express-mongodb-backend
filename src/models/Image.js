@@ -41,9 +41,7 @@ const schema = Schema(
         secure_url: {
             type: String,
         },
-        imageableId: { type: String },
-        imageableType: { type: String },
-        user: {
+        User: {
             type: Schema.Types.ObjectId,
             ref: "User",
         },

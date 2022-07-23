@@ -30,7 +30,7 @@ const serverPort = expressConfig.port;
 const server = async () => {
     await mongodb();
     await dbSeed();
-    // await dbSeedFake();
+    await dbSeedFake();
 
     app.listen(serverPort, () => {
         console.log(

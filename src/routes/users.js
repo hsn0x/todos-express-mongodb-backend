@@ -17,12 +17,11 @@ import {
     isUserAuth,
     isUsernameTaken,
 } from "../middleware/Auth.js";
-import { isUserIdValid } from "../middleware/User.js";
 
 const router = Router();
 
 router.get("/", getUsers);
-router.get("/:id", isUserIdValid, getUserById);
+router.get("/:id", getUserById);
 router.get("/username/:username", getUserByUsername);
 router.post("/", isAuth, isAdmin, isEmailExist, isUsernameTaken, createUser);
 router.put("/:id", isAuth, isUsernameTaken, isUserAuth, updateUser);

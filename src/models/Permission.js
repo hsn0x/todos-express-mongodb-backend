@@ -18,13 +18,13 @@ const schema = Schema(
         description: {
             type: String,
         },
-        roles: [
+        Roles: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "Role",
             },
         ],
-        resources: [
+        Resources: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "Resource",

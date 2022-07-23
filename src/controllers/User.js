@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import { genPassword, passwordMatch } from "../lib/passwordUtils.js";
 import {
     createUserQuery,
@@ -16,13 +15,31 @@ import {
 } from "../validation/User.js";
 
 export const getUsers = async (req, res) => {
-    const users = await findAllUsersQuery(["avatars", "images", "roles"], []);
-    res.status(200).json(users);
+    const { page, size } = req.query;
+    const params = {
+        page: parseInt(page),
+        size: parseInt(size),
+    };
+
+    const data = await findAllUsersQuery(
+        ["Avatars", "Images", "Roles", "Comments"],
+        [],
+        params
+    );
+    if (data) {
+        return res.status(200).json(data);
+    } else {
+        return res.status(404).json({ message: "No Data" });
+    }
 };
 
 export const getUserById = async (req, res) => {
     const id = req.params.id;
-    const user = await findByIdUserQuery(id);
+    const user = await findByIdUserQuery(
+        id,
+        ["Avatars", "Images", "Roles", "Comments"],
+        []
+    );
     if (user) {
         res.status(200).json({ user });
     } else {
@@ -32,7 +49,11 @@ export const getUserById = async (req, res) => {
 
 export const getUserByUsername = async (req, res) => {
     const username = req.params.username;
-    const user = await findOneUserQuery({ username });
+    const user = await findOneUserQuery(
+        { username },
+        ["Avatars", "Images", "Roles", "Comments"],
+        []
+    );
     if (user) {
         res.status(200).json({ user });
     } else {
@@ -44,7 +65,11 @@ export const getUserByUsername = async (req, res) => {
 
 export const getUserByEmail = async (req, res) => {
     const email = parseInt(req.params.email);
-    const user = await findOneUserQuery({ email });
+    const user = await findOneUserQuery(
+        { email },
+        ["Avatars", "Images", "Roles", "Comments"],
+        []
+    );
     if (user) {
         res.status(200).json({ user });
     } else {

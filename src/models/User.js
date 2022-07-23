@@ -42,22 +42,52 @@ const schema = mongoose.Schema(
         gender: {
             type: String,
         },
-        avatars: [
+        Avatars: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "Avatar",
             },
         ],
-        images: [
+        Images: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "Image",
             },
         ],
-        roles: [
+        Roles: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "Role",
+            },
+        ],
+        Tasks: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Task",
+            },
+        ],
+        Projects: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Project",
+            },
+        ],
+        Comments: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Comment",
+            },
+        ],
+        Labels: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Label",
+            },
+        ],
+        Priorities: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Priority",
             },
         ],
     },

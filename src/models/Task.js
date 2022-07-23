@@ -20,6 +20,30 @@ const schema = mongoose.Schema(
             type: Date,
             required: true,
         },
+        Comments: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Comment",
+            },
+        ],
+        User: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
+        Priority: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
+        Project: {
+            type: Schema.Types.ObjectId,
+            ref: "Project",
+        },
+        Labels: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Label",
+            },
+        ],
     },
     { timestamps: true }
 );

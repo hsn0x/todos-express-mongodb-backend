@@ -1,12 +1,10 @@
 import { Router } from "express";
-import { dbSeed } from "../seeders/index.js";
 
 const router = Router();
 
-router.get("/", async (req, res) => {
-    await dbSeed();
+router.get("/", function (req, res) {
     res.status(200).json({
-        message: "Node.js, Express, and MongoDB API",
+        message: "Node.js, Express, and Postgre API",
     });
 });
 

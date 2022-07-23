@@ -41,9 +41,7 @@ const schema = Schema(
         secure_url: {
             type: String,
         },
-        avatarableId: { type: String },
-        avatarableType: { type: String },
-        user: {
+        User: {
             type: Schema.Types.ObjectId,
             ref: "User",
         },

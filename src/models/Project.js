@@ -12,6 +12,16 @@ const schema = mongoose.Schema(
         slug: {
             type: String,
         },
+        Tasks: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Task",
+            },
+        ],
+        User: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
     },
     { timestamps: true }
 );
