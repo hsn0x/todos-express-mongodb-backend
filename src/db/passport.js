@@ -1,13 +1,13 @@
-import passport from "passport";
+import passport from "passport"
 
-import { findByIdQuery } from "../queries/users.js";
-import { localStrategy } from "./strategies/Local.js";
+import { usersQueries } from "../queries/index.js"
+import { localStrategy } from "./strategies/Local.js"
 
-passport.use(localStrategy);
-passport.serializeUser((user, done) => done(null, user.id));
+passport.use(localStrategy)
+passport.serializeUser((user, done) => done(null, user.id))
 passport.deserializeUser(async (userId, done) => {
     try {
-        const user = await findByIdQuery(userId, [
+        const user = await usersQueries.findByIdQuery(userId, [
             "Avatars",
             "Images",
             "Roles",
@@ -16,9 +16,9 @@ passport.deserializeUser(async (userId, done) => {
             "Comments",
             "Labels",
             "Priorities",
-        ]);
-        done(null, user);
+        ])
+        done(null, user)
     } catch (error) {
-        done(error);
+        done(error)
     }
-});
+})

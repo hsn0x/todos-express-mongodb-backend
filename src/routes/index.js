@@ -16,7 +16,7 @@ import priorities from "./priorities.js"
 /**
  * import Middleware for the application.
  */
-import { Auth } from "../middleware/index.js"
+import { AuthMiddleware } from "../middleware/index.js"
 
 /**
  * @description - Import router for the application.
@@ -44,6 +44,6 @@ router.use("/projects", projects)
 router.use("/comments", comments)
 router.use("/labels", labels)
 router.use("/priorities", priorities)
-router.use("/admin", Auth.isAuth, Auth.isAdmin, admin)
+router.use("/admin", AuthMiddleware.isAuth, AuthMiddleware.isAdmin, admin)
 
 export default router

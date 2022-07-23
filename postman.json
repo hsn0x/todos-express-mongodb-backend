@@ -1,6 +1,6 @@
 {
     "info": {
-        "_postman_id": "0076e4ee-9b84-436f-a2ae-82f5db3f0b69",
+        "_postman_id": "ce86c1a8-cd7d-419e-aba9-aa16db723778",
         "name": "hsn-todo-expressjs-mongodb-backend",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "_exporter_id": "13128906"
@@ -94,7 +94,7 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{localhost}}/{{version}}/auth/register",
+                            "raw": "{{localhost}}/api/v1/auth/register",
                             "host": ["{{localhost}}"],
                             "path": ["api", "v1", "auth", "register"]
                         }
@@ -131,7 +131,7 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{localhost}}/{{version}}/auth/me",
+                            "raw": "{{localhost}}/api/v1/auth/me",
                             "host": ["{{localhost}}"],
                             "path": ["api", "v1", "auth", "me"]
                         }
@@ -162,7 +162,7 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{localhost}}/{{version}}/auth/logout",
+                            "raw": "{{localhost}}/api/v1/auth/logout",
                             "host": ["{{localhost}}"],
                             "path": ["api", "v1", "auth", "logout"]
                         }
@@ -199,7 +199,7 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{localhost}}/{{version}}/auth/login/failure",
+                            "raw": "{{localhost}}/api/v1/auth/login/failure",
                             "host": ["{{localhost}}"],
                             "path": ["api", "v1", "auth", "login", "failure"]
                         }
@@ -236,7 +236,7 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{localhost}}/{{version}}/auth/login/success",
+                            "raw": "{{localhost}}/api/v1/auth/login/success",
                             "host": ["{{localhost}}"],
                             "path": ["api", "v1", "auth", "login", "success"]
                         }
@@ -249,7 +249,20 @@
             "name": "tasks",
             "item": [
                 {
-                    "name": "getTasksByUserId",
+                    "name": "getById",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/tasks/1",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "tasks", "1"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "getAllByUserId",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -269,7 +282,20 @@
                     "response": []
                 },
                 {
-                    "name": "getTasks",
+                    "name": "getAllBySearch",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/tasks/q/s",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "tasks", "q", "s"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -284,32 +310,6 @@
                             "raw": "{{localhost}}/{{version}}/tasks/",
                             "host": ["{{localhost}}"],
                             "path": ["{{version}}", "tasks", ""]
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "getTaskById",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{localhost}}/{{version}}/tasks/1",
-                            "host": ["{{localhost}}"],
-                            "path": ["{{version}}", "tasks", "1"]
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "getTaskBySearch",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{localhost}}/{{version}}/tasks/q/s",
-                            "host": ["{{localhost}}"],
-                            "path": ["{{version}}", "tasks", "q", "s"]
                         }
                     },
                     "response": []
@@ -457,7 +457,7 @@
             "name": "labels",
             "item": [
                 {
-                    "name": "getLabelById",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -470,7 +470,20 @@
                     "response": []
                 },
                 {
-                    "name": "getLabels",
+                    "name": "getAllBySearch",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/labels/q/s",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "labels", "q", "s"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -485,19 +498,6 @@
                             "raw": "{{localhost}}/{{version}}/labels/",
                             "host": ["{{localhost}}"],
                             "path": ["{{version}}", "labels", ""]
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "getLabelsBySearch",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{localhost}}/{{version}}/labels/q/s",
-                            "host": ["{{localhost}}"],
-                            "path": ["{{version}}", "labels", "q", "s"]
                         }
                     },
                     "response": []
@@ -586,7 +586,7 @@
             "name": "priorities",
             "item": [
                 {
-                    "name": "getPriorityById",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -599,7 +599,20 @@
                     "response": []
                 },
                 {
-                    "name": "getPriorities",
+                    "name": "getAllBySearch",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/priorities/q/s",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "priorities", "q", "s"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -614,19 +627,6 @@
                             "raw": "{{localhost}}/{{version}}/priorities/",
                             "host": ["{{localhost}}"],
                             "path": ["{{version}}", "priorities", ""]
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "getPriorityBySearch",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{localhost}}/{{version}}/priorities/q/s",
-                            "host": ["{{localhost}}"],
-                            "path": ["{{version}}", "priorities", "q", "s"]
                         }
                     },
                     "response": []
@@ -720,7 +720,7 @@
             "name": "projects",
             "item": [
                 {
-                    "name": "getProjectId",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -733,7 +733,20 @@
                     "response": []
                 },
                 {
-                    "name": "getProjects",
+                    "name": "getAllBySearch",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/projects/q/s",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "projects", "q", "s"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -748,19 +761,6 @@
                             "raw": "{{localhost}}/{{version}}/projects/",
                             "host": ["{{localhost}}"],
                             "path": ["{{version}}", "projects", ""]
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "getProjectsBySearch",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{localhost}}/{{version}}/projects/q/s",
-                            "host": ["{{localhost}}"],
-                            "path": ["{{version}}", "projects", "q", "s"]
                         }
                     },
                     "response": []
@@ -845,7 +845,7 @@
             "name": "comments",
             "item": [
                 {
-                    "name": "getCommentId",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -862,7 +862,7 @@
                     "response": []
                 },
                 {
-                    "name": "getComments",
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -892,7 +892,7 @@
                     "response": []
                 },
                 {
-                    "name": "getCommentsByTaskId",
+                    "name": "getAllByTaskId",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -917,7 +917,7 @@
                     "response": []
                 },
                 {
-                    "name": "getCommentsByUserId",
+                    "name": "getAllByUserId",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -942,7 +942,7 @@
                     "response": []
                 },
                 {
-                    "name": "getCommentsBySearch",
+                    "name": "getAllBySearch",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -1052,7 +1052,38 @@
             "name": "users",
             "item": [
                 {
-                    "name": "getUsers",
+                    "name": "getById",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/users/1",
+                            "host": ["{{localhost}}"],
+                            "path": ["{{version}}", "users", "1"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "getByUsername",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{localhost}}/{{version}}/users/username/justin_deo",
+                            "host": ["{{localhost}}"],
+                            "path": [
+                                "{{version}}",
+                                "users",
+                                "username",
+                                "justin_deo"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -1076,37 +1107,6 @@
                                     "key": "size",
                                     "value": "3"
                                 }
-                            ]
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "getUserById",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{localhost}}/{{version}}/users/1",
-                            "host": ["{{localhost}}"],
-                            "path": ["{{version}}", "users", "1"]
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "getUserByUsername",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{localhost}}/{{version}}/users/username/justin_deo",
-                            "host": ["{{localhost}}"],
-                            "path": [
-                                "{{version}}",
-                                "users",
-                                "username",
-                                "justin_deo"
                             ]
                         }
                     },

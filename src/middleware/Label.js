@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb"
-import { findByIdQuery } from "../queries/comments.js"
+import { labelsQueries } from "../queries/index.js"
 
 export default {
     isOwner: async (req, res, next) => {
@@ -7,19 +7,19 @@ export default {
         const { session, user } = req
 
         if (!ObjectId.isValid(id)) {
-            return res.status(400).json({ message: "Invalid Record ID" })
+            return res.status(400).json({ message: "Invalid Comment ID" })
         }
 
-        if (!user.Labels || !user.Labels.length > 0) {
+        if (!user.Comments || !user.Comments.length > 0) {
             return res.status(401).json({
-                message: `You dont have any comments`,
+                message: `You dont have any records`,
             })
         }
 
-        const record = await findByIdQuery(id)
+        const record = await labelsQueries.findByIdQuery(id)
         if (!record) {
             return res.status(404).json({
-                message: `Record not found with ID: ${id}`,
+                message: `Comment not found with ID: ${id}`,
             })
         }
 

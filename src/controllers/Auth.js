@@ -1,6 +1,6 @@
 import passport from "passport"
 import { validateRegister } from "../validation/Auth.js"
-import { registerQuery } from "../queries/auth.js"
+import { authQueries } from "../queries/index.js"
 import { genPassword } from "../lib/passwordUtils.js"
 
 export default {
@@ -56,7 +56,7 @@ export default {
             })
         }
 
-        const user = await registerQuery(userData)
+        const user = await authQueries.registerQuery(userData)
 
         if (user) {
             res.status(201).json(user)

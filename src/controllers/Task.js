@@ -1,17 +1,10 @@
-import {
-    createQuery,
-    deleteOneQuery,
-    findAllQuery,
-    findByIdQuery,
-    findOneQuery,
-    updateOneQuery,
-} from "../queries/tasks.js"
+import { tasksQueries } from "../queries/index.js"
 import { validateCreateTask, validateUpdateTask } from "../validation/Task.js"
 
 export default {
     getById: async (req, res) => {
         const id = req.params.id
-        const task = await findByIdQuery(id)
+        const task = await tasksQueries.findByIdQuery(id)
         if (task) {
             res.status(200).json({ task })
         } else {
@@ -20,7 +13,7 @@ export default {
     },
     getByName: async (req, res) => {
         const taskname = req.params.taskname
-        const task = await findOneQuery({ taskname })
+        const task = await tasksQueries.findOneQuery({ taskname })
         if (task) {
             res.status(200).json({ task })
         } else {
@@ -36,7 +29,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery({}, [], [], params)
+        const data = await tasksQueries.findAllQuery({}, [], [], params)
         if (data) {
             return res.status(200).json(data)
         } else {
@@ -55,7 +48,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(filter, [], [], params)
+        const data = await tasksQueries.findAllQuery(filter, [], [], params)
         if (data) {
             return res.status(200).json(data)
         } else {
@@ -71,7 +64,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(
+        const data = await tasksQueries.findAllQuery(
             filter,
             ["Avatars", "Images", "Roles"],
             [],
@@ -93,7 +86,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(
+        const data = await tasksQueries.findAllQuery(
             filter,
             ["Avatars", "Images", "Roles"],
             [],
@@ -129,7 +122,7 @@ export default {
             })
         }
 
-        const createdTask = await createQuery(data)
+        const createdTask = await tasksQueries.createQuery(data)
 
         if (createdTask) {
             return res.status(201).json({
@@ -164,7 +157,7 @@ export default {
             })
         }
 
-        const updatedTask = await updateOneQuery({ _id: id }, data)
+        const updatedTask = await tasksQueries.updateOneQuery({ _id: id }, data)
         if (updatedTask) {
             return res.status(200).json({
                 message: `Task updated with ID: ${updatedTask[0]?.id}`,
@@ -178,7 +171,7 @@ export default {
     },
     remove: async (req, res) => {
         const id = req.params.id
-        await deleteOneQuery({ _id: id })
+        await tasksQueries.deleteOneQuery({ _id: id })
         res.status(200).json({ message: `Task deleted with ID: ${id}` })
     },
 }

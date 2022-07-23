@@ -1,23 +1,35 @@
-import { findOneQuery } from "../queries/projects.js"
+import { ObjectId } from "mongodb"
+import { projectsQueries } from "../queries/index.js"
 
 export default {
     isOwner: async (req, res, next) => {
-        const id = parseInt(req.params.id)
+        const id = req.params.id
         const { session, user } = req
 
-        if (!user.Projects || !user.Projects.length > 0) {
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "Invalid Comment ID" })
+        }
+
+        if (!user.Comments || !user.Comments.length > 0) {
             return res.status(401).json({
-                message: `You dont have any projects`,
+                message: `You dont have any records`,
             })
         }
 
-        const isOwner = user.Projects.find((project) => project.id === id)
+        const record = await projectsQueries.findByIdQuery(id)
+        if (!record) {
+            return res.status(404).json({
+                message: `Comment not found with ID: ${id}`,
+            })
+        }
+
+        const isOwner = record.User._id == user.id
 
         if (isOwner) {
             return next()
         } else {
             return res.status(401).json({
-                message: `You are not the owner of the project`,
+                message: `You are not the owner of the record`,
             })
         }
     },

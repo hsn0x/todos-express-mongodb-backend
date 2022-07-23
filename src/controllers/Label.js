@@ -1,13 +1,4 @@
-import { ObjectId } from "mongodb"
-import { genPassword, passwordMatch } from "../lib/passwordUtils.js"
-import {
-    createQuery,
-    deleteOneQuery,
-    findAllQuery,
-    findByIdQuery,
-    findOneQuery,
-    updateOneQuery,
-} from "../queries/labels.js"
+import { labelsQueries } from "../queries/index.js"
 import {
     validateCreateLabel,
     validateUpdateLabel,
@@ -16,7 +7,7 @@ import {
 export default {
     getById: async (req, res) => {
         const id = req.params.id
-        const label = await findByIdQuery(id)
+        const label = await labelsQueries.findByIdQuery(id)
         if (label) {
             res.status(200).json({ label })
         } else {
@@ -25,7 +16,7 @@ export default {
     },
     getByName: async (req, res) => {
         const labelname = req.params.labelname
-        const label = await findOneQuery({ labelname })
+        const label = await labelsQueries.findOneQuery({ labelname })
         if (label) {
             res.status(200).json({ label })
         } else {
@@ -42,7 +33,12 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery({}, ["Task", "User"], [], params)
+        const data = await labelsQueries.findAllQuery(
+            {},
+            ["Task", "User"],
+            [],
+            params
+        )
         if (data) {
             return res.status(200).json(data)
         } else {
@@ -61,7 +57,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(filter, [], [], params)
+        const data = await labelsQueries.findAllQuery(filter, [], [], params)
         if (data) {
             return res.status(200).json(data)
         } else {
@@ -77,7 +73,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(
+        const data = await labelsQueries.findAllQuery(
             filter,
             ["Avatars", "Images", "Roles"],
             [],
@@ -99,7 +95,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(
+        const data = await labelsQueries.findAllQuery(
             filter,
             ["Avatars", "Images", "Roles"],
             [],
@@ -131,7 +127,7 @@ export default {
             })
         }
 
-        const createdLabel = await createQuery(data)
+        const createdLabel = await labelsQueries.createQuery(data)
 
         if (createdLabel) {
             return res.status(201).json({
@@ -161,7 +157,7 @@ export default {
             })
         }
 
-        const updatedLabel = await updateOneQuery({ id }, data)
+        const updatedLabel = await labelsQueries.updateOneQuery({ id }, data)
         if (updatedLabel) {
             return res.status(200).json({
                 message: `Label updated with ID: ${updatedLabel[0]?.id}`,
@@ -175,7 +171,7 @@ export default {
     },
     remove: async (req, res) => {
         const id = req.params.id
-        await deleteOneQuery({ id })
+        await labelsQueries.deleteOneQuery({ id })
         return res.status(200).json({ message: `Label deleted with ID: ${id}` })
     },
 }

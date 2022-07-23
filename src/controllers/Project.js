@@ -1,13 +1,4 @@
-import { ObjectId } from "mongodb"
-import { genPassword, passwordMatch } from "../lib/passwordUtils.js"
-import {
-    createQuery,
-    deleteOneQuery,
-    findAllQuery,
-    findByIdQuery,
-    findOneQuery,
-    updateOneQuery,
-} from "../queries/projects.js"
+import { projectsQueries } from "../queries/index.js"
 import {
     validateCreateProject,
     validateUpdateProject,
@@ -16,7 +7,7 @@ import {
 export default {
     getById: async (req, res) => {
         const id = req.params.id
-        const project = await findByIdQuery(id)
+        const project = await projectsQueries.findByIdQuery(id)
         if (project) {
             res.status(200).json({ project })
         } else {
@@ -27,7 +18,7 @@ export default {
     },
     getByName: async (req, res) => {
         const projectname = req.params.projectname
-        const project = await findOneQuery({ projectname })
+        const project = await projectsQueries.findOneQuery({ projectname })
         if (project) {
             res.status(200).json({ project })
         } else {
@@ -43,7 +34,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery({}, [], [], params)
+        const data = await projectsQueries.findAllQuery({}, [], [], params)
         if (data) {
             return res.status(200).json(data)
         } else {
@@ -62,7 +53,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(filter, [], [], params)
+        const data = await projectsQueries.findAllQuery(filter, [], [], params)
         if (data) {
             return res.status(200).json(data)
         } else {
@@ -78,7 +69,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(
+        const data = await projectsQueries.findAllQuery(
             filter,
             ["Avatars", "Images", "Roles"],
             [],
@@ -100,7 +91,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(
+        const data = await projectsQueries.findAllQuery(
             filter,
             ["Avatars", "Images", "Roles"],
             [],
@@ -115,16 +106,13 @@ export default {
     create: async (req, res, next) => {
         const { session, user } = req
 
-        const { content, TaskId } = req.body
-        const projectData = {
-            content,
-            TaskId: TaskId,
-            Task: TaskId,
-            UserId: user.id,
+        const { name } = req.body
+        const data = {
+            name,
             User: user.id,
         }
 
-        const isProjectValid = validateCreateProject(projectData)
+        const isProjectValid = validateCreateProject(data)
 
         if (!isProjectValid.valid) {
             return res.status(400).json({
@@ -133,7 +121,7 @@ export default {
             })
         }
 
-        const createdProject = await createQuery(projectData)
+        const createdProject = await projectsQueries.createQuery(data)
 
         if (createdProject) {
             return res.status(201).json({
@@ -150,14 +138,13 @@ export default {
         const id = req.params.id
         const { session, user } = req
 
-        const { content, TaskId } = req.body
-        const projectData = {
-            content,
-            TaskId: TaskId,
-            UserId: user.id,
+        const { name } = req.body
+        const data = {
+            name,
+            User: user.id,
         }
 
-        const isProjectValid = validateUpdateProject(projectData)
+        const isProjectValid = validateUpdateProject(data)
         if (!isProjectValid.valid) {
             return res.status(400).json({
                 message: "Invalid project data",
@@ -165,7 +152,10 @@ export default {
             })
         }
 
-        const updatedProject = await updateOneQuery({ id }, projectData)
+        const updatedProject = await projectsQueries.updateOneQuery(
+            { id },
+            data
+        )
         if (updatedProject) {
             return res.status(200).json({
                 message: `Project updated with ID: ${updatedProject[0]?.id}`,
@@ -179,7 +169,7 @@ export default {
     },
     remove: async (req, res) => {
         const id = req.params.id
-        await deleteOneQuery({ id })
+        await projectsQueries.deleteOneQuery({ id })
         res.status(200).json({ message: `Project deleted with ID: ${id}` })
     },
 }

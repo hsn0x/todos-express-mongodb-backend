@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb"
-import { findByIdQuery } from "../queries/comments.js"
+import { commentsQueries } from "../queries/index.js"
 
 export default {
     isOwner: async (req, res, next) => {
@@ -12,24 +12,24 @@ export default {
 
         if (!user.Comments || !user.Comments.length > 0) {
             return res.status(401).json({
-                message: `You dont have any comments`,
+                message: `You dont have any records`,
             })
         }
 
-        const comment = await findByIdQuery(id)
-        if (!comment) {
+        const record = await commentsQueries.findByIdQuery(id)
+        if (!record) {
             return res.status(404).json({
                 message: `Comment not found with ID: ${id}`,
             })
         }
 
-        const isOwner = comment.User._id == user.id
+        const isOwner = record.User._id == user.id
 
         if (isOwner) {
             return next()
         } else {
             return res.status(401).json({
-                message: `You are not the owner of the comment`,
+                message: `You are not the owner of the record`,
             })
         }
     },

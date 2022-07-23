@@ -1,7 +1,7 @@
 import { Router } from "express"
-import { Task as TaskController } from "../controllers/index.js"
-import { Auth } from "../middleware/index.js"
-import { Task as TaskMiddleware } from "../middleware/index.js"
+import { TaskController } from "../controllers/index.js"
+import { AuthMiddleware } from "../middleware/index.js"
+import { TaskMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
@@ -10,11 +10,16 @@ router.get("/:id", TaskController.getById)
 router.get("/q/:query", TaskController.getAllBySearch)
 router.get("/name/:slug", TaskController.getByName)
 router.get("/UserId/:id", TaskController.getAllByUserId)
-router.post("/", Auth.isAuth, TaskController.create)
-router.put("/:id", Auth.isAuth, TaskMiddleware.isOwner, TaskController.update)
+router.post("/", AuthMiddleware.isAuth, TaskController.create)
+router.put(
+    "/:id",
+    AuthMiddleware.isAuth,
+    TaskMiddleware.isOwner,
+    TaskController.update
+)
 router.delete(
     "/:id",
-    Auth.isAuth,
+    AuthMiddleware.isAuth,
     TaskMiddleware.isOwner,
     TaskController.remove
 )

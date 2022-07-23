@@ -1,27 +1,28 @@
-import { faker } from "@faker-js/faker";
-import { Avatar, Image, User } from "../models/index.js";
-import { genPassword } from "../lib/passwordUtils.js";
-import { findOneQuery } from "../queries/roles.js";
-import { ownerConfig } from "../config/index.js";
-import { findOneAndUpdate as findOneAndUpdateUsers } from "../queries/users.js";
+import { faker } from "@faker-js/faker"
+import { Avatar, Image, User } from "../models/index.js"
+import { genPassword } from "../lib/passwordUtils.js"
+import { ownerConfig } from "../config/index.js"
+import { rolesQueries, usersQueries } from "../queries/index.js"
 
 const creates = async () => {
-    const hashedPassword = genPassword(ownerConfig.password);
-    const passwordHash = hashedPassword.hash;
-    const passwordSalt = hashedPassword.salt;
+    const hashedPassword = genPassword(ownerConfig.password)
+    const passwordHash = hashedPassword.hash
+    const passwordSalt = hashedPassword.salt
 
-    const ADMIN_ROLE = await findOneQuery({ name: "ADMIN" });
-    const MODERATOR_ROLE = await findOneQuery({ name: "MODERATOR" });
-    const EDITOR_ROLE = await findOneQuery({ name: "EDITOR" });
+    const ADMIN_ROLE = await rolesQueries.findOneQuery({ name: "ADMIN" })
+    const MODERATOR_ROLE = await rolesQueries.findOneQuery({
+        name: "MODERATOR",
+    })
+    const EDITOR_ROLE = await rolesQueries.findOneQuery({ name: "EDITOR" })
 
     const image = await Image.create({
         public_id: faker.random.word(),
         url: faker.image.imageUrl(200, 200, "nature", true),
-    });
+    })
     const avatar = await Avatar.create({
         public_id: faker.random.word(),
         url: faker.image.imageUrl(200, 200, "people", true),
-    });
+    })
 
     const ADMIN_USER = await User.create({
         firstName: ownerConfig.firstName,
@@ -36,32 +37,32 @@ const creates = async () => {
         Images: image._id,
         Avatars: avatar._id,
         Roles: [ADMIN_ROLE._id, MODERATOR_ROLE._id, EDITOR_ROLE._id],
-    });
-};
+    })
+}
 
 const createFakeUsers = async (record) => {
-    const fakeUsers = [];
-    const fakeImages = [];
-    const fakeAvatars = [];
+    const fakeUsers = []
+    const fakeImages = []
+    const fakeAvatars = []
 
     for (let index = 0; index < record; index++) {
-        const hashedPassword = genPassword(faker.internet.password());
-        const passwordHash = hashedPassword.hash;
-        const passwordSalt = hashedPassword.salt;
+        const hashedPassword = genPassword(faker.internet.password())
+        const passwordHash = hashedPassword.hash
+        const passwordSalt = hashedPassword.salt
 
         const image = new Image({
             public_id: faker.random.word(),
             url: faker.image.imageUrl(200, 200, "nature", true),
-        });
-        fakeImages.push(image);
+        })
+        fakeImages.push(image)
 
         const avatar = new Avatar({
             public_id: faker.random.word(),
             url: faker.image.imageUrl(200, 200, "people", true),
-        });
-        fakeAvatars.push(avatar);
+        })
+        fakeAvatars.push(avatar)
 
-        const username = faker.internet.userName() + faker.internet.userName();
+        const username = faker.internet.userName() + faker.internet.userName()
         const user = new User({
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
@@ -74,13 +75,13 @@ const createFakeUsers = async (record) => {
             gender: faker.name.gender(),
             images: image._id,
             avatars: avatar._id,
-        });
-        fakeUsers.push(user);
+        })
+        fakeUsers.push(user)
     }
 
-    Image.bulkSave(fakeImages);
-    Avatar.bulkSave(fakeAvatars);
-    User.bulkSave(fakeUsers);
-};
+    Image.bulkSave(fakeImages)
+    Avatar.bulkSave(fakeAvatars)
+    User.bulkSave(fakeUsers)
+}
 
-export { creates, createFakeUsers };
+export { creates, createFakeUsers }

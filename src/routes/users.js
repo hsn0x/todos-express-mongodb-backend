@@ -1,35 +1,45 @@
 import { Router } from "express"
-import { User } from "../controllers/index.js"
-import { Auth } from "../middleware/index.js"
+import { UserController } from "../controllers/index.js"
+import { AuthMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", User.getAll)
-router.get("/:id", User.getById)
-router.get("/username/:username", User.getByUsername)
+router.get("/", UserController.getAll)
+router.get("/:id", UserController.getById)
+router.get("/username/:username", UserController.getByUsername)
 router.post(
     "/",
-    Auth.isAuth,
-    Auth.isAdmin,
-    Auth.isEmailExist,
-    Auth.isUsernameTaken,
-    User.create
+    AuthMiddleware.isAuth,
+    AuthMiddleware.isAdmin,
+    AuthMiddleware.isEmailExist,
+    AuthMiddleware.isUsernameTaken,
+    UserController.create
 )
 router.put(
     "/:id",
-    Auth.isAuth,
-    Auth.isUsernameTaken,
-    Auth.isUserAuth,
-    User.update
+    AuthMiddleware.isAuth,
+    AuthMiddleware.isUsernameTaken,
+    AuthMiddleware.isUserAuth,
+    UserController.update
 )
 router.put(
     "/email/:id",
-    Auth.isAuth,
-    Auth.isEmailExist,
-    Auth.isUserAuth,
-    User.updateEmail
+    AuthMiddleware.isAuth,
+    AuthMiddleware.isEmailExist,
+    AuthMiddleware.isUserAuth,
+    UserController.updateEmail
 )
-router.put("/password/:id", Auth.isAuth, Auth.isUserAuth, User.updatePassword)
-router.delete("/:id", Auth.isAuth, Auth.isUserAuth, User.remove)
+router.put(
+    "/password/:id",
+    AuthMiddleware.isAuth,
+    AuthMiddleware.isUserAuth,
+    UserController.updatePassword
+)
+router.delete(
+    "/:id",
+    AuthMiddleware.isAuth,
+    AuthMiddleware.isUserAuth,
+    UserController.remove
+)
 
 export default router

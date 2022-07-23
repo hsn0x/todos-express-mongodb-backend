@@ -1,12 +1,5 @@
 import { genPassword, passwordMatch } from "../lib/passwordUtils.js"
-import {
-    createQuery,
-    deleteOneQuery,
-    findAllQuery,
-    findByIdQuery,
-    findOneQuery,
-    updateOneQuery,
-} from "../queries/users.js"
+import { usersQueries } from "../queries/index.js"
 import {
     validateCreateUser,
     validateUpdateUserEmail,
@@ -22,7 +15,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(
+        const data = await usersQueries.findAllQuery(
             ["Avatars", "Images", "Roles", "Comments"],
             [],
             params
@@ -35,7 +28,7 @@ export default {
     },
     getById: async (req, res) => {
         const id = req.params.id
-        const user = await findByIdQuery(
+        const user = await usersQueries.findByIdQuery(
             id,
             ["Avatars", "Images", "Roles", "Comments"],
             []
@@ -48,7 +41,7 @@ export default {
     },
     getByUsername: async (req, res) => {
         const username = req.params.username
-        const user = await findOneQuery(
+        const user = await usersQueries.findOneQuery(
             { username },
             ["Avatars", "Images", "Roles", "Comments"],
             []
@@ -63,7 +56,7 @@ export default {
     },
     getByEmail: async (req, res) => {
         const email = parseInt(req.params.email)
-        const user = await findOneQuery(
+        const user = await usersQueries.findOneQuery(
             { email },
             ["Avatars", "Images", "Roles", "Comments"],
             []
@@ -88,7 +81,7 @@ export default {
             gender,
         } = req.body
 
-        const userData = {
+        const data = {
             firstName,
             lastName,
             username,
@@ -100,13 +93,13 @@ export default {
             passwordHash: null,
             passwordSalt: null,
         }
-        userData.age = Number(age)
+        data.age = Number(age)
 
-        const hashedPassword = genPassword(userData.password)
-        userData.passwordHash = hashedPassword.hash
-        userData.passwordSalt = hashedPassword.salt
+        const hashedPassword = genPassword(data.password)
+        data.passwordHash = hashedPassword.hash
+        data.passwordSalt = hashedPassword.salt
 
-        const isUserValid = validateCreateUser(userData)
+        const isUserValid = validateCreateUser(data)
 
         if (!isUserValid.valid) {
             return res.status(401).json({
@@ -115,7 +108,7 @@ export default {
             })
         }
 
-        const user = await createQuery(userData)
+        const user = await usersQueries.createQuery(data)
 
         if (user) {
             res.status(201).json(user)
@@ -130,7 +123,7 @@ export default {
         const { session, user } = req
 
         const { firstName, lastName, username, age, gender } = req.body
-        const userData = {
+        const data = {
             firstName,
             lastName,
             username,
@@ -138,9 +131,9 @@ export default {
             gender,
         }
 
-        userData.age = Number(userData.age)
+        data.age = Number(data.age)
 
-        const isUserValid = validateUpdateUser(userData)
+        const isUserValid = validateUpdateUser(data)
 
         if (!isUserValid.valid) {
             return res.status(401).json({
@@ -149,7 +142,7 @@ export default {
             })
         }
 
-        const updatedUser = await updateOneQuery({ id }, userData)
+        const updatedUser = await usersQueries.updateOneQuery({ id }, data)
         if (updatedUser) {
             res.status(200).json({
                 message: `User updated with ID: ${user.id}`,
@@ -178,7 +171,7 @@ export default {
                 errors: isUserValid.errors,
             })
         }
-        const updatedUser = await updateOneQuery({ id }, data)
+        const updatedUser = await usersQueries.updateOneQuery({ id }, data)
         if (updatedUser) {
             res.status(200).json({
                 message: `User updated with ID: ${user.id}`,
@@ -199,7 +192,7 @@ export default {
             })
         }
 
-        const currentUser = await findOneQuery(
+        const currentUser = await usersQueries.findOneQuery(
             { id },
             [],
             ["passwordHash", "passwordSalt"]
@@ -211,7 +204,7 @@ export default {
         }
 
         const { password, newPassword } = req.body
-        const userData = {
+        const data = {
             password,
             newPassword,
             passwordHash: null,
@@ -222,7 +215,7 @@ export default {
          * Check if the current password is valid
          */
         let isUserValid = validateUpdateUserPassword({
-            ...userData,
+            ...data,
             passwordHash: currentUser.passwordHash,
             passwordSalt: currentUser.passwordSalt,
         })
@@ -233,14 +226,14 @@ export default {
             })
         }
 
-        const newHashedPassword = genPassword(userData.newPassword)
-        userData.passwordHash = newHashedPassword.hash
-        userData.passwordSalt = newHashedPassword.salt
+        const newHashedPassword = genPassword(data.newPassword)
+        data.passwordHash = newHashedPassword.hash
+        data.passwordSalt = newHashedPassword.salt
 
         /**
          * Check if the current password is valid
          */
-        isUserValid = validateUpdateUserPassword(userData)
+        isUserValid = validateUpdateUserPassword(data)
         if (!isUserValid.valid) {
             return res.status(401).json({
                 valid: isUserValid.valid,
@@ -253,7 +246,7 @@ export default {
          */
 
         const isPasswordMatch = passwordMatch(
-            userData.password,
+            data.password,
             currentUser.passwordHash,
             currentUser.passwordSalt
         )
@@ -263,8 +256,8 @@ export default {
             })
         }
 
-        userData.password = userData.newPassword
-        const updatedUser = await updateOneQuery({ id }, userData)
+        data.password = data.newPassword
+        const updatedUser = await usersQueries.updateOneQuery({ id }, data)
         if (updatedUser) {
             res.status(200).json({
                 message: `User updated with ID: ${user.id}`,
@@ -278,7 +271,7 @@ export default {
     },
     remove: async (req, res) => {
         const id = parseInt(req.params.id)
-        await deleteOneQuery({ id })
+        await usersQueries.deleteOneQuery({ id })
         res.status(200).json({ message: `User deleted with ID: ${id}` })
     },
 }

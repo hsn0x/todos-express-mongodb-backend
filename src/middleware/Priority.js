@@ -1,23 +1,35 @@
-import { findOneQuery } from "../queries/priorities.js"
+import { ObjectId } from "mongodb"
+import { prioritiesQueries } from "../queries/index.js"
 
 export default {
     isOwner: async (req, res, next) => {
-        const id = parseInt(req.params.id)
+        const id = req.params.id
         const { session, user } = req
 
-        if (!user.Priorities || !user.Priorities.length > 0) {
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "Invalid Comment ID" })
+        }
+
+        if (!user.Comments || !user.Comments.length > 0) {
             return res.status(401).json({
-                message: `You dont have any priorities`,
+                message: `You dont have any records`,
             })
         }
 
-        const isOwner = user.Priorities.find((priority) => priority.id === id)
+        const record = await prioritiesQueries.findByIdQuery(id)
+        if (!record) {
+            return res.status(404).json({
+                message: `Comment not found with ID: ${id}`,
+            })
+        }
+
+        const isOwner = record.User._id == user.id
 
         if (isOwner) {
             return next()
         } else {
             return res.status(401).json({
-                message: `You are not the owner of the priority`,
+                message: `You are not the owner of the record`,
             })
         }
     },

@@ -4,13 +4,13 @@ import passport from "./Passport.js"
 import mongoDb from "./MongoDB.js"
 import cors from "cors"
 
-import Auth from "./Auth.js"
-import Comment from "./Comment.js"
-import Label from "./Label.js"
-import Priority from "./Priority.js"
-import Project from "./Project.js"
-import Task from "./Task.js"
-import User from "./User.js"
+export { default as AuthMiddleware } from "./Auth.js"
+export { default as CommentMiddleware } from "./Comment.js"
+export { default as LabelMiddleware } from "./Label.js"
+export { default as PriorityMiddleware } from "./Priority.js"
+export { default as ProjectMiddleware } from "./Project.js"
+export { default as TaskMiddleware } from "./Task.js"
+export { default as UserMiddleware } from "./User.js"
 
 const router = Router()
 
@@ -25,13 +25,4 @@ router.use(mongoDb)
 router.use(bodyParser)
 router.use(passport)
 
-export {
-    Auth,
-    Comment,
-    Label,
-    Priority,
-    Project,
-    Task,
-    User,
-    router as middlewares,
-}
+export { router as middlewares }

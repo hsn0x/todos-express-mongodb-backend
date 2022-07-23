@@ -1,13 +1,13 @@
-import bodyParser from "body-parser";
-import { Router } from "express";
+import bodyParser from "body-parser"
+import { Router } from "express"
 
-const router = Router();
+const router = Router()
 
-router.use(bodyParser.json());
+router.use(bodyParser.json())
 router.use(
     bodyParser.urlencoded({
         extended: true,
     })
-);
+)
 
-export default router;
+export default router

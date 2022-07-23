@@ -1,13 +1,4 @@
-import { ObjectId } from "mongodb"
-import { genPassword, passwordMatch } from "../lib/passwordUtils.js"
-import {
-    createQuery,
-    deleteOneQuery,
-    findAllQuery,
-    findByIdQuery,
-    findOneQuery,
-    updateOneQuery,
-} from "../queries/priorities.js"
+import { prioritiesQueries } from "../queries/index.js"
 import {
     validateCreatePriority,
     validateUpdatePriority,
@@ -16,7 +7,7 @@ import {
 export default {
     getById: async (req, res) => {
         const id = req.params.id
-        const priority = await findByIdQuery(id)
+        const priority = await prioritiesQueries.findByIdQuery(id)
         if (priority) {
             res.status(200).json({ priority })
         } else {
@@ -27,7 +18,7 @@ export default {
     },
     getByName: async (req, res) => {
         const priorityname = req.params.priorityname
-        const priority = await findOneQuery({ priorityname })
+        const priority = await prioritiesQueries.findOneQuery({ priorityname })
         if (priority) {
             res.status(200).json({ priority })
         } else {
@@ -43,7 +34,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery({}, [], [], params)
+        const data = await prioritiesQueries.findAllQuery({}, [], [], params)
         if (data) {
             return res.status(200).json(data)
         } else {
@@ -62,7 +53,12 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(filter, [], [], params)
+        const data = await prioritiesQueries.findAllQuery(
+            filter,
+            [],
+            [],
+            params
+        )
         if (data) {
             return res.status(200).json(data)
         } else {
@@ -78,7 +74,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(
+        const data = await prioritiesQueries.findAllQuery(
             filter,
             ["Avatars", "Images", "Roles"],
             [],
@@ -100,7 +96,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(
+        const data = await prioritiesQueries.findAllQuery(
             filter,
             ["Avatars", "Images", "Roles"],
             [],
@@ -115,15 +111,15 @@ export default {
     create: async (req, res, next) => {
         const { session, user } = req
 
-        const { name, query, TaskId } = request.body
-        const priorityData = {
+        const { name, query, Tasks } = req.body
+        const data = {
             name,
             query,
-            Tasks: TaskId,
+            Tasks,
             User: user.id,
         }
 
-        const isPriorityValid = validateCreatePriority(priorityData)
+        const isPriorityValid = validateCreatePriority(data)
 
         if (!isPriorityValid.valid) {
             return res.status(400).json({
@@ -132,7 +128,7 @@ export default {
             })
         }
 
-        const createdPriority = await createQuery(priorityData)
+        const createdPriority = await prioritiesQueries.createQuery(data)
 
         if (createdPriority) {
             return res.status(201).json({
@@ -149,15 +145,15 @@ export default {
         const id = req.params.id
         const { session, user } = req
 
-        const { name, query, TaskId } = request.body
-        const priorityData = {
+        const { name, query, Tasks } = req.body
+        const data = {
             name,
             query,
-            Tasks: parseInt(TaskId),
+            Tasks,
             User: user.id,
         }
 
-        const isPriorityValid = validateUpdatePriority(priorityData)
+        const isPriorityValid = validateUpdatePriority(data)
         if (!isPriorityValid.valid) {
             return res.status(400).json({
                 message: "Invalid priority data",
@@ -165,7 +161,10 @@ export default {
             })
         }
 
-        const updatedPriority = await updateOneQuery({ id }, priorityData)
+        const updatedPriority = await prioritiesQueries.updateOneQuery(
+            { id },
+            data
+        )
         if (updatedPriority) {
             return res.status(200).json({
                 message: `Priority updated with ID: ${updatedPriority[0]?.id}`,
@@ -179,7 +178,7 @@ export default {
     },
     remove: async (req, res) => {
         const id = req.params.id
-        await deleteOneQuery({ id })
+        await prioritiesQueries.deleteOneQuery({ id })
         res.status(200).json({ message: `Priority deleted with ID: ${id}` })
     },
 }

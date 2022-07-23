@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb"
-import { findByIdQuery } from "../queries/tasks.js"
+import { tasksQueries } from "../queries/index.js"
 
 export default {
     isOwner: async (req, res, next) => {
@@ -12,24 +12,24 @@ export default {
 
         if (!user.Tasks || !user.Tasks.length > 0) {
             return res.status(401).json({
-                message: `You dont have any tasks`,
+                message: `You dont have any records`,
             })
         }
 
-        const task = await findByIdQuery(id)
-        if (!task) {
+        const record = await tasksQueries.findByIdQuery(id)
+        if (!record) {
             return res.status(404).json({
                 message: `Task not found with ID: ${id}`,
             })
         }
 
-        const isOwner = task.User._id == user.id
+        const isOwner = record.User._id == user.id
 
         if (isOwner) {
             return next()
         } else {
             return res.status(401).json({
-                message: `You are not the owner of the task`,
+                message: `You are not the owner of the record`,
             })
         }
     },
