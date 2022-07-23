@@ -1,24 +1,16 @@
-import { Router } from "express";
-import {
-    create,
-    remove,
-    getById,
-    getByName,
-    getAll,
-    getAllBySearch,
-    update,
-} from "../controllers/Label.js";
-import { isAuth } from "../middleware/Auth.js";
-import { isOwner } from "../middleware/Label.js";
+import { Router } from "express"
+import { Label } from "../controllers/index.js"
+import { isAuth } from "../middleware/Auth.js"
+import { isOwner } from "../middleware/Label.js"
 
-const router = Router();
+const router = Router()
 
-router.get("/", getAll);
-router.get("/:id", getById);
-router.get("/q/:query", getAllBySearch);
-router.get("/name/:slug", getByName);
-router.post("/", isAuth, create);
-router.put("/:id", isAuth, isOwner, update);
-router.delete("/:id", isAuth, isOwner, remove);
+router.get("/", Label.getAll)
+router.get("/:id", Label.getById)
+router.get("/q/:query", Label.getAllBySearch)
+router.get("/name/:slug", Label.getByName)
+router.post("/", isAuth, Label.create)
+router.put("/:id", isAuth, isOwner, Label.update)
+router.delete("/:id", isAuth, isOwner, Label.remove)
 
-export default router;
+export default router

@@ -1,8 +1,5 @@
-import { Router } from 'express';
-import { getDashboard } from '../controllers/Dashboard.js';
+import { Router } from "express"
 
-const router = Router();
+const router = Router()
 
-router.get('/dashboard', getDashboard);
-
-export default router;
+export default router

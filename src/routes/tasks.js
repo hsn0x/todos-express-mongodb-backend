@@ -1,26 +1,17 @@
-import { Router } from "express";
-import {
-    create,
-    remove,
-    getById,
-    getAll,
-    update,
-    getAllBySearch,
-    getByName,
-    getAllByUserId,
-} from "../controllers/Task.js";
-import { isAuth } from "../middleware/Auth.js";
-import { isOwner } from "../middleware/Task.js";
+import { Router } from "express"
+import { Task } from "../controllers/index.js"
+import { isAuth } from "../middleware/Auth.js"
+import { isOwner } from "../middleware/Task.js"
 
-const router = Router();
+const router = Router()
 
-router.get("/", getAll);
-router.get("/:id", getById);
-router.get("/q/:query", getAllBySearch);
-router.get("/name/:slug", getByName);
-router.get("/UserId/:id", getAllByUserId);
-router.post("/", isAuth, create);
-router.put("/:id", isAuth, isOwner, update);
-router.delete("/:id", isAuth, isOwner, remove);
+router.get("/", Task.getAll)
+router.get("/:id", Task.getById)
+router.get("/q/:query", Task.getAllBySearch)
+router.get("/name/:slug", Task.getByName)
+router.get("/UserId/:id", Task.getAllByUserId)
+router.post("/", isAuth, Task.create)
+router.put("/:id", isAuth, isOwner, Task.update)
+router.delete("/:id", isAuth, isOwner, Task.remove)
 
-export default router;
+export default router

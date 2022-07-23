@@ -1,14 +1,5 @@
-import { Router } from "express";
-import {
-    create,
-    remove,
-    getById,
-    getByUsername,
-    getAll,
-    update,
-    updateEmail,
-    updatePassword,
-} from "../controllers/User.js";
+import { Router } from "express"
+import { User } from "../controllers/index.js"
 import {
     isAdmin,
     isAuth,
@@ -16,17 +7,17 @@ import {
     isGuest,
     isUserAuth,
     isUsernameTaken,
-} from "../middleware/Auth.js";
+} from "../middleware/Auth.js"
 
-const router = Router();
+const router = Router()
 
-router.get("/", getAll);
-router.get("/:id", getById);
-router.get("/username/:username", getByUsername);
-router.post("/", isAuth, isAdmin, isEmailExist, isUsernameTaken, create);
-router.put("/:id", isAuth, isUsernameTaken, isUserAuth, update);
-router.put("/email/:id", isAuth, isEmailExist, isUserAuth, updateEmail);
-router.put("/password/:id", isAuth, isUserAuth, updatePassword);
-router.delete("/:id", isAuth, isUserAuth, remove);
+router.get("/", User.getAll)
+router.get("/:id", User.getById)
+router.get("/username/:username", User.getByUsername)
+router.post("/", isAuth, isAdmin, isEmailExist, isUsernameTaken, User.create)
+router.put("/:id", isAuth, isUsernameTaken, isUserAuth, User.update)
+router.put("/email/:id", isAuth, isEmailExist, isUserAuth, User.updateEmail)
+router.put("/password/:id", isAuth, isUserAuth, User.updatePassword)
+router.delete("/:id", isAuth, isUserAuth, User.remove)
 
-export default router;
+export default router
