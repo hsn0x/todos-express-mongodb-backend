@@ -15,7 +15,7 @@ const CreateCommentSchema = {
             pattern: "^[a-f\\d]{24}$",
         },
     },
-    required: ["content", "TaskId", "UserId"],
+    required: ["content", "Task", "User"],
     additionalProperties: false,
 };
 
@@ -32,7 +32,7 @@ const UpdateCommentSchema = {
             pattern: "^[a-f\\d]{24}$",
         },
     },
-    required: ["content", "TaskId", "UserId"],
+    required: ["content", "Task", "User"],
     additionalProperties: false,
 };
 

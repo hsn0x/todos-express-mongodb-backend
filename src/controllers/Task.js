@@ -1,5 +1,3 @@
-import { ObjectId } from "mongodb";
-import { genPassword, passwordMatch } from "../lib/passwordUtils.js";
 import {
     createTaskQuery,
     deleteOneTaskQuery,
@@ -122,12 +120,12 @@ export const createTask = async (req, res, next) => {
         Priority,
     };
 
-    const isTaskValid = validateCreateTask(data);
+    const isValid = validateCreateTask(data);
 
-    if (!isTaskValid.valid) {
+    if (!isValid.valid) {
         return res.status(400).json({
             message: "Invalid task data",
-            errors: isTaskValid.errors,
+            errors: isValid.errors,
         });
     }
 
@@ -157,15 +155,15 @@ export const updateTask = async (req, res) => {
         Priority,
     };
 
-    const isTaskValid = validateUpdateTask(data);
-    if (!isTaskValid.valid) {
+    const isValid = validateUpdateTask(data);
+    if (!isValid.valid) {
         return res.status(400).json({
             message: "Invalid task data",
-            errors: isTaskValid.errors,
+            errors: isValid.errors,
         });
     }
 
-    const updatedTask = await updateOneTaskQuery({ _id }, data);
+    const updatedTask = await updateOneTaskQuery({ _id: id }, data);
     if (updatedTask) {
         return res.status(200).json({
             message: `Task updated with ID: ${updatedTask[0]?.id}`,

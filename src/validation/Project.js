@@ -6,12 +6,12 @@ const CreateProjectSchema = {
     type: "object",
     properties: {
         name: { type: "string" },
-        UserId: {
+        User: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
     },
-    required: ["name", "UserId"],
+    required: ["name", "User"],
     additionalProperties: false,
 };
 
@@ -19,12 +19,12 @@ const UpdateProjectSchema = {
     type: "object",
     properties: {
         name: { type: "string" },
-        UserId: {
+        User: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
     },
-    required: ["name", "UserId"],
+    required: ["name", "User"],
     additionalProperties: false,
 };
 

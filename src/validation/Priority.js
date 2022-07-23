@@ -9,16 +9,16 @@ const Createprioritieschema = {
     properties: {
         name: { type: "string" },
         query: { type: "string" },
-        TaskId: {
+        Task: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
-        UserId: {
+        User: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
     },
-    required: ["name", "query", "TaskId", "UserId"],
+    required: ["name", "query", "Task", "User"],
     additionalProperties: false,
 };
 
@@ -27,16 +27,16 @@ const Updateprioritieschema = {
     properties: {
         name: { type: "string" },
         query: { type: "string" },
-        TaskId: {
+        Task: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
-        UserId: {
+        User: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
     },
-    required: ["name", "query", "TaskId", "UserId"],
+    required: ["name", "query", "Task", "User"],
     additionalProperties: false,
 };
 

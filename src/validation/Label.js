@@ -8,13 +8,16 @@ const CreateLabelSchema = {
     type: "object",
     properties: {
         name: { type: "string" },
-        TaskId: {
+        Task: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
-        UserId: { type: "string", pattern: "^[a-f\\d]{24}$" },
+        User: {
+            type: "string",
+            pattern: "^[a-f\\d]{24}$",
+        },
     },
-    required: ["name", "TaskId", "UserId"],
+    required: ["name", "Task", "User"],
     additionalProperties: false,
 };
 
@@ -22,16 +25,16 @@ const UpdateLabelSchema = {
     type: "object",
     properties: {
         name: { type: "string" },
-        TaskId: {
+        Task: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
-        UserId: {
+        User: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
     },
-    required: ["name", "TaskId", "UserId"],
+    required: ["name", "Task", "User"],
     additionalProperties: false,
 };
 
