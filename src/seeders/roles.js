@@ -4,10 +4,9 @@ import { ROLES } from "../constants/index.js";
 export const createRoles = async () => {
     for (let rolesIndex = 0; rolesIndex < ROLES.length; rolesIndex++) {
         const ROLE = ROLES[rolesIndex];
-        const role = new Role({
+        await Role.create({
             name: ROLE.name,
             description: ROLE.description,
         });
-        await role.save();
     }
 };

@@ -26,11 +26,11 @@ export const dbSeed = async () => {
  */
 export const dbSeedFake = async () => {
     await createFakeUsers(RECORD);
-    await createFakePriorities(RECORD);
     await createFakeProjects(RECORD);
     await createFakeTasks(RECORD);
     await createFakeComments(RECORD);
     await createFakeLabels(RECORD);
+    await createFakePriorities(RECORD);
 
     // await createFakeStudents(RECORD);
 };
