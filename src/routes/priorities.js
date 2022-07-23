@@ -1,16 +1,26 @@
 import { Router } from "express"
-import { Priority } from "../controllers/index.js"
-import { isAuth } from "../middleware/Auth.js"
-import { isOwner } from "../middleware/Priority.js"
+import { Priority as PriorityController } from "../controllers/index.js"
+import { Auth } from "../middleware/index.js"
+import { Priority as PriorityMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", Priority.getAll)
-router.get("/:id", Priority.getById)
-router.get("/q/:query", Priority.getAllBySearch)
-router.get("/name/:slug", Priority.getByName)
-router.post("/", isAuth, Priority.create)
-router.put("/:id", isAuth, isOwner, Priority.update)
-router.delete("/:id", isAuth, isOwner, Priority.remove)
+router.get("/", PriorityController.getAll)
+router.get("/:id", PriorityController.getById)
+router.get("/q/:query", PriorityController.getAllBySearch)
+router.get("/name/:slug", PriorityController.getByName)
+router.post("/", Auth.isAuth, PriorityController.create)
+router.put(
+    "/:id",
+    Auth.isAuth,
+    PriorityMiddleware.isOwner,
+    PriorityController.update
+)
+router.delete(
+    "/:id",
+    Auth.isAuth,
+    PriorityMiddleware.isOwner,
+    PriorityController.remove
+)
 
 export default router

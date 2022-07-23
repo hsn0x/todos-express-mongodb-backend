@@ -1,16 +1,21 @@
 import { Router } from "express"
-import { Label } from "../controllers/index.js"
-import { isAuth } from "../middleware/Auth.js"
-import { isOwner } from "../middleware/Label.js"
+import { Label as LabelController } from "../controllers/index.js"
+import { Auth } from "../middleware/index.js"
+import { Label as LabelMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", Label.getAll)
-router.get("/:id", Label.getById)
-router.get("/q/:query", Label.getAllBySearch)
-router.get("/name/:slug", Label.getByName)
-router.post("/", isAuth, Label.create)
-router.put("/:id", isAuth, isOwner, Label.update)
-router.delete("/:id", isAuth, isOwner, Label.remove)
+router.get("/", LabelController.getAll)
+router.get("/:id", LabelController.getById)
+router.get("/q/:query", LabelController.getAllBySearch)
+router.get("/name/:slug", LabelController.getByName)
+router.post("/", Auth.isAuth, LabelController.create)
+router.put("/:id", Auth.isAuth, LabelMiddleware.isOwner, LabelController.update)
+router.delete(
+    "/:id",
+    Auth.isAuth,
+    LabelMiddleware.isOwner,
+    LabelController.remove
+)
 
 export default router

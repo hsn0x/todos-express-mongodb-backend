@@ -1,20 +1,30 @@
 import { Router } from "express"
-import { Comment } from "../controllers/index.js"
-import { isAuth } from "../middleware/Auth.js"
-import { isOwner } from "../middleware/Comment.js"
+import { Comment as CommentController } from "../controllers/index.js"
+import { Auth } from "../middleware/index.js"
+import { Comment as CommentMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/:id", Comment.getById)
-router.get("/name/:slug", Comment.getByName)
+router.get("/:id", CommentController.getById)
+router.get("/name/:slug", CommentController.getByName)
 
-router.get("/", Comment.getAll)
-router.get("/q/:query", Comment.getAllBySearch)
-router.get("/TaskId/:id", Comment.getAllByTaskId)
-router.get("/UserId/:id", Comment.getAllByUserId)
+router.get("/", CommentController.getAll)
+router.get("/q/:query", CommentController.getAllBySearch)
+router.get("/TaskId/:id", CommentController.getAllByTaskId)
+router.get("/UserId/:id", CommentController.getAllByUserId)
 
-router.post("/", isAuth, Comment.create)
-router.put("/:id", isAuth, isOwner, Comment.update)
-router.delete("/:id", isAuth, isOwner, Comment.remove)
+router.post("/", Auth.isAuth, CommentController.create)
+router.put(
+    "/:id",
+    Auth.isAuth,
+    CommentMiddleware.isOwner,
+    CommentController.update
+)
+router.delete(
+    "/:id",
+    Auth.isAuth,
+    CommentMiddleware.isOwner,
+    CommentController.remove
+)
 
 export default router

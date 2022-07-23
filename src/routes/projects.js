@@ -1,16 +1,16 @@
 import { Router } from "express"
-import { Project } from "../controllers/index.js"
-import { isAuth } from "../middleware/Auth.js"
-import { isOwner } from "../middleware/Project.js"
+import { Project as ProjectController } from "../controllers/index.js"
+import { Auth } from "../middleware/index.js"
+import { Project } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", Project.getAll)
-router.get("/:id", Project.getById)
-router.get("/q/:query", Project.getAllBySearch)
-router.get("/name/:slug", Project.getByName)
-router.post("/", isAuth, Project.create)
-router.put("/:id", isAuth, isOwner, Project.update)
-router.delete("/:id", isAuth, isOwner, Project.remove)
+router.get("/", ProjectController.getAll)
+router.get("/:id", ProjectController.getById)
+router.get("/q/:query", ProjectController.getAllBySearch)
+router.get("/name/:slug", ProjectController.getByName)
+router.post("/", Auth.isAuth, ProjectController.create)
+router.put("/:id", Auth.isAuth, Project.isOwner, ProjectController.update)
+router.delete("/:id", Auth.isAuth, Project.isOwner, ProjectController.remove)
 
 export default router
