@@ -2,13 +2,14 @@ import { getPagination, getPagingData } from "../lib/handlePagination.js";
 import Project from "../models/Project.js";
 
 export const findAllProjectsQuery = async (
+    filter = {},
     populate = [],
     salt = [],
     { page, size }
 ) => {
     const { limit, skip } = getPagination(page, size);
 
-    const rows = await Project.find()
+    const rows = await Project.find(filter)
         .select(salt)
         .populate(populate)
         .skip(skip)
@@ -28,6 +29,7 @@ export const findAllProjectsQuery = async (
         rows,
     };
 };
+
 export const findByIdProjectQuery = async (id, populate = [], salt = []) => {
     const data = await Project.findById(id).select(salt).populate(populate);
     return data;
@@ -44,6 +46,7 @@ export const findOneProjectAndUpdate = async (filter, data) => {
     const recordUpdated = await Project.findOneAndUpdate(filter, data);
     return recordUpdated;
 };
+
 export const createProjectQuery = async (data, options) => {
     const createdProject = Project.create(data, options);
     return createdProject;

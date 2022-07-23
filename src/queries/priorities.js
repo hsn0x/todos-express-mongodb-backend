@@ -2,13 +2,14 @@ import { getPagination, getPagingData } from "../lib/handlePagination.js";
 import Priority from "../models/Priority.js";
 
 export const findAllPrioritiesQuery = async (
+    filter = {},
     populate = [],
     salt = [],
     { page, size }
 ) => {
     const { limit, skip } = getPagination(page, size);
 
-    const rows = await Priority.find()
+    const rows = await Priority.find(filter)
         .select(salt)
         .populate(populate)
         .skip(skip)
@@ -28,6 +29,7 @@ export const findAllPrioritiesQuery = async (
         rows,
     };
 };
+
 export const findByIdPriorityQuery = async (id, populate = [], salt = []) => {
     const data = await Priority.findById(id).select(salt).populate(populate);
     return data;
@@ -48,6 +50,7 @@ export const findOnePriorityAndUpdate = async (filter, data) => {
     const recordUpdated = await Priority.findOneAndUpdate(filter, data);
     return recordUpdated;
 };
+
 export const createPriorityQuery = async (data, options) => {
     const createdPriority = Priority.create(data, options);
     return createdPriority;

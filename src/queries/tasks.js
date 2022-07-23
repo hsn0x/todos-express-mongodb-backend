@@ -2,13 +2,14 @@ import { getPagination, getPagingData } from "../lib/handlePagination.js";
 import Task from "../models/Task.js";
 
 export const findAllTasksQuery = async (
+    filter = {},
     populate = [],
     salt = [],
     { page, size }
 ) => {
     const { limit, skip } = getPagination(page, size);
 
-    const rows = await Task.find()
+    const rows = await Task.find(filter)
         .select(salt)
         .populate(populate)
         .skip(skip)
@@ -28,6 +29,7 @@ export const findAllTasksQuery = async (
         rows,
     };
 };
+
 export const findByIdTaskQuery = async (id, populate = [], salt = []) => {
     const data = await Task.findById(id).select(salt).populate(populate);
     return data;
@@ -44,6 +46,7 @@ export const findOneTaskAndUpdate = async (filter, data) => {
     const recordUpdated = await Task.findOneAndUpdate(filter, data);
     return recordUpdated;
 };
+
 export const createTaskQuery = async (data, options) => {
     const createdTask = Task.create(data, options);
     return createdTask;

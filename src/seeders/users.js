@@ -43,6 +43,7 @@ const createFakeUsers = async (record) => {
     const fakeUsers = [];
     const fakeImages = [];
     const fakeAvatars = [];
+
     for (let index = 0; index < record; index++) {
         const hashedPassword = genPassword(faker.internet.password());
         const passwordHash = hashedPassword.hash;
