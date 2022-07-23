@@ -41,7 +41,7 @@ export const getLabels = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllLabelsQuery({}, [], [], params);
+    const data = await findAllLabelsQuery({}, ["Task", "User"], [], params);
     if (data) {
         return res.status(200).json(data);
     } else {

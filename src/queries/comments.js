@@ -29,6 +29,7 @@ export const findAllCommentsQuery = async (
         rows,
     };
 };
+
 export const findByIdCommentQuery = async (id, populate = [], salt = []) => {
     const data = await Comment.findById(id).select(salt).populate(populate);
     return data;
@@ -45,6 +46,7 @@ export const findOneCommentAndUpdate = async (filter, data) => {
     const recordUpdated = await Comment.findOneAndUpdate(filter, data);
     return recordUpdated;
 };
+
 export const createCommentQuery = async (data, options) => {
     const createdComment = Comment.create(data, options);
     return createdComment;

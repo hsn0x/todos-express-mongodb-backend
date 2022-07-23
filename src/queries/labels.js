@@ -2,13 +2,14 @@ import { getPagination, getPagingData } from "../lib/handlePagination.js";
 import Label from "../models/Label.js";
 
 export const findAllLabelsQuery = async (
+    filter = {},
     populate = [],
     salt = [],
     { page, size }
 ) => {
     const { limit, skip } = getPagination(page, size);
 
-    const rows = await Label.find()
+    const rows = await Label.find(filter)
         .select(salt)
         .populate(populate)
         .skip(skip)
@@ -28,6 +29,7 @@ export const findAllLabelsQuery = async (
         rows,
     };
 };
+
 export const findByIdLabelQuery = async (id, populate = [], salt = []) => {
     const data = await Label.findById(id).select(salt).populate(populate);
     return data;
@@ -44,6 +46,7 @@ export const findOneLabelAndUpdate = async (filter, data) => {
     const recordUpdated = await Label.findOneAndUpdate(filter, data);
     return recordUpdated;
 };
+
 export const createLabelQuery = async (data, options) => {
     const createdLabel = Label.create(data, options);
     return createdLabel;
