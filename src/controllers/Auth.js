@@ -1,7 +1,7 @@
-import { createUser } from "./User.js";
+import { create } from "./User.js";
 import passport from "passport";
 import { validateRegister } from "../validation/Auth.js";
-import { registerUserQuery } from "../queries/auth.js";
+import { registerQuery } from "../queries/auth.js";
 import { genPassword } from "../lib/passwordUtils.js";
 
 export const login = (req, res, next) => {
@@ -56,7 +56,7 @@ export const register = async (req, res, next) => {
         });
     }
 
-    const user = await registerUserQuery(userData);
+    const user = await registerQuery(userData);
 
     if (user) {
         res.status(201).json(user);

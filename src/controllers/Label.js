@@ -1,30 +1,30 @@
 import { ObjectId } from "mongodb";
 import { genPassword, passwordMatch } from "../lib/passwordUtils.js";
 import {
-    createLabelQuery,
-    deleteOneLabelQuery,
-    findAllLabelsQuery,
-    findByIdLabelQuery,
-    findOneLabelQuery,
-    updateOneLabelQuery,
+    createQuery,
+    deleteOneQuery,
+    findAllQuery,
+    findByIdQuery,
+    findOneQuery,
+    updateOneQuery,
 } from "../queries/labels.js";
 import {
     validateCreateLabel,
     validateUpdateLabel,
 } from "../validation/Label.js";
 
-export const getLabelById = async (req, res) => {
+export const getById = async (req, res) => {
     const id = req.params.id;
-    const label = await findByIdLabelQuery(id);
+    const label = await findByIdQuery(id);
     if (label) {
         res.status(200).json({ label });
     } else {
         res.status(404).json({ message: `Label not found with ID: ${id}` });
     }
 };
-export const getLabelByName = async (req, res) => {
+export const getByName = async (req, res) => {
     const labelname = req.params.labelname;
-    const label = await findOneLabelQuery({ labelname });
+    const label = await findOneQuery({ labelname });
     if (label) {
         res.status(200).json({ label });
     } else {
@@ -34,21 +34,21 @@ export const getLabelByName = async (req, res) => {
     }
 };
 
-export const getLabels = async (req, res) => {
+export const getAll = async (req, res) => {
     const { page, size } = req.query;
     const params = {
         page: parseInt(page),
         size: parseInt(size),
     };
 
-    const data = await findAllLabelsQuery({}, ["Task", "User"], [], params);
+    const data = await findAllQuery({}, ["Task", "User"], [], params);
     if (data) {
         return res.status(200).json(data);
     } else {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getLabelsBySearch = async (req, res) => {
+export const getAllBySearch = async (req, res) => {
     const { page, size } = req.query;
     const { query } = req.params;
     const filter = { $text: { $search: query } };
@@ -60,14 +60,14 @@ export const getLabelsBySearch = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllLabelsQuery(filter, [], [], params);
+    const data = await findAllQuery(filter, [], [], params);
     if (data) {
         return res.status(200).json(data);
     } else {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getLabelsByTaskId = async (req, res) => {
+export const getAllByTaskId = async (req, res) => {
     const TaskId = req.params.id;
     const { page, size } = req.query;
     const filter = { TaskId };
@@ -76,7 +76,7 @@ export const getLabelsByTaskId = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllLabelsQuery(
+    const data = await findAllQuery(
         filter,
         ["Avatars", "Images", "Roles"],
         [],
@@ -89,7 +89,7 @@ export const getLabelsByTaskId = async (req, res) => {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getLabelsByUserId = async (req, res) => {
+export const getAllByUserId = async (req, res) => {
     const UserId = req.params.id;
     const { page, size } = req.query;
     const filter = { UserId };
@@ -98,7 +98,7 @@ export const getLabelsByUserId = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllLabelsQuery(
+    const data = await findAllQuery(
         filter,
         ["Avatars", "Images", "Roles"],
         [],
@@ -111,13 +111,13 @@ export const getLabelsByUserId = async (req, res) => {
     }
 };
 
-export const createLabel = async (req, res, next) => {
+export const create = async (req, res, next) => {
     const { session, user } = req;
 
-    const { name, TaskId } = request.body;
+    const { name, Task } = req.body;
     const data = {
         name,
-        Task: TaskId,
+        Task,
         User: user.id,
     };
 
@@ -130,7 +130,7 @@ export const createLabel = async (req, res, next) => {
         });
     }
 
-    const createdLabel = await createLabelQuery(data);
+    const createdLabel = await createQuery(data);
 
     if (createdLabel) {
         return res.status(201).json({
@@ -141,14 +141,14 @@ export const createLabel = async (req, res, next) => {
         return res.status(500).json({ message: `Faile to create a label` });
     }
 };
-export const updateLabel = async (req, res) => {
+export const update = async (req, res) => {
     const id = req.params.id;
     const { session, user } = req;
 
-    const { name, TaskId } = request.body;
+    const { name, Task } = req.body;
     const data = {
         name,
-        Task: TaskId,
+        Task,
         User: user.id,
     };
 
@@ -160,7 +160,7 @@ export const updateLabel = async (req, res) => {
         });
     }
 
-    const updatedLabel = await updateOneLabelQuery({ id }, data);
+    const updatedLabel = await updateOneQuery({ id }, data);
     if (updatedLabel) {
         return res.status(200).json({
             message: `Label updated with ID: ${updatedLabel[0]?.id}`,
@@ -172,8 +172,8 @@ export const updateLabel = async (req, res) => {
         });
     }
 };
-export const deleteLabel = async (req, res) => {
+export const remove = async (req, res) => {
     const id = req.params.id;
-    await deleteOneLabelQuery({ id });
+    await deleteOneQuery({ id });
     return res.status(200).json({ message: `Label deleted with ID: ${id}` });
 };

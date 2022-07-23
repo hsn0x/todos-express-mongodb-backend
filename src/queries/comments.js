@@ -1,7 +1,7 @@
 import { getPagination, getPagingData } from "../lib/handlePagination.js";
 import Comment from "../models/Comment.js";
 
-export const findAllCommentsQuery = async (
+export const findAllQuery = async (
     filter = {},
     populate = [],
     salt = [],
@@ -30,32 +30,32 @@ export const findAllCommentsQuery = async (
     };
 };
 
-export const findByIdCommentQuery = async (id, populate = [], salt = []) => {
+export const findByIdQuery = async (id, populate = [], salt = []) => {
     const data = await Comment.findById(id).select(salt).populate(populate);
     return data;
 };
-export const findOneCommentQuery = async (filter, populate = [], salt = []) => {
+export const findOneQuery = async (filter, populate = [], salt = []) => {
     const data = await Comment.findOne(filter).select(salt).populate(populate);
     return data;
 };
-export const findByIdCommentAndUpdate = async (id, data) => {
+export const findByIdAndUpdate = async (id, data) => {
     const recordUpdated = await Comment.findByIdAndUpdate(id, data);
     return recordUpdated;
 };
-export const findOneCommentAndUpdate = async (filter, data) => {
+export const findOneAndUpdate = async (filter, data) => {
     const recordUpdated = await Comment.findOneAndUpdate(filter, data);
     return recordUpdated;
 };
 
-export const createCommentQuery = async (data, options) => {
+export const createQuery = async (data, options) => {
     const createdComment = Comment.create(data, options);
     return createdComment;
 };
-export const updateOneCommentQuery = async (filter, data, options = {}) => {
+export const updateOneQuery = async (filter, data, options = {}) => {
     const recordUpdated = await Comment.updateOne(filter, data, options);
     return recordUpdated;
 };
-export const deleteOneCommentQuery = async (filter, options) => {
+export const deleteOneQuery = async (filter, options) => {
     const recordDeleted = await Comment.deleteOne(filter, options);
     return recordDeleted;
 };

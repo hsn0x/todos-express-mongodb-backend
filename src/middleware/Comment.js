@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
-import { findByIdCommentQuery } from "../queries/comments.js";
+import { findByIdQuery } from "../queries/comments.js";
 
-const isCommentOwner = async (req, res, next) => {
+const isOwner = async (req, res, next) => {
     const id = req.params.id;
     const { session, user } = req;
 
@@ -15,17 +15,16 @@ const isCommentOwner = async (req, res, next) => {
         });
     }
 
-    const comment = await findByIdCommentQuery(id);
+    const comment = await findByIdQuery(id);
     if (!comment) {
         return res.status(404).json({
             message: `Comment not found with ID: ${id}`,
         });
     }
 
-    console.log(comment.UserId, user.id);
-    const isCommentOwner = comment.UserId == user.id;
+    const isOwner = comment.User._id == user.id;
 
-    if (isCommentOwner) {
+    if (isOwner) {
         return next();
     } else {
         return res.status(401).json({
@@ -34,4 +33,4 @@ const isCommentOwner = async (req, res, next) => {
     }
 };
 
-export { isCommentOwner };
+export { isOwner };

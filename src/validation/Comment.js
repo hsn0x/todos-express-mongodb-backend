@@ -23,11 +23,11 @@ const UpdateCommentSchema = {
     type: "object",
     properties: {
         content: { type: "string" },
-        TaskId: {
+        Task: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
-        UserId: {
+        User: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },

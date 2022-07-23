@@ -1,24 +1,24 @@
 import { Router } from "express";
 import {
-    createLabel,
-    deleteLabel,
-    getLabelById,
-    getLabelByName,
-    getLabels,
-    getLabelsBySearch,
-    updateLabel,
+    create,
+    remove,
+    getById,
+    getByName,
+    getAll,
+    getAllBySearch,
+    update,
 } from "../controllers/Label.js";
 import { isAuth } from "../middleware/Auth.js";
-import { isLabelOwner } from "../middleware/Label.js";
+import { isOwner } from "../middleware/Label.js";
 
 const router = Router();
 
-router.get("/", getLabels);
-router.get("/:id", getLabelById);
-router.get("/q/:query", getLabelsBySearch);
-router.get("/name/:slug", getLabelByName);
-router.post("/", isAuth, createLabel);
-router.put("/:id", isAuth, isLabelOwner, updateLabel);
-router.delete("/:id", isAuth, isLabelOwner, deleteLabel);
+router.get("/", getAll);
+router.get("/:id", getById);
+router.get("/q/:query", getAllBySearch);
+router.get("/name/:slug", getByName);
+router.post("/", isAuth, create);
+router.put("/:id", isAuth, isOwner, update);
+router.delete("/:id", isAuth, isOwner, remove);
 
 export default router;

@@ -1,9 +1,9 @@
 import { Permission, Role } from "../models/index.js";
 import { PERMISSIONS, ROLES } from "../constants/index.js";
-import { findOneRoleAndUpdate } from "../queries/roles.js";
+import { findOneAndUpdate as findOneAndUpdateRoles } from "../queries/roles.js";
 import {
-    findOnePermissionAndUpdate,
-    findOnePermissionQuery,
+    findOneAndUpdate as findOneAndUpdatePermissions,
+    findOneQuery,
 } from "../queries/permissions.js";
 
 export const createPermissions = async () => {
@@ -26,7 +26,7 @@ export const createPermissions = async () => {
             const perm = permissions.find(
                 (perm) => perm.name == rolePermission
             );
-            const role = await findOneRoleAndUpdate(
+            const role = await findOneAndUpdateRoles(
                 { name: ROLE.name },
                 {
                     $push: {
@@ -34,7 +34,7 @@ export const createPermissions = async () => {
                     },
                 }
             );
-            await findOnePermissionAndUpdate(
+            await findOneAndUpdatePermissions(
                 { _id: perm._id },
                 {
                     $push: {

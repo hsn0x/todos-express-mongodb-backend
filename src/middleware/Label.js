@@ -1,24 +1,36 @@
-import { findOneLabelQuery } from "../queries/labels.js";
+import { ObjectId } from "mongodb";
+import { findByIdQuery } from "../queries/comments.js";
 
-const isLabelOwner = async (req, res, next) => {
-    const id = parseInt(req.params.id);
+const isOwner = async (req, res, next) => {
+    const id = req.params.id;
     const { session, user } = req;
+
+    if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ message: "Invalid Record ID" });
+    }
 
     if (!user.Labels || !user.Labels.length > 0) {
         return res.status(401).json({
-            message: `You dont have any labels`,
+            message: `You dont have any comments`,
         });
     }
 
-    const isLabelOwner = user.Labels.find((label) => label.id === id);
+    const record = await findByIdQuery(id);
+    if (!record) {
+        return res.status(404).json({
+            message: `Record not found with ID: ${id}`,
+        });
+    }
 
-    if (isLabelOwner) {
+    const isOwner = record.User._id == user.id;
+
+    if (isOwner) {
         return next();
     } else {
         return res.status(401).json({
-            message: `You are not the owner of the label`,
+            message: `You are not the owner of the record`,
         });
     }
 };
 
-export { isLabelOwner };
+export { isOwner };

@@ -1,4 +1,4 @@
-import { createFakeUsers, createUsers } from "./users.js";
+import { createFakeUsers, creates } from "./users.js";
 import { createRoles } from "./roles.js";
 import { createPermissions } from "./permissions.js";
 import { createResources } from "./resources.js";
@@ -18,7 +18,7 @@ export const dbSeed = async () => {
     await createRoles();
     await createPermissions();
     await createResources();
-    await createUsers();
+    await creates();
 };
 
 /**

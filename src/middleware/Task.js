@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
-import { findByIdTaskQuery } from "../queries/tasks.js";
+import { findByIdQuery } from "../queries/tasks.js";
 
-const isTaskOwner = async (req, res, next) => {
+const isOwner = async (req, res, next) => {
     const id = req.params.id;
     const { session, user } = req;
 
@@ -15,16 +15,16 @@ const isTaskOwner = async (req, res, next) => {
         });
     }
 
-    const task = await findByIdTaskQuery(id);
+    const task = await findByIdQuery(id);
     if (!task) {
         return res.status(404).json({
             message: `Task not found with ID: ${id}`,
         });
     }
 
-    const isTaskOwner = task.User._id == user.id;
+    const isOwner = task.User._id == user.id;
 
-    if (isTaskOwner) {
+    if (isOwner) {
         return next();
     } else {
         return res.status(401).json({
@@ -33,4 +33,4 @@ const isTaskOwner = async (req, res, next) => {
     }
 };
 
-export { isTaskOwner };
+export { isOwner };

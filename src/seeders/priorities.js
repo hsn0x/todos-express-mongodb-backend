@@ -1,7 +1,8 @@
 import { faker } from "@faker-js/faker";
 import { Priority, Task, User } from "../models/index.js";
-import { findOneTaskAndUpdate } from "../queries/tasks.js";
-import { findOneUserAndUpdate } from "../queries/users.js";
+import { findOneAndUpdate as findOneAndUpdateTasks } from "../queries/tasks.js";
+import { findOneAndUpdate as findOneAndUpdateUsers } from "../queries/users.js";
+
 import { randomNumber } from "../utils/index.js";
 
 export const createFakePriorities = async (record) => {
@@ -21,7 +22,7 @@ export const createFakePriorities = async (record) => {
         });
         priorities.push(priority);
 
-        await findOneUserAndUpdate(
+        await findOneAndUpdateUsers(
             { _id: randomUser.id },
             {
                 $push: {
@@ -29,7 +30,7 @@ export const createFakePriorities = async (record) => {
                 },
             }
         );
-        await findOneTaskAndUpdate(
+        await findOneAndUpdateTasks(
             { _id: randomTask.id },
             {
                 $push: {

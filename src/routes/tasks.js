@@ -1,26 +1,26 @@
 import { Router } from "express";
 import {
-    createTask,
-    deleteTask,
-    getTaskById,
-    getTasks,
-    updateTask,
-    getTasksBySearch,
-    getTaskByName,
-    getTasksByUserId,
+    create,
+    remove,
+    getById,
+    getAll,
+    update,
+    getAllBySearch,
+    getByName,
+    getAllByUserId,
 } from "../controllers/Task.js";
 import { isAuth } from "../middleware/Auth.js";
-import { isTaskOwner } from "../middleware/Task.js";
+import { isOwner } from "../middleware/Task.js";
 
 const router = Router();
 
-router.get("/", getTasks);
-router.get("/:id", getTaskById);
-router.get("/q/:query", getTasksBySearch);
-router.get("/name/:slug", getTaskByName);
-router.get("/UserId/:id", getTasksByUserId);
-router.post("/", isAuth, createTask);
-router.put("/:id", isAuth, isTaskOwner, updateTask);
-router.delete("/:id", isAuth, isTaskOwner, deleteTask);
+router.get("/", getAll);
+router.get("/:id", getById);
+router.get("/q/:query", getAllBySearch);
+router.get("/name/:slug", getByName);
+router.get("/UserId/:id", getAllByUserId);
+router.post("/", isAuth, create);
+router.put("/:id", isAuth, isOwner, update);
+router.delete("/:id", isAuth, isOwner, remove);
 
 export default router;

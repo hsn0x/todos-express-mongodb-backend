@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { Comment, Task, User } from "../models/index.js";
-import { findOneTaskAndUpdate } from "../queries/tasks.js";
-import { findOneUserAndUpdate } from "../queries/users.js";
+import { findOneAndUpdate } from "../queries/tasks.js";
+import { findOneAndUpdate as findOneAndUpdateUsers } from "../queries/users.js";
 import { randomNumber } from "../utils/index.js";
 
 export const createFakeComments = async (record) => {
@@ -20,7 +20,7 @@ export const createFakeComments = async (record) => {
         });
         fakeComments.push(comment);
 
-        await findOneUserAndUpdate(
+        await findOneAndUpdate(
             { _id: randomUser.id },
             {
                 $push: {
@@ -28,7 +28,7 @@ export const createFakeComments = async (record) => {
                 },
             }
         );
-        await findOneTaskAndUpdate(
+        await findOneAndUpdate(
             { _id: randomTask.id },
             {
                 $push: {

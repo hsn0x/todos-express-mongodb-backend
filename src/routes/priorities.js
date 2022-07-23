@@ -1,24 +1,24 @@
 import { Router } from "express";
 import {
-    createPriority,
-    deletePriority,
-    getPriorityById,
-    getPriorityByName,
-    getPriorities,
-    getPrioritiesBySearch,
-    updatePriority,
+    create,
+    remove,
+    getById,
+    getByName,
+    getAll,
+    getAllBySearch,
+    update,
 } from "../controllers/Priority.js";
 import { isAuth } from "../middleware/Auth.js";
-import { isPriorityOwner } from "../middleware/Priority.js";
+import { isOwner } from "../middleware/Priority.js";
 
 const router = Router();
 
-router.get("/", getPriorities);
-router.get("/:id", getPriorityById);
-router.get("/q/:query", getPrioritiesBySearch);
-router.get("/name/:slug", getPriorityByName);
-router.post("/", isAuth, createPriority);
-router.put("/:id", isAuth, isPriorityOwner, updatePriority);
-router.delete("/:id", isAuth, isPriorityOwner, deletePriority);
+router.get("/", getAll);
+router.get("/:id", getById);
+router.get("/q/:query", getAllBySearch);
+router.get("/name/:slug", getByName);
+router.post("/", isAuth, create);
+router.put("/:id", isAuth, isOwner, update);
+router.delete("/:id", isAuth, isOwner, remove);
 
 export default router;

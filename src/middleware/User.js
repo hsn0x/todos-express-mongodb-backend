@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 
-export const isUserIdValid = (req, res, next) => {
+export const isIdValid = (req, res, next) => {
     const id = req.params.id;
     if (ObjectId.isValid(id)) {
         next();

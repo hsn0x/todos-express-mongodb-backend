@@ -1,30 +1,30 @@
 import { ObjectId } from "mongodb";
 import { genPassword, passwordMatch } from "../lib/passwordUtils.js";
 import {
-    createPriorityQuery,
-    deleteOnePriorityQuery,
-    findAllPrioritiesQuery,
-    findByIdPriorityQuery,
-    findOnePriorityQuery,
-    updateOnePriorityQuery,
+    createQuery,
+    deleteOneQuery,
+    findAllQuery,
+    findByIdQuery,
+    findOneQuery,
+    updateOneQuery,
 } from "../queries/priorities.js";
 import {
     validateCreatePriority,
     validateUpdatePriority,
 } from "../validation/Priority.js";
 
-export const getPriorityById = async (req, res) => {
+export const getById = async (req, res) => {
     const id = req.params.id;
-    const priority = await findByIdPriorityQuery(id);
+    const priority = await findByIdQuery(id);
     if (priority) {
         res.status(200).json({ priority });
     } else {
         res.status(404).json({ message: `Priority not found with ID: ${id}` });
     }
 };
-export const getPriorityByName = async (req, res) => {
+export const getByName = async (req, res) => {
     const priorityname = req.params.priorityname;
-    const priority = await findOnePriorityQuery({ priorityname });
+    const priority = await findOneQuery({ priorityname });
     if (priority) {
         res.status(200).json({ priority });
     } else {
@@ -34,21 +34,21 @@ export const getPriorityByName = async (req, res) => {
     }
 };
 
-export const getPriorities = async (req, res) => {
+export const getAll = async (req, res) => {
     const { page, size } = req.query;
     const params = {
         page: parseInt(page),
         size: parseInt(size),
     };
 
-    const data = await findAllPrioritiesQuery({}, [], [], params);
+    const data = await findAllQuery({}, [], [], params);
     if (data) {
         return res.status(200).json(data);
     } else {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getPrioritiesBySearch = async (req, res) => {
+export const getAllBySearch = async (req, res) => {
     const { page, size } = req.query;
     const { query } = req.params;
     const filter = { $text: { $search: query } };
@@ -60,14 +60,14 @@ export const getPrioritiesBySearch = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllPrioritiesQuery(filter, [], [], params);
+    const data = await findAllQuery(filter, [], [], params);
     if (data) {
         return res.status(200).json(data);
     } else {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getPrioritiesByTaskId = async (req, res) => {
+export const getAllByTaskId = async (req, res) => {
     const TaskId = req.params.id;
     const { page, size } = req.query;
     const filter = { TaskId };
@@ -76,7 +76,7 @@ export const getPrioritiesByTaskId = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllPrioritiesQuery(
+    const data = await findAllQuery(
         filter,
         ["Avatars", "Images", "Roles"],
         [],
@@ -89,7 +89,7 @@ export const getPrioritiesByTaskId = async (req, res) => {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getPrioritiesByUserId = async (req, res) => {
+export const getAllByUserId = async (req, res) => {
     const UserId = req.params.id;
     const { page, size } = req.query;
     const filter = { UserId };
@@ -98,7 +98,7 @@ export const getPrioritiesByUserId = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllPrioritiesQuery(
+    const data = await findAllQuery(
         filter,
         ["Avatars", "Images", "Roles"],
         [],
@@ -111,7 +111,7 @@ export const getPrioritiesByUserId = async (req, res) => {
     }
 };
 
-export const createPriority = async (req, res, next) => {
+export const create = async (req, res, next) => {
     const { session, user } = req;
 
     const { name, query, TaskId } = request.body;
@@ -131,7 +131,7 @@ export const createPriority = async (req, res, next) => {
         });
     }
 
-    const createdPriority = await createPriorityQuery(priorityData);
+    const createdPriority = await createQuery(priorityData);
 
     if (createdPriority) {
         return res.status(201).json({
@@ -142,7 +142,7 @@ export const createPriority = async (req, res, next) => {
         return res.status(500).json({ message: `Faile to create a priority` });
     }
 };
-export const updatePriority = async (req, res) => {
+export const update = async (req, res) => {
     const id = req.params.id;
     const { session, user } = req;
 
@@ -162,7 +162,7 @@ export const updatePriority = async (req, res) => {
         });
     }
 
-    const updatedPriority = await updateOnePriorityQuery({ id }, priorityData);
+    const updatedPriority = await updateOneQuery({ id }, priorityData);
     if (updatedPriority) {
         return res.status(200).json({
             message: `Priority updated with ID: ${updatedPriority[0]?.id}`,
@@ -174,8 +174,8 @@ export const updatePriority = async (req, res) => {
         });
     }
 };
-export const deletePriority = async (req, res) => {
+export const remove = async (req, res) => {
     const id = req.params.id;
-    await deleteOnePriorityQuery({ id });
+    await deleteOneQuery({ id });
     res.status(200).json({ message: `Priority deleted with ID: ${id}` });
 };

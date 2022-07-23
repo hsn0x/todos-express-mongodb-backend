@@ -1,7 +1,7 @@
 import { getPagination, getPagingData } from "../lib/handlePagination.js";
 import User from "../models/User.js";
 
-export const findAllUsersQuery = async (
+export const findAllQuery = async (
     populate = [],
     salt = [],
     { page, size }
@@ -28,31 +28,31 @@ export const findAllUsersQuery = async (
         rows,
     };
 };
-export const findByIdUserQuery = async (id, populate = [], salt = []) => {
+export const findByIdQuery = async (id, populate = [], salt = []) => {
     const data = await User.findById(id).populate(populate).select(salt);
     return data;
 };
-export const findOneUserQuery = async (filter, populate = [], salt = []) => {
+export const findOneQuery = async (filter, populate = [], salt = []) => {
     const data = await User.findOne(filter).populate(populate).select(salt);
     return data;
 };
-export const findByIdUserAndUpdate = async (id, data) => {
+export const findByIdAndUpdate = async (id, data) => {
     const recordUpdated = await User.findByIdAndUpdate(id, data);
     return recordUpdated;
 };
-export const findOneUserAndUpdate = async (filter, data) => {
+export const findOneAndUpdate = async (filter, data) => {
     const recordUpdated = await User.findOneAndUpdate(filter, data);
     return recordUpdated;
 };
-export const createUserQuery = async (data, options) => {
+export const createQuery = async (data, options) => {
     const createdUser = User.create(data, options);
     return createdUser;
 };
-export const updateOneUserQuery = async (filter, data, options = {}) => {
+export const updateOneQuery = async (filter, data, options = {}) => {
     const recordUpdated = await User.updateOne(filter, data, options);
     return recordUpdated;
 };
-export const deleteOneUserQuery = async (filter, options) => {
+export const deleteOneQuery = async (filter, options) => {
     const recordDeleted = await User.deleteOne(filter, options);
     return recordDeleted;
 };

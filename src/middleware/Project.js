@@ -1,6 +1,6 @@
-import { findOneProjectQuery } from "../queries/projects.js";
+import { findOneQuery } from "../queries/projects.js";
 
-const isProjectOwner = async (req, res, next) => {
+const isOwner = async (req, res, next) => {
     const id = parseInt(req.params.id);
     const { session, user } = req;
 
@@ -10,9 +10,9 @@ const isProjectOwner = async (req, res, next) => {
         });
     }
 
-    const isProjectOwner = user.Projects.find((project) => project.id === id);
+    const isOwner = user.Projects.find((project) => project.id === id);
 
-    if (isProjectOwner) {
+    if (isOwner) {
         return next();
     } else {
         return res.status(401).json({
@@ -21,4 +21,4 @@ const isProjectOwner = async (req, res, next) => {
     }
 };
 
-export { isProjectOwner };
+export { isOwner };

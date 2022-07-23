@@ -1,11 +1,11 @@
 import { genPassword, passwordMatch } from "../lib/passwordUtils.js";
 import {
-    createUserQuery,
-    deleteOneUserQuery,
-    findAllUsersQuery,
-    findByIdUserQuery,
-    findOneUserQuery,
-    updateOneUserQuery,
+    createQuery,
+    deleteOneQuery,
+    findAllQuery,
+    findByIdQuery,
+    findOneQuery,
+    updateOneQuery,
 } from "../queries/users.js";
 import {
     validateCreateUser,
@@ -14,14 +14,14 @@ import {
     validateUpdateUser,
 } from "../validation/User.js";
 
-export const getUsers = async (req, res) => {
+export const getAll = async (req, res) => {
     const { page, size } = req.query;
     const params = {
         page: parseInt(page),
         size: parseInt(size),
     };
 
-    const data = await findAllUsersQuery(
+    const data = await findAllQuery(
         ["Avatars", "Images", "Roles", "Comments"],
         [],
         params
@@ -32,10 +32,9 @@ export const getUsers = async (req, res) => {
         return res.status(404).json({ message: "No Data" });
     }
 };
-
-export const getUserById = async (req, res) => {
+export const getById = async (req, res) => {
     const id = req.params.id;
-    const user = await findByIdUserQuery(
+    const user = await findByIdQuery(
         id,
         ["Avatars", "Images", "Roles", "Comments"],
         []
@@ -46,10 +45,9 @@ export const getUserById = async (req, res) => {
         res.status(404).json({ message: `User not found with ID: ${id}` });
     }
 };
-
-export const getUserByUsername = async (req, res) => {
+export const getByUsername = async (req, res) => {
     const username = req.params.username;
-    const user = await findOneUserQuery(
+    const user = await findOneQuery(
         { username },
         ["Avatars", "Images", "Roles", "Comments"],
         []
@@ -62,10 +60,9 @@ export const getUserByUsername = async (req, res) => {
         });
     }
 };
-
-export const getUserByEmail = async (req, res) => {
+export const getByEmail = async (req, res) => {
     const email = parseInt(req.params.email);
-    const user = await findOneUserQuery(
+    const user = await findOneQuery(
         { email },
         ["Avatars", "Images", "Roles", "Comments"],
         []
@@ -79,7 +76,7 @@ export const getUserByEmail = async (req, res) => {
     }
 };
 
-export const createUser = async (req, res, next) => {
+export const create = async (req, res, next) => {
     const {
         firstName,
         lastName,
@@ -118,7 +115,7 @@ export const createUser = async (req, res, next) => {
         });
     }
 
-    const user = await createUserQuery(userData);
+    const user = await createQuery(userData);
 
     if (user) {
         res.status(201).json(user);
@@ -128,8 +125,7 @@ export const createUser = async (req, res, next) => {
         });
     }
 };
-
-export const updateUser = async (req, res) => {
+export const update = async (req, res) => {
     const id = req.params.id;
     const { session, user } = req;
 
@@ -153,7 +149,7 @@ export const updateUser = async (req, res) => {
         });
     }
 
-    const updatedUser = await updateOneUserQuery({ id }, userData);
+    const updatedUser = await updateOneQuery({ id }, userData);
     if (updatedUser) {
         res.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -165,8 +161,7 @@ export const updateUser = async (req, res) => {
         });
     }
 };
-
-export const updateUserEmail = async (req, res) => {
+export const updateEmail = async (req, res) => {
     const id = parseInt(req.params.id);
     const { session, user } = req;
 
@@ -183,7 +178,7 @@ export const updateUserEmail = async (req, res) => {
             errors: isUserValid.errors,
         });
     }
-    const updatedUser = await updateOneUserQuery({ id }, data);
+    const updatedUser = await updateOneQuery({ id }, data);
     if (updatedUser) {
         res.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -195,8 +190,7 @@ export const updateUserEmail = async (req, res) => {
         });
     }
 };
-
-export const updateUserPassword = async (req, res) => {
+export const updatePassword = async (req, res) => {
     const id = req.params.id;
     const { session, user } = req;
     if (user.id !== id) {
@@ -205,7 +199,7 @@ export const updateUserPassword = async (req, res) => {
         });
     }
 
-    const currentUser = await findOneUserQuery(
+    const currentUser = await findOneQuery(
         { id },
         [],
         ["passwordHash", "passwordSalt"]
@@ -270,7 +264,7 @@ export const updateUserPassword = async (req, res) => {
     }
 
     userData.password = userData.newPassword;
-    const updatedUser = await updateOneUserQuery({ id }, userData);
+    const updatedUser = await updateOneQuery({ id }, userData);
     if (updatedUser) {
         res.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -282,9 +276,8 @@ export const updateUserPassword = async (req, res) => {
         });
     }
 };
-
-export const deleteUser = async (req, res) => {
+export const remove = async (req, res) => {
     const id = parseInt(req.params.id);
-    await deleteOneUserQuery({ id });
+    await deleteOneQuery({ id });
     res.status(200).json({ message: `User deleted with ID: ${id}` });
 };

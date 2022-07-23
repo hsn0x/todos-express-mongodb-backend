@@ -1,7 +1,7 @@
 import { getPagination, getPagingData } from "../lib/handlePagination.js";
 import Project from "../models/Project.js";
 
-export const findAllProjectsQuery = async (
+export const findAllQuery = async (
     filter = {},
     populate = [],
     salt = [],
@@ -30,32 +30,32 @@ export const findAllProjectsQuery = async (
     };
 };
 
-export const findByIdProjectQuery = async (id, populate = [], salt = []) => {
+export const findByIdQuery = async (id, populate = [], salt = []) => {
     const data = await Project.findById(id).select(salt).populate(populate);
     return data;
 };
-export const findOneProjectQuery = async (filter, populate = [], salt = []) => {
+export const findOneQuery = async (filter, populate = [], salt = []) => {
     const data = await Project.findOne(filter).select(salt).populate(populate);
     return data;
 };
-export const findByIdProjectAndUpdate = async (id, data) => {
+export const findByIdAndUpdate = async (id, data) => {
     const recordUpdated = await Project.findByIdAndUpdate(id, data);
     return recordUpdated;
 };
-export const findOneProjectAndUpdate = async (filter, data) => {
+export const findOneAndUpdate = async (filter, data) => {
     const recordUpdated = await Project.findOneAndUpdate(filter, data);
     return recordUpdated;
 };
 
-export const createProjectQuery = async (data, options) => {
+export const createQuery = async (data, options) => {
     const createdProject = Project.create(data, options);
     return createdProject;
 };
-export const updateOneProjectQuery = async (filter, data, options = {}) => {
+export const updateOneQuery = async (filter, data, options = {}) => {
     const recordUpdated = await Project.updateOne(filter, data, options);
     return recordUpdated;
 };
-export const deleteOneProjectQuery = async (filter, options) => {
+export const deleteOneQuery = async (filter, options) => {
     const recordDeleted = await Project.deleteOne(filter, options);
     return recordDeleted;
 };

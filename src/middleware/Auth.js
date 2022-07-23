@@ -1,6 +1,6 @@
 // Auth middleware
 
-import { findOneUserQuery } from "../queries/users.js";
+import { findOneQuery } from "../queries/users.js";
 
 /**
  * Check if user is logged in
@@ -49,7 +49,7 @@ export const isUsernameTaken = async (req, res, next) => {
         return res.status(400).json({ message: "Username is required" });
     }
 
-    const isUsernameTaken = await findOneUserQuery({ username });
+    const isUsernameTaken = await findOneQuery({ username });
     if (isUsernameTaken) {
         return res.status(401).json({
             message: `Username ${username} is already taken`,
@@ -70,7 +70,7 @@ export const isUsernameTaken = async (req, res, next) => {
 export const isEmailExist = async (req, res, next) => {
     const { email } = req.body;
 
-    const isEmailExist = await findOneUserQuery({ email });
+    const isEmailExist = await findOneQuery({ email });
     if (isEmailExist) {
         return res.status(401).json({
             message: `User with email ${email} already exist`,
@@ -94,7 +94,7 @@ export const isEmailExist = async (req, res, next) => {
  */
 export const isAdmin = (req, res, next) => {
     const auth = req.isAuthenticated();
-    const roles = req.user.roles;
+    const roles = req.user.Roles;
 
     if (auth) {
         const isAdmin =

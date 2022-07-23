@@ -1,6 +1,6 @@
 import { Strategy as LocalStrategy } from "passport-local";
 import { passwordMatch } from "../../lib/passwordUtils.js";
-import { findOneUserQuery } from "../../queries/users.js";
+import { findOneQuery } from "../../queries/users.js";
 
 const customFields = {
     usernameField: "email",
@@ -8,7 +8,7 @@ const customFields = {
 };
 const verifyCallback = async (email, password, done) => {
     try {
-        const user = await findOneUserQuery(
+        const user = await findOneQuery(
             { email },
             [],
             ["passwordSalt", "passwordHash"]

@@ -1,30 +1,30 @@
 import { ObjectId } from "mongodb";
 import { genPassword, passwordMatch } from "../lib/passwordUtils.js";
 import {
-    createCommentQuery,
-    deleteOneCommentQuery,
-    findAllCommentsQuery,
-    findByIdCommentQuery,
-    findOneCommentQuery,
-    updateOneCommentQuery,
+    createQuery,
+    deleteOneQuery,
+    findAllQuery,
+    findByIdQuery,
+    findOneQuery,
+    updateOneQuery,
 } from "../queries/comments.js";
 import {
     validateCreateComment,
     validateUpdateComment,
 } from "../validation/Comment.js";
 
-export const getCommentById = async (req, res) => {
+export const getById = async (req, res) => {
     const id = req.params.id;
-    const comment = await findByIdCommentQuery(id);
+    const comment = await findByIdQuery(id);
     if (comment) {
         res.status(200).json({ comment });
     } else {
         res.status(404).json({ message: `Comment not found with ID: ${id}` });
     }
 };
-export const getCommentByName = async (req, res) => {
+export const getByName = async (req, res) => {
     const commentname = req.params.commentname;
-    const comment = await findOneCommentQuery({ commentname });
+    const comment = await findOneQuery({ commentname });
     if (comment) {
         res.status(200).json({ comment });
     } else {
@@ -34,21 +34,21 @@ export const getCommentByName = async (req, res) => {
     }
 };
 
-export const getComments = async (req, res) => {
+export const getAll = async (req, res) => {
     const { page, size } = req.query;
     const params = {
         page: parseInt(page),
         size: parseInt(size),
     };
 
-    const data = await findAllCommentsQuery({}, [], [], params);
+    const data = await findAllQuery({}, [], [], params);
     if (data) {
         return res.status(200).json(data);
     } else {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getCommentsBySearch = async (req, res) => {
+export const getAllBySearch = async (req, res) => {
     const { page, size } = req.query;
     const { query } = req.params;
     const filter = { $text: { $search: query } };
@@ -60,14 +60,14 @@ export const getCommentsBySearch = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllCommentsQuery(filter, [], [], params);
+    const data = await findAllQuery(filter, [], [], params);
     if (data) {
         return res.status(200).json(data);
     } else {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getCommentsByTaskId = async (req, res) => {
+export const getAllByTaskId = async (req, res) => {
     const TaskId = req.params.id;
     const { page, size } = req.query;
     const filter = { TaskId };
@@ -76,7 +76,7 @@ export const getCommentsByTaskId = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllCommentsQuery(
+    const data = await findAllQuery(
         filter,
         ["Avatars", "Images", "Roles"],
         [],
@@ -89,7 +89,7 @@ export const getCommentsByTaskId = async (req, res) => {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getCommentsByUserId = async (req, res) => {
+export const getAllByUserId = async (req, res) => {
     const UserId = req.params.id;
     const { page, size } = req.query;
     const filter = { UserId };
@@ -98,7 +98,7 @@ export const getCommentsByUserId = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllCommentsQuery(
+    const data = await findAllQuery(
         filter,
         ["Avatars", "Images", "Roles"],
         [],
@@ -111,15 +111,13 @@ export const getCommentsByUserId = async (req, res) => {
     }
 };
 
-export const createComment = async (req, res, next) => {
+export const create = async (req, res, next) => {
     const { session, user } = req;
 
-    const { content, TaskId } = req.body;
+    const { content, Task } = req.body;
     const commentData = {
         content,
-        TaskId: TaskId,
-        Task: TaskId,
-        UserId: user.id,
+        Task,
         User: user.id,
     };
 
@@ -132,7 +130,7 @@ export const createComment = async (req, res, next) => {
         });
     }
 
-    const createdComment = await createCommentQuery(commentData);
+    const createdComment = await createQuery(commentData);
 
     if (createdComment) {
         return res.status(201).json({
@@ -143,15 +141,15 @@ export const createComment = async (req, res, next) => {
         return res.status(500).json({ message: `Faile to create a comment` });
     }
 };
-export const updateComment = async (req, res) => {
+export const update = async (req, res) => {
     const id = req.params.id;
     const { session, user } = req;
 
-    const { content, TaskId } = req.body;
+    const { content, Task } = req.body;
     const commentData = {
         content,
-        TaskId: TaskId,
-        UserId: user.id,
+        Task,
+        User: user.id,
     };
 
     const isCommentValid = validateUpdateComment(commentData);
@@ -162,7 +160,7 @@ export const updateComment = async (req, res) => {
         });
     }
 
-    const updatedComment = await updateOneCommentQuery({ id }, commentData);
+    const updatedComment = await updateOneQuery({ _id: id }, commentData);
     if (updatedComment) {
         return res.status(200).json({
             message: `Comment updated with ID: ${updatedComment[0]?.id}`,
@@ -174,8 +172,8 @@ export const updateComment = async (req, res) => {
         });
     }
 };
-export const deleteComment = async (req, res) => {
+export const remove = async (req, res) => {
     const id = req.params.id;
-    await deleteOneCommentQuery({ id });
+    await deleteOneQuery({ _id: id });
     res.status(200).json({ message: `Comment deleted with ID: ${id}` });
 };

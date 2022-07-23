@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Project, User } from "../models/index.js";
-import { findOneUserAndUpdate } from "../queries/users.js";
+import { findOneAndUpdate } from "../queries/users.js";
 import { randomNumber } from "../utils/index.js";
 
 export const createFakeProjects = async (record) => {
@@ -16,7 +16,7 @@ export const createFakeProjects = async (record) => {
         });
         fakeProjects.push(project);
 
-        await findOneUserAndUpdate(
+        await findOneAndUpdate(
             { _id: randomUser.id },
             {
                 $push: {

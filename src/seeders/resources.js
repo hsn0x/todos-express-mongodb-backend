@@ -1,12 +1,6 @@
 import { Resource } from "../models/index.js";
 import { RESOURCES } from "../constants/index.js";
-import {
-    findAllPermissionsQuery,
-    findOnePermissionAndUpdate,
-    findOnePermissionQuery,
-} from "../queries/permissions.js";
-import { findAllResourcesQuery } from "../queries/resources.js";
-import { ObjectId } from "mongodb";
+import { findAllQuery, findOneAndUpdate } from "../queries/permissions.js";
 
 export const createResources = async () => {
     const resources = [];
@@ -19,7 +13,7 @@ export const createResources = async () => {
         resources.push(resource);
     }
 
-    const permissions = await findAllPermissionsQuery();
+    const permissions = await findAllQuery();
     for (
         let permissionIndex = 0;
         permissionIndex < permissions.length;
@@ -33,7 +27,7 @@ export const createResources = async () => {
         ) {
             const resource = resources[resourceIndex];
 
-            await findOnePermissionAndUpdate(
+            await findOneAndUpdate(
                 { _id: permission._id },
                 {
                     $push: {

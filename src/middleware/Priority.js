@@ -1,6 +1,6 @@
-import { findOnePriorityQuery } from "../queries/priorities.js";
+import { findOneQuery } from "../queries/priorities.js";
 
-const isPriorityOwner = async (req, res, next) => {
+const isOwner = async (req, res, next) => {
     const id = parseInt(req.params.id);
     const { session, user } = req;
 
@@ -10,11 +10,9 @@ const isPriorityOwner = async (req, res, next) => {
         });
     }
 
-    const isPriorityOwner = user.Priorities.find(
-        (priority) => priority.id === id
-    );
+    const isOwner = user.Priorities.find((priority) => priority.id === id);
 
-    if (isPriorityOwner) {
+    if (isOwner) {
         return next();
     } else {
         return res.status(401).json({
@@ -23,4 +21,4 @@ const isPriorityOwner = async (req, res, next) => {
     }
 };
 
-export { isPriorityOwner };
+export { isOwner };

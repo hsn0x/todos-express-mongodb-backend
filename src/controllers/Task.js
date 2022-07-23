@@ -1,25 +1,25 @@
 import {
-    createTaskQuery,
-    deleteOneTaskQuery,
-    findAllTasksQuery,
-    findByIdTaskQuery,
-    findOneTaskQuery,
-    updateOneTaskQuery,
+    createQuery,
+    deleteOneQuery,
+    findAllQuery,
+    findByIdQuery,
+    findOneQuery,
+    updateOneQuery,
 } from "../queries/tasks.js";
 import { validateCreateTask, validateUpdateTask } from "../validation/Task.js";
 
-export const getTaskById = async (req, res) => {
+export const getById = async (req, res) => {
     const id = req.params.id;
-    const task = await findByIdTaskQuery(id);
+    const task = await findByIdQuery(id);
     if (task) {
         res.status(200).json({ task });
     } else {
         res.status(404).json({ message: `Task not found with ID: ${id}` });
     }
 };
-export const getTaskByName = async (req, res) => {
+export const getByName = async (req, res) => {
     const taskname = req.params.taskname;
-    const task = await findOneTaskQuery({ taskname });
+    const task = await findOneQuery({ taskname });
     if (task) {
         res.status(200).json({ task });
     } else {
@@ -29,21 +29,21 @@ export const getTaskByName = async (req, res) => {
     }
 };
 
-export const getTasks = async (req, res) => {
+export const getAll = async (req, res) => {
     const { page, size } = req.query;
     const params = {
         page: parseInt(page),
         size: parseInt(size),
     };
 
-    const data = await findAllTasksQuery({}, [], [], params);
+    const data = await findAllQuery({}, [], [], params);
     if (data) {
         return res.status(200).json(data);
     } else {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getTasksBySearch = async (req, res) => {
+export const getAllBySearch = async (req, res) => {
     const { page, size } = req.query;
     const { query } = req.params;
     const filter = { $text: { $search: query } };
@@ -55,14 +55,14 @@ export const getTasksBySearch = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllTasksQuery(filter, [], [], params);
+    const data = await findAllQuery(filter, [], [], params);
     if (data) {
         return res.status(200).json(data);
     } else {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getTasksByTaskId = async (req, res) => {
+export const getAllByTaskId = async (req, res) => {
     const TaskId = req.params.id;
     const { page, size } = req.query;
     const filter = { TaskId };
@@ -71,7 +71,7 @@ export const getTasksByTaskId = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllTasksQuery(
+    const data = await findAllQuery(
         filter,
         ["Avatars", "Images", "Roles"],
         [],
@@ -84,7 +84,7 @@ export const getTasksByTaskId = async (req, res) => {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getTasksByUserId = async (req, res) => {
+export const getAllByUserId = async (req, res) => {
     const UserId = req.params.id;
     const { page, size } = req.query;
     const filter = { UserId };
@@ -93,7 +93,7 @@ export const getTasksByUserId = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllTasksQuery(
+    const data = await findAllQuery(
         filter,
         ["Avatars", "Images", "Roles"],
         [],
@@ -106,7 +106,7 @@ export const getTasksByUserId = async (req, res) => {
     }
 };
 
-export const createTask = async (req, res, next) => {
+export const create = async (req, res, next) => {
     const { session, user } = req;
 
     const { title, description, dueDate, Project, Labels, Priority } = req.body;
@@ -129,7 +129,7 @@ export const createTask = async (req, res, next) => {
         });
     }
 
-    const createdTask = await createTaskQuery(data);
+    const createdTask = await createQuery(data);
 
     if (createdTask) {
         return res.status(201).json({
@@ -140,7 +140,7 @@ export const createTask = async (req, res, next) => {
         return res.status(500).json({ message: `Faile to create a task` });
     }
 };
-export const updateTask = async (req, res) => {
+export const update = async (req, res) => {
     const id = req.params.id;
     const { session, user } = req;
 
@@ -163,7 +163,7 @@ export const updateTask = async (req, res) => {
         });
     }
 
-    const updatedTask = await updateOneTaskQuery({ _id: id }, data);
+    const updatedTask = await updateOneQuery({ _id: id }, data);
     if (updatedTask) {
         return res.status(200).json({
             message: `Task updated with ID: ${updatedTask[0]?.id}`,
@@ -175,8 +175,8 @@ export const updateTask = async (req, res) => {
         });
     }
 };
-export const deleteTask = async (req, res) => {
+export const remove = async (req, res) => {
     const id = req.params.id;
-    await deleteOneTaskQuery({ id });
+    await deleteOneQuery({ _id: id });
     res.status(200).json({ message: `Task deleted with ID: ${id}` });
 };

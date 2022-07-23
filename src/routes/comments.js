@@ -1,30 +1,30 @@
 import { Router } from "express";
 import {
-    createComment,
-    deleteComment,
-    getCommentById,
-    getCommentByName,
-    getComments,
-    getCommentsBySearch,
-    getCommentsByTaskId,
-    getCommentsByUserId,
-    updateComment,
+    create,
+    remove,
+    getById,
+    getByName,
+    getAll,
+    getAllBySearch,
+    getAllByTaskId,
+    getAllByUserId,
+    update,
 } from "../controllers/Comment.js";
 import { isAuth } from "../middleware/Auth.js";
-import { isCommentOwner } from "../middleware/Comment.js";
+import { isOwner } from "../middleware/Comment.js";
 
 const router = Router();
 
-router.get("/:id", getCommentById);
-router.get("/name/:slug", getCommentByName);
+router.get("/:id", getById);
+router.get("/name/:slug", getByName);
 
-router.get("/", getComments);
-router.get("/q/:query", getCommentsBySearch);
-router.get("/TaskId/:id", getCommentsByTaskId);
-router.get("/UserId/:id", getCommentsByUserId);
+router.get("/", getAll);
+router.get("/q/:query", getAllBySearch);
+router.get("/TaskId/:id", getAllByTaskId);
+router.get("/UserId/:id", getAllByUserId);
 
-router.post("/", isAuth, createComment);
-router.put("/:id", isAuth, isCommentOwner, updateComment);
-router.delete("/:id", isAuth, isCommentOwner, deleteComment);
+router.post("/", isAuth, create);
+router.put("/:id", isAuth, isOwner, update);
+router.delete("/:id", isAuth, isOwner, remove);
 
 export default router;

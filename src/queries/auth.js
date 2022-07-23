@@ -1,6 +1,6 @@
 import { User } from "../models/index.js";
 
-export const registerUserQuery = async (data) => {
+export const registerQuery = async (data) => {
     const registerdUser = await User.create(data);
 
     delete registerdUser.passwordHash;

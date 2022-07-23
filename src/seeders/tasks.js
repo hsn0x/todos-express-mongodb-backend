@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Project, Task, User } from "../models/index.js";
-import { findOneUserAndUpdate } from "../queries/users.js";
+import { findOneAndUpdate as findOneAndUpdateUsers } from "../queries/users.js";
 import { randomNumber } from "../utils/index.js";
 
 export const createFakeTasks = async (record) => {
@@ -22,7 +22,7 @@ export const createFakeTasks = async (record) => {
         });
         fakeTasks.push(task);
 
-        await findOneUserAndUpdate(
+        await findOneAndUpdateUsers(
             { _id: randomUser.id },
             {
                 $push: {
@@ -30,7 +30,7 @@ export const createFakeTasks = async (record) => {
                 },
             }
         );
-        // await findOneProjectAndUpdate(
+        // await findOneAndUpdate(
         //     { _id: randomTask.id },
         //     {
         //         $push: {

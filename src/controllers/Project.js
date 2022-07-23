@@ -1,30 +1,30 @@
 import { ObjectId } from "mongodb";
 import { genPassword, passwordMatch } from "../lib/passwordUtils.js";
 import {
-    createProjectQuery,
-    deleteOneProjectQuery,
-    findAllProjectsQuery,
-    findByIdProjectQuery,
-    findOneProjectQuery,
-    updateOneProjectQuery,
+    createQuery,
+    deleteOneQuery,
+    findAllQuery,
+    findByIdQuery,
+    findOneQuery,
+    updateOneQuery,
 } from "../queries/projects.js";
 import {
     validateCreateProject,
     validateUpdateProject,
 } from "../validation/Project.js";
 
-export const getProjectById = async (req, res) => {
+export const getById = async (req, res) => {
     const id = req.params.id;
-    const project = await findByIdProjectQuery(id);
+    const project = await findByIdQuery(id);
     if (project) {
         res.status(200).json({ project });
     } else {
         res.status(404).json({ message: `Project not found with ID: ${id}` });
     }
 };
-export const getProjectByName = async (req, res) => {
+export const getByName = async (req, res) => {
     const projectname = req.params.projectname;
-    const project = await findOneProjectQuery({ projectname });
+    const project = await findOneQuery({ projectname });
     if (project) {
         res.status(200).json({ project });
     } else {
@@ -34,21 +34,21 @@ export const getProjectByName = async (req, res) => {
     }
 };
 
-export const getProjects = async (req, res) => {
+export const getAll = async (req, res) => {
     const { page, size } = req.query;
     const params = {
         page: parseInt(page),
         size: parseInt(size),
     };
 
-    const data = await findAllProjectsQuery({}, [], [], params);
+    const data = await findAllQuery({}, [], [], params);
     if (data) {
         return res.status(200).json(data);
     } else {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getProjectsBySearch = async (req, res) => {
+export const getAllBySearch = async (req, res) => {
     const { page, size } = req.query;
     const { query } = req.params;
     const filter = { $text: { $search: query } };
@@ -60,14 +60,14 @@ export const getProjectsBySearch = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllProjectsQuery(filter, [], [], params);
+    const data = await findAllQuery(filter, [], [], params);
     if (data) {
         return res.status(200).json(data);
     } else {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getProjectsByTaskId = async (req, res) => {
+export const getAllByTaskId = async (req, res) => {
     const TaskId = req.params.id;
     const { page, size } = req.query;
     const filter = { TaskId };
@@ -76,7 +76,7 @@ export const getProjectsByTaskId = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllProjectsQuery(
+    const data = await findAllQuery(
         filter,
         ["Avatars", "Images", "Roles"],
         [],
@@ -89,7 +89,7 @@ export const getProjectsByTaskId = async (req, res) => {
         return res.status(404).json({ message: "No Data" });
     }
 };
-export const getProjectsByUserId = async (req, res) => {
+export const getAllByUserId = async (req, res) => {
     const UserId = req.params.id;
     const { page, size } = req.query;
     const filter = { UserId };
@@ -98,7 +98,7 @@ export const getProjectsByUserId = async (req, res) => {
         size: parseInt(size),
     };
 
-    const data = await findAllProjectsQuery(
+    const data = await findAllQuery(
         filter,
         ["Avatars", "Images", "Roles"],
         [],
@@ -111,7 +111,7 @@ export const getProjectsByUserId = async (req, res) => {
     }
 };
 
-export const createProject = async (req, res, next) => {
+export const create = async (req, res, next) => {
     const { session, user } = req;
 
     const { content, TaskId } = req.body;
@@ -132,7 +132,7 @@ export const createProject = async (req, res, next) => {
         });
     }
 
-    const createdProject = await createProjectQuery(projectData);
+    const createdProject = await createQuery(projectData);
 
     if (createdProject) {
         return res.status(201).json({
@@ -143,7 +143,7 @@ export const createProject = async (req, res, next) => {
         return res.status(500).json({ message: `Faile to create a project` });
     }
 };
-export const updateProject = async (req, res) => {
+export const update = async (req, res) => {
     const id = req.params.id;
     const { session, user } = req;
 
@@ -162,7 +162,7 @@ export const updateProject = async (req, res) => {
         });
     }
 
-    const updatedProject = await updateOneProjectQuery({ id }, projectData);
+    const updatedProject = await updateOneQuery({ id }, projectData);
     if (updatedProject) {
         return res.status(200).json({
             message: `Project updated with ID: ${updatedProject[0]?.id}`,
@@ -174,8 +174,8 @@ export const updateProject = async (req, res) => {
         });
     }
 };
-export const deleteProject = async (req, res) => {
+export const remove = async (req, res) => {
     const id = req.params.id;
-    await deleteOneProjectQuery({ id });
+    await deleteOneQuery({ id });
     res.status(200).json({ message: `Project deleted with ID: ${id}` });
 };

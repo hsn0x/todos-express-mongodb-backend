@@ -1,18 +1,18 @@
 import { faker } from "@faker-js/faker";
 import { Avatar, Image, User } from "../models/index.js";
 import { genPassword } from "../lib/passwordUtils.js";
-import { findOneRoleQuery } from "../queries/roles.js";
+import { findOneQuery } from "../queries/roles.js";
 import { ownerConfig } from "../config/index.js";
-import { findOneUserAndUpdate } from "../queries/users.js";
+import { findOneAndUpdate as findOneAndUpdateUsers } from "../queries/users.js";
 
-const createUsers = async () => {
+const creates = async () => {
     const hashedPassword = genPassword(ownerConfig.password);
     const passwordHash = hashedPassword.hash;
     const passwordSalt = hashedPassword.salt;
 
-    const ADMIN_ROLE = await findOneRoleQuery({ name: "ADMIN" });
-    const MODERATOR_ROLE = await findOneRoleQuery({ name: "MODERATOR" });
-    const EDITOR_ROLE = await findOneRoleQuery({ name: "EDITOR" });
+    const ADMIN_ROLE = await findOneQuery({ name: "ADMIN" });
+    const MODERATOR_ROLE = await findOneQuery({ name: "MODERATOR" });
+    const EDITOR_ROLE = await findOneQuery({ name: "EDITOR" });
 
     const image = await Image.create({
         public_id: faker.random.word(),
@@ -83,4 +83,4 @@ const createFakeUsers = async (record) => {
     User.bulkSave(fakeUsers);
 };
 
-export { createUsers, createFakeUsers };
+export { creates, createFakeUsers };

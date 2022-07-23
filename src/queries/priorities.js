@@ -1,7 +1,7 @@
 import { getPagination, getPagingData } from "../lib/handlePagination.js";
 import Priority from "../models/Priority.js";
 
-export const findAllPrioritiesQuery = async (
+export const findAllQuery = async (
     filter = {},
     populate = [],
     salt = [],
@@ -30,36 +30,32 @@ export const findAllPrioritiesQuery = async (
     };
 };
 
-export const findByIdPriorityQuery = async (id, populate = [], salt = []) => {
+export const findByIdQuery = async (id, populate = [], salt = []) => {
     const data = await Priority.findById(id).select(salt).populate(populate);
     return data;
 };
-export const findOnePriorityQuery = async (
-    filter,
-    populate = [],
-    salt = []
-) => {
+export const findOneQuery = async (filter, populate = [], salt = []) => {
     const data = await Priority.findOne(filter).select(salt).populate(populate);
     return data;
 };
-export const findByIdPriorityAndUpdate = async (id, data) => {
+export const findByIdAndUpdate = async (id, data) => {
     const recordUpdated = await Priority.findByIdAndUpdate(id, data);
     return recordUpdated;
 };
-export const findOnePriorityAndUpdate = async (filter, data) => {
+export const findOneAndUpdate = async (filter, data) => {
     const recordUpdated = await Priority.findOneAndUpdate(filter, data);
     return recordUpdated;
 };
 
-export const createPriorityQuery = async (data, options) => {
+export const createQuery = async (data, options) => {
     const createdPriority = Priority.create(data, options);
     return createdPriority;
 };
-export const updateOnePriorityQuery = async (filter, data, options = {}) => {
+export const updateOneQuery = async (filter, data, options = {}) => {
     const recordUpdated = await Priority.updateOne(filter, data, options);
     return recordUpdated;
 };
-export const deleteOnePriorityQuery = async (filter, options) => {
+export const deleteOneQuery = async (filter, options) => {
     const recordDeleted = await Priority.deleteOne(filter, options);
     return recordDeleted;
 };
