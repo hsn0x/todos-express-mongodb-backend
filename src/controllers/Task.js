@@ -111,16 +111,18 @@ export const getTasksByUserId = async (req, res) => {
 export const createTask = async (req, res, next) => {
     const { session, user } = req;
 
-    const { content, TaskId } = req.body;
-    const taskData = {
-        content,
-        TaskId: TaskId,
-        Task: TaskId,
-        UserId: user.id,
+    const { title, description, dueDate, Project, Labels, Priority } = req.body;
+    const data = {
+        title,
+        description,
+        due_date: new Date(dueDate).toISOString(),
         User: user.id,
+        Project,
+        Labels,
+        Priority,
     };
 
-    const isTaskValid = validateCreateTask(taskData);
+    const isTaskValid = validateCreateTask(data);
 
     if (!isTaskValid.valid) {
         return res.status(400).json({
@@ -129,7 +131,7 @@ export const createTask = async (req, res, next) => {
         });
     }
 
-    const createdTask = await createTaskQuery(taskData);
+    const createdTask = await createTaskQuery(data);
 
     if (createdTask) {
         return res.status(201).json({
@@ -144,14 +146,18 @@ export const updateTask = async (req, res) => {
     const id = req.params.id;
     const { session, user } = req;
 
-    const { content, TaskId } = req.body;
-    const taskData = {
-        content,
-        TaskId: TaskId,
-        UserId: user.id,
+    const { title, description, dueDate, Project, Labels, Priority } = req.body;
+    const data = {
+        title,
+        description,
+        due_date: new Date(dueDate).toISOString(),
+        User: user.id,
+        Project,
+        Labels,
+        Priority,
     };
 
-    const isTaskValid = validateUpdateTask(taskData);
+    const isTaskValid = validateUpdateTask(data);
     if (!isTaskValid.valid) {
         return res.status(400).json({
             message: "Invalid task data",
@@ -159,7 +165,7 @@ export const updateTask = async (req, res) => {
         });
     }
 
-    const updatedTask = await updateOneTaskQuery({ id }, taskData);
+    const updatedTask = await updateOneTaskQuery({ _id }, data);
     if (updatedTask) {
         return res.status(200).json({
             message: `Task updated with ID: ${updatedTask[0]?.id}`,

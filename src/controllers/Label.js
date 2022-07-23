@@ -114,16 +114,14 @@ export const getLabelsByUserId = async (req, res) => {
 export const createLabel = async (req, res, next) => {
     const { session, user } = req;
 
-    const { content, TaskId } = req.body;
-    const labelData = {
-        content,
-        TaskId: TaskId,
+    const { name, TaskId } = request.body;
+    const data = {
+        name,
         Task: TaskId,
-        UserId: user.id,
         User: user.id,
     };
 
-    const isLabelValid = validateCreateLabel(labelData);
+    const isLabelValid = validateCreateLabel(data);
 
     if (!isLabelValid.valid) {
         return res.status(400).json({
@@ -132,7 +130,7 @@ export const createLabel = async (req, res, next) => {
         });
     }
 
-    const createdLabel = await createLabelQuery(labelData);
+    const createdLabel = await createLabelQuery(data);
 
     if (createdLabel) {
         return res.status(201).json({
@@ -147,14 +145,14 @@ export const updateLabel = async (req, res) => {
     const id = req.params.id;
     const { session, user } = req;
 
-    const { content, TaskId } = req.body;
-    const labelData = {
-        content,
-        TaskId: TaskId,
-        UserId: user.id,
+    const { name, TaskId } = request.body;
+    const data = {
+        name,
+        Task: TaskId,
+        User: user.id,
     };
 
-    const isLabelValid = validateUpdateLabel(labelData);
+    const isLabelValid = validateUpdateLabel(data);
     if (!isLabelValid.valid) {
         return res.status(400).json({
             message: "Invalid label data",
@@ -162,7 +160,7 @@ export const updateLabel = async (req, res) => {
         });
     }
 
-    const updatedLabel = await updateOneLabelQuery({ id }, labelData);
+    const updatedLabel = await updateOneLabelQuery({ id }, data);
     if (updatedLabel) {
         return res.status(200).json({
             message: `Label updated with ID: ${updatedLabel[0]?.id}`,
@@ -177,5 +175,5 @@ export const updateLabel = async (req, res) => {
 export const deleteLabel = async (req, res) => {
     const id = req.params.id;
     await deleteOneLabelQuery({ id });
-    res.status(200).json({ message: `Label deleted with ID: ${id}` });
+    return res.status(200).json({ message: `Label deleted with ID: ${id}` });
 };

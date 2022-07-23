@@ -10,27 +10,27 @@ const CreateTaskSchema = {
         title: { type: "string" },
         description: { type: "string" },
         due_date: { type: "string", format: "date-time" },
-        LabelsIds: {
+        Labels: {
             type: "array",
             items: {
                 type: "string",
                 pattern: "^[a-f\\d]{24}$",
             },
         },
-        PriorityId: {
+        Priority: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
-        ProjectId: {
+        Project: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
-        UserId: {
+        User: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
     },
-    required: ["title", "description", "UserId"],
+    required: ["title", "description", "User"],
     additionalProperties: false,
 };
 
@@ -40,27 +40,27 @@ const UpdateTaskSchema = {
         title: { type: "string" },
         description: { type: "string" },
         due_date: { type: "string", format: "date-time" },
-        LabelsIds: {
+        Labels: {
             type: "array",
             items: {
                 type: "string",
                 pattern: "^[a-f\\d]{24}$",
             },
         },
-        PriorityId: {
+        Priority: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
-        ProjectId: {
+        Project: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
-        UserId: {
+        User: {
             type: "string",
             pattern: "^[a-f\\d]{24}$",
         },
     },
-    required: ["title", "description", "UserId"],
+    required: ["title", "description", "User"],
     additionalProperties: false,
 };
 

@@ -114,12 +114,11 @@ export const getPrioritiesByUserId = async (req, res) => {
 export const createPriority = async (req, res, next) => {
     const { session, user } = req;
 
-    const { content, TaskId } = req.body;
+    const { name, query, TaskId } = request.body;
     const priorityData = {
-        content,
-        TaskId: TaskId,
-        Task: TaskId,
-        UserId: user.id,
+        name,
+        query,
+        Tasks: TaskId,
         User: user.id,
     };
 
@@ -147,11 +146,12 @@ export const updatePriority = async (req, res) => {
     const id = req.params.id;
     const { session, user } = req;
 
-    const { content, TaskId } = req.body;
+    const { name, query, TaskId } = request.body;
     const priorityData = {
-        content,
-        TaskId: TaskId,
-        UserId: user.id,
+        name,
+        query,
+        Tasks: parseInt(TaskId),
+        User: user.id,
     };
 
     const isPriorityValid = validateUpdatePriority(priorityData);
