@@ -16,12 +16,12 @@ app.use(middlewares)
 app.use("/api/v1", routes)
 
 const serverHost = expressConfig.host
-const serverPort = process.env.PORT || expressConfig.port
+const serverPort = process.env.PORT || 80
 
 const server = async () => {
     await mongodb()
-    await dbSeed()
-    await dbSeedFake()
+    // await dbSeed()
+    // await dbSeedFake()
 
     app.listen(serverPort, () => {
         console.log(
