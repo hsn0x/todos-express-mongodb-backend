@@ -1,3 +1,3 @@
 export default {
-    amount: 50,
-};
+    amount: 5,
+}
