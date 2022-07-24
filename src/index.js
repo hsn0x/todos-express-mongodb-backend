@@ -25,10 +25,6 @@ if (deploymentConfig.service == "heroku") {
 }
 
 const server = async () => {
-    await mongodb()
-    await dbSeed()
-    await dbSeedFake()
-
     app.listen(serverPort, () => {
         console.log(
             `Express.js API Server with MongoDB is runnig ..., on port http://${serverHost}:${serverPort}`
@@ -36,4 +32,11 @@ const server = async () => {
     })
 }
 
+const database = async () => {
+    await mongodb()
+    await dbSeed()
+    await dbSeedFake()
+}
+
 server()
+database()
