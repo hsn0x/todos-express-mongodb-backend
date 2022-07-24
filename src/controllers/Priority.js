@@ -76,7 +76,7 @@ export default {
 
         const data = await prioritiesQueries.findAllQuery(
             filter,
-            ["Avatars", "Images", "Roles"],
+            [],
             [],
             params
         )
@@ -98,7 +98,7 @@ export default {
 
         const data = await prioritiesQueries.findAllQuery(
             filter,
-            ["Avatars", "Images", "Roles"],
+            [],
             [],
             params
         )

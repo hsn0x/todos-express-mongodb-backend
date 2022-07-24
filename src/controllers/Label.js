@@ -73,12 +73,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await labelsQueries.findAllQuery(
-            filter,
-            ["Avatars", "Images", "Roles"],
-            [],
-            params
-        )
+        const data = await labelsQueries.findAllQuery(filter, [], [], params)
 
         if (data) {
             return res.status(200).json(data)
@@ -95,12 +90,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await labelsQueries.findAllQuery(
-            filter,
-            ["Avatars", "Images", "Roles"],
-            [],
-            params
-        )
+        const data = await labelsQueries.findAllQuery(filter, [], [], params)
         if (data) {
             return res.status(200).json(data)
         } else {

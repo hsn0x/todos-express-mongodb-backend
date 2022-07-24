@@ -35,7 +35,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery({}, [], [], params)
+        const data = await commentsQueries.findAllQuery({}, [], [], params)
         if (data) {
             return res.status(200).json(data)
         } else {
@@ -54,7 +54,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(filter, [], [], params)
+        const data = await commentsQueries.findAllQuery(filter, [], [], params)
         if (data) {
             return res.status(200).json(data)
         } else {
@@ -70,12 +70,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(
-            filter,
-            ["Avatars", "Images", "Roles"],
-            [],
-            params
-        )
+        const data = await commentsQueries.findAllQuery(filter, [], [], params)
 
         if (data) {
             return res.status(200).json(data)
@@ -92,12 +87,7 @@ export default {
             size: parseInt(size),
         }
 
-        const data = await findAllQuery(
-            filter,
-            ["Avatars", "Images", "Roles"],
-            [],
-            params
-        )
+        const data = await commentsQueries.findAllQuery(filter, [], [], params)
         if (data) {
             return res.status(200).json(data)
         } else {
