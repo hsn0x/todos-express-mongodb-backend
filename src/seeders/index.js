@@ -20,6 +20,7 @@ export const dbSeed = async () => {
     await createPermissions()
     await createResources()
     await creates()
+    console.log(`Seeding ${RECORD} records ... DONE`)
 }
 
 /**
@@ -34,6 +35,8 @@ export const dbSeedFake = async () => {
     await createFakeComments(RECORD)
     await createFakeLabels(RECORD)
     await createFakePriorities(RECORD)
+
+    console.log(`Seeding fake ${RECORD} records ... DONE`)
 
     // await createFakeStudents(RECORD);
 }
