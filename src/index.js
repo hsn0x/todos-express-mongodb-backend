@@ -20,8 +20,8 @@ const serverPort = process.env.PORT || 80
 
 const server = async () => {
     await mongodb()
-    // await dbSeed()
-    // await dbSeedFake()
+    await dbSeed()
+    await dbSeedFake()
 
     app.listen(serverPort, () => {
         console.log(
