@@ -4,7 +4,7 @@ import passport from "passport"
 import routes from "./routes/index.js"
 import { middlewares } from "./middleware/index.js"
 
-import { expressConfig } from "./config/index.js"
+import { deploymentConfig, expressConfig } from "./config/index.js"
 
 import { dbSeed, dbSeedFake } from "./seeders/index.js"
 import mongodb from "./db/mongodb.js"
@@ -16,7 +16,13 @@ app.use(middlewares)
 app.use("/api/v1", routes)
 
 const serverHost = expressConfig.host
-const serverPort = process.env.PORT || expressConfig.port
+let serverPort = ""
+
+if (deploymentConfig.service == "heroku") {
+    serverPort = process.env.PORT || 80
+} else {
+    serverPort = expressConfig.port
+}
 
 const server = async () => {
     await mongodb()

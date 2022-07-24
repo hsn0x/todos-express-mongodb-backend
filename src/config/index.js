@@ -1,17 +1,9 @@
 import "./env.js"
 
-import expressConfig from "./express.js"
-import sessionConfig from "./session.js"
-import passportConfig from "./passport.js"
-import ownerConfig from "./owner.js"
-import seedersConfig from "./seeders.js"
-import mongodbConfig from "./mongodb.js"
-
-export {
-    expressConfig,
-    sessionConfig,
-    passportConfig,
-    ownerConfig,
-    seedersConfig,
-    mongodbConfig,
-}
+export { default as expressConfig } from "./express.js"
+export { default as sessionConfig } from "./session.js"
+export { default as passportConfig } from "./passport.js"
+export { default as ownerConfig } from "./owner.js"
+export { default as seedersConfig } from "./seeders.js"
+export { default as mongodbConfig } from "./mongodb.js"
+export { default as deploymentConfig } from "./deployment.js"
