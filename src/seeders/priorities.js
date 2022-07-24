@@ -5,6 +5,8 @@ import { tasksQueries, usersQueries } from "../queries/index.js"
 import { randomNumber } from "../utils/index.js"
 
 export const createFakePriorities = async (record) => {
+    console.log(`Creating ${record} fake priorities ...`)
+
     const tasks = await Task.find()
     const users = await User.find()
     const priorities = []
@@ -40,4 +42,6 @@ export const createFakePriorities = async (record) => {
     }
 
     await Priority.bulkSave(priorities)
+
+    console.log(`Created ${record} fake priorities`)
 }

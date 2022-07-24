@@ -18,6 +18,7 @@ app.use("/api/v1", routes)
 const serverHost = expressConfig.host
 let serverPort = ""
 
+console.log(deploymentConfig.service)
 if (deploymentConfig.service == "heroku") {
     serverPort = process.env.PORT || 80
 } else {

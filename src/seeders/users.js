@@ -41,6 +41,7 @@ const creates = async () => {
 }
 
 const createFakeUsers = async (record) => {
+    console.log(`Creating ${record} fake users ...`)
     const fakeUsers = []
     const fakeImages = []
     const fakeAvatars = []
@@ -82,6 +83,8 @@ const createFakeUsers = async (record) => {
     Image.bulkSave(fakeImages)
     Avatar.bulkSave(fakeAvatars)
     User.bulkSave(fakeUsers)
+
+    console.log("Fake users created")
 }
 
 export { creates, createFakeUsers }

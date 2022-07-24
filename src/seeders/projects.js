@@ -4,6 +4,8 @@ import { usersQueries } from "../queries/index.js"
 import { randomNumber } from "../utils/index.js"
 
 export const createFakeProjects = async (record) => {
+    console.log(`Creating ${record} fake projects ...`)
+
     const users = await User.find()
     const fakeProjects = []
 
@@ -26,4 +28,6 @@ export const createFakeProjects = async (record) => {
         )
     }
     await Project.bulkSave(fakeProjects)
+
+    console.log(`Created ${record} fake projects`)
 }

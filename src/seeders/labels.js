@@ -4,6 +4,8 @@ import { tasksQueries, usersQueries } from "../queries/index.js"
 import { randomNumber } from "../utils/index.js"
 
 export const createFakeLabels = async (record) => {
+    console.log(`Creating ${record} fake labels ...`)
+
     const tasks = await Task.find()
     const users = await User.find()
     const fakeLabels = []
@@ -38,4 +40,6 @@ export const createFakeLabels = async (record) => {
     }
 
     await Label.bulkSave(fakeLabels)
+
+    console.log(`Created ${record} fake labels`)
 }

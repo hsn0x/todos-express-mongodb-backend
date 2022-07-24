@@ -3,6 +3,8 @@ import { RESOURCES } from "../constants/index.js"
 import { permissionsQueries } from "../queries/index.js"
 
 export const createResources = async () => {
+    console.log(`Creating ${RESOURCES.length} resources ...`)
+
     const resources = []
     for (let index = 0; index < RESOURCES.length; index++) {
         const RESOURCE = RESOURCES[index]
@@ -38,5 +40,7 @@ export const createResources = async () => {
         }
     }
 
-    Resource.bulkSave(resources)
+    await Resource.bulkSave(resources)
+
+    console.log(`Created ${RESOURCES.length} resources`)
 }

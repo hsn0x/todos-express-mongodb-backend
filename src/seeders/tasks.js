@@ -4,6 +4,7 @@ import { usersQueries } from "../queries/index.js"
 import { randomNumber } from "../utils/index.js"
 
 export const createFakeTasks = async (record) => {
+    console.log(`Creating ${record} fake tasks ...`)
     const fakeTasks = []
 
     const projects = await Project.find()
@@ -41,4 +42,6 @@ export const createFakeTasks = async (record) => {
     }
 
     await Task.bulkSave(fakeTasks)
+
+    console.log(`Created ${record} fake tasks`)
 }

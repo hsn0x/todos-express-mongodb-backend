@@ -4,6 +4,8 @@ import { rolesQueries } from "../queries/index.js"
 import { permissionsQueries } from "../queries/index.js"
 
 export const createPermissions = async () => {
+    console.log(`Creating ${PERMISSIONS.length} permissions ...`)
+
     const permissions = []
     for (let index = 0; index < PERMISSIONS.length; index++) {
         const PERMISSION = PERMISSIONS[index]
@@ -14,6 +16,7 @@ export const createPermissions = async () => {
         permissions.push(permission)
     }
     await Permission.bulkSave(permissions)
+    console.log(`Created ${PERMISSIONS.length} permissions`)
 
     for (let index = 0; index < ROLES.length; index++) {
         const ROLE = ROLES[index]
