@@ -16,7 +16,7 @@ app.use(middlewares)
 app.use("/api/v1", routes)
 
 const serverHost = expressConfig.host
-const serverPort = expressConfig.port
+const serverPort = process.env.PORT || expressConfig.port
 
 const server = async () => {
     await mongodb()
