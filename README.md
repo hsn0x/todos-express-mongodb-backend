@@ -9,9 +9,9 @@ I'm a full stack developer...
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/hsn0x)
 [![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/hsn_0x)
 
-# Todos Express.js MongoDB.js Backend API
+# Todos Express MongoDB.js Backend API
 
-Todos List Backend API with Express.js and MongoDB.js
+Todos List Backend API with Express and MongoDB.js
 
 ## Authors
 
@@ -121,8 +121,8 @@ To run this project, you will need to add the following environment variables to
 Here are some related projects
 
 -   [Marketplace Next.js Frontend](https://github.com/hsn0x/marketplace-nextjs-frontend)
--   [Todos Express.js Sequelize.js Backend](https://github.com/hsn0x/todos-express.js-sequelize.js-backend.git)
--   [Marketplace Express.js Sequelize.js Backend](https://github.com/hsn0x/marketplace-expressjs-sequelize-backend.git)
+-   [Todos Express Sequelize Backend](https://github.com/hsn0x/todos-express.js-sequelize.js-backend.git)
+-   [Marketplace Express Sequelize Backend](https://github.com/hsn0x/marketplace-express-sequelize-backend.git)
 
 ## Roadmap
 
