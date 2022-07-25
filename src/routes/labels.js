@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { LabelController } from "../controllers/index.js"
-import { AuthMiddleware } from "../middleware/index.js"
-import { LabelMiddleware } from "../middleware/index.js"
+import { AuthMiddleware } from "../middlewares/index.js"
+import { LabelMiddleware } from "../middlewares/index.js"
 
 const router = Router()
 

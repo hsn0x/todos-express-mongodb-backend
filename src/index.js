@@ -1,8 +1,7 @@
 import express from "express"
-import passport from "passport"
 
 import routes from "./routes/index.js"
-import { middlewares } from "./middleware/index.js"
+import { middlewares } from "./middlewares/index.js"
 
 import { deploymentConfig, expressConfig } from "./config/index.js"
 

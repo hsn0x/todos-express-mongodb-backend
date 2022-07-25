@@ -49,8 +49,8 @@ export default {
         return recordUpdated
     },
     createQuery: async (data, options) => {
-        const createdComment = Comment.create(data, options)
-        return createdComment
+        const recordCreated = Comment.create(data, options)
+        return recordCreated
     },
     updateOneQuery: async (filter, data, options = {}) => {
         const recordUpdated = await Comment.updateOne(filter, data, options)

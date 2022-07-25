@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { ProjectController } from "../controllers/index.js"
-import { AuthMiddleware } from "../middleware/index.js"
-import { ProjectMiddleware } from "../middleware/index.js"
+import { AuthMiddleware } from "../middlewares/index.js"
+import { ProjectMiddleware } from "../middlewares/index.js"
 
 const router = Router()
 

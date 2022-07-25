@@ -46,8 +46,8 @@ export default {
         return recordUpdated
     },
     createQuery: async (data, options) => {
-        const createdTask = Task.create(data, options)
-        return createdTask
+        const recordCreated = Task.create(data, options)
+        return recordCreated
     },
     updateOneQuery: async (filter, data, options = {}) => {
         const recordUpdated = await Task.updateOne(filter, data, options)

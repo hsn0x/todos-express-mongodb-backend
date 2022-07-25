@@ -16,10 +16,12 @@ const RECORD = seedersConfig.amount
  */
 export const dbSeed = async () => {
     console.log(`Seeding ${RECORD} records ...`)
+
     await createRoles()
     await createPermissions()
     await createResources()
     await creates()
+
     console.log(`Seeding ${RECORD} records ... DONE`)
 }
 

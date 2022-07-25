@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { PriorityController } from "../controllers/index.js"
-import { AuthMiddleware } from "../middleware/index.js"
-import { PriorityMiddleware } from "../middleware/index.js"
+import { AuthMiddleware } from "../middlewares/index.js"
+import { PriorityMiddleware } from "../middlewares/index.js"
 
 const router = Router()
 
