@@ -1,7 +1,7 @@
 {
     "name": "todos-express-mongodb-backend",
     "version": "1.0.3",
-    "description": "hsn todos list with express.js and mongodb, backend",
+    "description": "todos list with express.js and mongodb, backend",
     "main": "src/index.js",
     "author": "Hassane Bendaoud <40140987+hsn0x@users.noreply.github.com>",
     "license": "MIT",

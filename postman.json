@@ -1,7 +1,7 @@
 {
     "info": {
         "_postman_id": "ce86c1a8-cd7d-419e-aba9-aa16db723778",
-        "name": "hsn-todo-expressjs-mongodb-backend",
+        "name": "todo-expressjs-mongodb-backend",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "_exporter_id": "13128906"
     },
