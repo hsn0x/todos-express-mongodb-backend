@@ -1,8 +1,5 @@
 import { projectsQueries } from "../queries/index.js"
-import {
-    validateCreateProject,
-    validateUpdateProject,
-} from "../validation/Project.js"
+import { validateCreate, validateUpdate } from "../validation/Project.js"
 
 export default {
     getById: async (req, res) => {
@@ -102,7 +99,7 @@ export default {
             User: user.id,
         }
 
-        const isProjectValid = validateCreateProject(data)
+        const isProjectValid = validateCreate(data)
 
         if (!isProjectValid.valid) {
             return res.status(400).json({
@@ -134,7 +131,7 @@ export default {
             User: user.id,
         }
 
-        const isProjectValid = validateUpdateProject(data)
+        const isProjectValid = validateUpdate(data)
         if (!isProjectValid.valid) {
             return res.status(400).json({
                 message: "Invalid project data",

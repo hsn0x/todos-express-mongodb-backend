@@ -1,8 +1,5 @@
 import { commentsQueries } from "../queries/index.js"
-import {
-    validateCreateComment,
-    validateUpdateComment,
-} from "../validation/Comment.js"
+import { validateCreate, validateUpdate } from "../validation/Comment.js"
 
 export default {
     getById: async (req, res) => {
@@ -99,32 +96,30 @@ export default {
         const { session, user } = req
 
         const { content, Task } = req.body
-        const commentData = {
+        const data = {
             content,
             Task,
             User: user.id,
         }
 
-        const isCommentValid = validateCreateComment(commentData)
+        const isValid = validateCreate(data)
 
-        if (!isCommentValid.valid) {
+        if (!isValid.valid) {
             return res.status(400).json({
-                message: "Invalid comment data",
-                errors: isCommentValid.errors,
+                message: "Invalid record data",
+                errors: isValid.errors,
             })
         }
 
-        const createdComment = await commentsQueries.createQuery(commentData)
+        const createdRecord = await commentsQueries.createQuery(data)
 
-        if (createdComment) {
+        if (createdRecord) {
             return res.status(201).json({
-                message: `Comment added with ID: ${createdComment.id}`,
-                data: createdComment,
+                message: `Record added with ID: ${createdRecord.id}`,
+                data: createdRecord,
             })
         } else {
-            return res
-                .status(500)
-                .json({ message: `Faile to create a comment` })
+            return res.status(500).json({ message: `Faile to create a record` })
         }
     },
     update: async (req, res) => {
@@ -132,38 +127,40 @@ export default {
         const { session, user } = req
 
         const { content, Task } = req.body
-        const commentData = {
+        const data = {
             content,
             Task,
             User: user.id,
         }
 
-        const isCommentValid = validateUpdateComment(commentData)
-        if (!isCommentValid.valid) {
+        const isValid = validateUpdate(data)
+        if (!isValid.valid) {
             return res.status(400).json({
-                message: "Invalid comment data",
-                errors: isCommentValid.errors,
+                message: "Invalid record data",
+                errors: isValid.errors,
             })
         }
 
-        const updatedComment = await commentsQueries.updateOneQuery(
+        const updatedRecord = await commentsQueries.updateOneQuery(
             { _id: id },
-            commentData
+            data
         )
-        if (updatedComment) {
+        if (updatedRecord) {
             return res.status(200).json({
-                message: `Comment updated with ID: ${updatedComment[0]?.id}`,
-                data: updatedComment,
+                message: `Record updated with ID: ${updatedRecord.id}`,
+                data: updatedRecord,
             })
         } else {
             return res.status(500).json({
-                message: `Faile to update a comment, ${id}`,
+                message: `Faile to update a record, ${id}`,
             })
         }
     },
     remove: async (req, res) => {
         const id = req.params.id
         await commentsQueries.deleteOneQuery({ _id: id })
-        res.status(200).json({ message: `Comment deleted with ID: ${id}` })
+        return res
+            .status(200)
+            .json({ message: `Record deleted with ID: ${id}` })
     },
 }

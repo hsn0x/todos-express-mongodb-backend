@@ -1,5 +1,5 @@
 import { tasksQueries } from "../queries/index.js"
-import { validateCreateTask, validateUpdateTask } from "../validation/Task.js"
+import { validateCreate, validateUpdate } from "../validation/Task.js"
 
 export default {
     getById: async (req, res) => {
@@ -103,7 +103,7 @@ export default {
             Priority,
         }
 
-        const isValid = validateCreateTask(data)
+        const isValid = validateCreate(data)
 
         if (!isValid.valid) {
             return res.status(400).json({
@@ -139,7 +139,7 @@ export default {
             Priority,
         }
 
-        const isValid = validateUpdateTask(data)
+        const isValid = validateUpdate(data)
         if (!isValid.valid) {
             return res.status(400).json({
                 message: "Invalid task data",

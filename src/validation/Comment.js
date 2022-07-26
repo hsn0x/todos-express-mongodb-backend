@@ -1,8 +1,8 @@
-import Ajv from "ajv";
+import Ajv from "ajv"
 
-const ajv = new Ajv();
+const ajv = new Ajv()
 
-const CreateCommentSchema = {
+const CreateSchema = {
     type: "object",
     properties: {
         content: { type: "string" },
@@ -17,9 +17,9 @@ const CreateCommentSchema = {
     },
     required: ["content", "Task", "User"],
     additionalProperties: false,
-};
+}
 
-const UpdateCommentSchema = {
+const UpdateSchema = {
     type: "object",
     properties: {
         content: { type: "string" },
@@ -34,23 +34,23 @@ const UpdateCommentSchema = {
     },
     required: ["content", "Task", "User"],
     additionalProperties: false,
-};
+}
 
-export const validateCreateComment = (commentData) => {
-    const valid = ajv.validate(CreateCommentSchema, commentData);
+export const validateCreate = (commentData) => {
+    const valid = ajv.validate(CreateSchema, commentData)
     if (!valid)
         return {
             valid,
             errors: ajv.errors,
-        };
-    return { valid };
-};
-export const validateUpdateComment = (commentData) => {
-    const valid = ajv.validate(UpdateCommentSchema, commentData);
+        }
+    return { valid }
+}
+export const validateUpdate = (commentData) => {
+    const valid = ajv.validate(UpdateSchema, commentData)
     if (!valid)
         return {
             valid,
             errors: ajv.errors,
-        };
-    return { valid };
-};
+        }
+    return { valid }
+}

@@ -1,8 +1,8 @@
-import Ajv from "ajv";
+import Ajv from "ajv"
 
-const ajv = new Ajv();
+const ajv = new Ajv()
 
-const CreateUserSchema = {
+const CreateSchema = {
     type: "object",
     properties: {
         firstName: { type: "string" },
@@ -26,9 +26,9 @@ const CreateUserSchema = {
         "passwordSalt",
     ],
     additionalProperties: false,
-};
+}
 
-const UpdateUserSchema = {
+const UpdateSchema = {
     type: "object",
     properties: {
         firstName: { type: "string" },
@@ -40,18 +40,18 @@ const UpdateUserSchema = {
     },
     required: ["firstName", "lastName", "username", "age", "gender"],
     additionalProperties: false,
-};
+}
 
-const UpdateUserEmailSchema = {
+const UpdateUserSchema = {
     type: "object",
     properties: {
         email: { type: "string" },
     },
     required: ["email"],
     additionalProperties: false,
-};
+}
 
-const UpdateUserPasswordSchema = {
+const UpdatePasswordSchema = {
     type: "object",
     properties: {
         newPassword: { type: "string" },
@@ -61,44 +61,46 @@ const UpdateUserPasswordSchema = {
     },
     required: ["newPassword", "password", "passwordHash", "passwordSalt"],
     additionalProperties: false,
-};
+}
 
-export const validateCreateUser = (userData) => {
-    const valid = ajv.validate(CreateUserSchema, userData);
-    if (!valid)
-        return {
-            valid,
-            errors: ajv.errors,
-        };
-    return { valid };
-};
+export default {
+    validateCreate: (userData) => {
+        const valid = ajv.validate(CreateSchema, userData)
+        if (!valid)
+            return {
+                valid,
+                errors: ajv.errors,
+            }
+        return { valid }
+    },
 
-export const validateUpdateUser = (userData) => {
-    const valid = ajv.validate(UpdateUserSchema, userData);
-    if (!valid)
-        return {
-            valid,
-            errors: ajv.errors,
-        };
-    return { valid };
-};
+    validateUpdate: (userData) => {
+        const valid = ajv.validate(UpdateSchema, userData)
+        if (!valid)
+            return {
+                valid,
+                errors: ajv.errors,
+            }
+        return { valid }
+    },
 
-export const validateUpdateUserEmail = (userData) => {
-    const valid = ajv.validate(UpdateUserEmailSchema, userData);
-    if (!valid)
-        return {
-            valid,
-            errors: ajv.errors,
-        };
-    return { valid };
-};
+    validateUpdateEmail: (userData) => {
+        const valid = ajv.validate(UpdateUserSchema, userData)
+        if (!valid)
+            return {
+                valid,
+                errors: ajv.errors,
+            }
+        return { valid }
+    },
 
-export const validateUpdateUserPassword = (userData) => {
-    const valid = ajv.validate(UpdateUserPasswordSchema, userData);
-    if (!valid)
-        return {
-            valid,
-            errors: ajv.errors,
-        };
-    return { valid };
-};
+    validateUpdatePassword: (userData) => {
+        const valid = ajv.validate(UpdatePasswordSchema, userData)
+        if (!valid)
+            return {
+                valid,
+                errors: ajv.errors,
+            }
+        return { valid }
+    },
+}

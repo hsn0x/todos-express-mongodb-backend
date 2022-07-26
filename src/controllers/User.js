@@ -1,10 +1,10 @@
 import { genPassword, passwordMatch } from "../lib/passwordUtils.js"
 import { usersQueries } from "../queries/index.js"
 import {
-    validateCreateUser,
-    validateUpdateUserEmail,
-    validateUpdateUserPassword,
-    validateUpdateUser,
+    validateCreate,
+    validateUpdateEmail,
+    validateUpdatePassword,
+    validateUpdate,
 } from "../validation/User.js"
 
 export default {
@@ -135,7 +135,7 @@ export default {
         data.passwordHash = hashedPassword.hash
         data.passwordSalt = hashedPassword.salt
 
-        const isUserValid = validateCreateUser(data)
+        const isUserValid = validateCreate(data)
 
         if (!isUserValid.valid) {
             return res.status(401).json({
@@ -169,7 +169,7 @@ export default {
 
         data.age = Number(data.age)
 
-        const isUserValid = validateUpdateUser(data)
+        const isUserValid = validateUpdate(data)
 
         if (!isUserValid.valid) {
             return res.status(401).json({
@@ -199,7 +199,7 @@ export default {
             email,
         }
 
-        const isUserValid = validateUpdateUserEmail(data)
+        const isUserValid = validateUpdateEmail(data)
 
         if (!isUserValid.valid) {
             return res.status(401).json({
@@ -250,7 +250,7 @@ export default {
         /**
          * Check if the current password is valid
          */
-        let isUserValid = validateUpdateUserPassword({
+        let isUserValid = validateUpdatePassword({
             ...data,
             passwordHash: currentUser.passwordHash,
             passwordSalt: currentUser.passwordSalt,
@@ -269,7 +269,7 @@ export default {
         /**
          * Check if the current password is valid
          */
-        isUserValid = validateUpdateUserPassword(data)
+        isUserValid = validateUpdatePassword(data)
         if (!isUserValid.valid) {
             return res.status(401).json({
                 valid: isUserValid.valid,

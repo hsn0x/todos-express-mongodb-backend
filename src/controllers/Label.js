@@ -1,8 +1,5 @@
 import { labelsQueries } from "../queries/index.js"
-import {
-    validateCreateLabel,
-    validateUpdateLabel,
-} from "../validation/Label.js"
+import { validateCreate, validateUpdate } from "../validation/Label.js"
 
 export default {
     getById: async (req, res) => {
@@ -108,7 +105,7 @@ export default {
             User: user.id,
         }
 
-        const isLabelValid = validateCreateLabel(data)
+        const isLabelValid = validateCreate(data)
 
         if (!isLabelValid.valid) {
             return res.status(400).json({
@@ -139,7 +136,7 @@ export default {
             User: user.id,
         }
 
-        const isLabelValid = validateUpdateLabel(data)
+        const isLabelValid = validateUpdate(data)
         if (!isLabelValid.valid) {
             return res.status(400).json({
                 message: "Invalid label data",

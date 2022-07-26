@@ -1,10 +1,10 @@
-import Ajv from "ajv";
-import addFormats from "ajv-formats";
+import Ajv from "ajv"
+import addFormats from "ajv-formats"
 
-const ajv = new Ajv();
-addFormats(ajv);
+const ajv = new Ajv()
+addFormats(ajv)
 
-const CreateLabelSchema = {
+const CreateSchema = {
     type: "object",
     properties: {
         name: { type: "string" },
@@ -19,9 +19,9 @@ const CreateLabelSchema = {
     },
     required: ["name", "Task", "User"],
     additionalProperties: false,
-};
+}
 
-const UpdateLabelSchema = {
+const UpdateSchema = {
     type: "object",
     properties: {
         name: { type: "string" },
@@ -36,23 +36,23 @@ const UpdateLabelSchema = {
     },
     required: ["name", "Task", "User"],
     additionalProperties: false,
-};
+}
 
-export const validateCreateLabel = (labelData) => {
-    const valid = ajv.validate(CreateLabelSchema, labelData);
+export const validateCreate = (labelData) => {
+    const valid = ajv.validate(CreateSchema, labelData)
     if (!valid)
         return {
             valid,
             errors: ajv.errors,
-        };
-    return { valid };
-};
-export const validateUpdateLabel = (labelData) => {
-    const valid = ajv.validate(UpdateLabelSchema, labelData);
+        }
+    return { valid }
+}
+export const validateUpdate = (labelData) => {
+    const valid = ajv.validate(UpdateSchema, labelData)
     if (!valid)
         return {
             valid,
             errors: ajv.errors,
-        };
-    return { valid };
-};
+        }
+    return { valid }
+}

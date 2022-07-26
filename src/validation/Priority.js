@@ -46,7 +46,7 @@ const Updateprioritieschema = {
     additionalProperties: false,
 }
 
-export const validateCreatePriority = (priorityData) => {
+export const validateCreate = (priorityData) => {
     const valid = ajv.validate(Createprioritieschema, priorityData)
     if (!valid)
         return {
@@ -55,7 +55,7 @@ export const validateCreatePriority = (priorityData) => {
         }
     return { valid }
 }
-export const validateUpdatePriority = (priorityData) => {
+export const validateUpdate = (priorityData) => {
     const valid = ajv.validate(Updateprioritieschema, priorityData)
     if (!valid)
         return {

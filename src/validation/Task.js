@@ -1,10 +1,10 @@
-import Ajv from "ajv";
-import addFormats from "ajv-formats";
+import Ajv from "ajv"
+import addFormats from "ajv-formats"
 
-const ajv = new Ajv();
-addFormats(ajv);
+const ajv = new Ajv()
+addFormats(ajv)
 
-const CreateTaskSchema = {
+const CreateSchema = {
     type: "object",
     properties: {
         title: { type: "string" },
@@ -32,9 +32,9 @@ const CreateTaskSchema = {
     },
     required: ["title", "description", "User"],
     additionalProperties: false,
-};
+}
 
-const UpdateTaskSchema = {
+const UpdateSchema = {
     type: "object",
     properties: {
         title: { type: "string" },
@@ -62,23 +62,23 @@ const UpdateTaskSchema = {
     },
     required: ["title", "description", "User"],
     additionalProperties: false,
-};
+}
 
-export const validateCreateTask = (taskData) => {
-    const valid = ajv.validate(CreateTaskSchema, taskData);
+export const validateCreate = (taskData) => {
+    const valid = ajv.validate(CreateSchema, taskData)
     if (!valid)
         return {
             valid,
             errors: ajv.errors,
-        };
-    return { valid };
-};
-export const validateUpdateTask = (taskData) => {
-    const valid = ajv.validate(UpdateTaskSchema, taskData);
+        }
+    return { valid }
+}
+export const validateUpdate = (taskData) => {
+    const valid = ajv.validate(UpdateSchema, taskData)
     if (!valid)
         return {
             valid,
             errors: ajv.errors,
-        };
-    return { valid };
-};
+        }
+    return { valid }
+}

@@ -1,8 +1,5 @@
 import { prioritiesQueries } from "../queries/index.js"
-import {
-    validateCreatePriority,
-    validateUpdatePriority,
-} from "../validation/Priority.js"
+import { validateCreate, validateUpdate } from "../validation/Priority.js"
 
 export default {
     getById: async (req, res) => {
@@ -119,7 +116,7 @@ export default {
             User: user.id,
         }
 
-        const isPriorityValid = validateCreatePriority(data)
+        const isPriorityValid = validateCreate(data)
 
         if (!isPriorityValid.valid) {
             return res.status(400).json({
@@ -153,7 +150,7 @@ export default {
             User: user.id,
         }
 
-        const isPriorityValid = validateUpdatePriority(data)
+        const isPriorityValid = validateUpdate(data)
         if (!isPriorityValid.valid) {
             return res.status(400).json({
                 message: "Invalid priority data",
