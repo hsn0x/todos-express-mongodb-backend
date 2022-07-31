@@ -1,6 +1,6 @@
 {
     "name": "todos-express-mongodb-backend",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "todos list with express and mongodb, backend",
     "main": "src/index.js",
     "author": "Hassane Bendaoud <40140987+hsn0x@users.noreply.github.com>",
