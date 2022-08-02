@@ -112,6 +112,8 @@ To run this project, you will need to add the following environment variables to
 
 ## Features
 
+-   Auth
+    -   Login, Register, Logout
 -   Tasks
     -   Create, Edit, Update, Delete Store
         ...
